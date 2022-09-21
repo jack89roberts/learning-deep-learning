@@ -14,6 +14,7 @@
   - Activation functions
 
 - Future topics:
+  - ReLU
   - Adam
   - pytorch (properly)
   - Regularisation
@@ -21,5 +22,5 @@
   - CNNs
   - Transformers
   - Workflow (project structure, experiment tracking etc.)
-  - GPUs
-
+  - GPUs / HPC / VMs etc.
+  - Back propagation
