@@ -1,26 +1,33 @@
 # learning-deep-learning
 
-- Part 1: Linear Regression
-  - Loss functions
-  - Gradient descent
-  - Linear regression as a neural network
-  - First look at pytorch
+A collection of notebooks, packaged into a book, to document my journey in learning applied deep learning.
 
-- Part 2: Logistic Regression
-  - Why linear regression doesn't work for classification
-  - Sigmoid
-  - Logistic loss
-  - Logistic regression as a neural network
-  - Activation functions
+## Book
 
-- Future topics:
-  - ReLU
-  - Adam
-  - pytorch (properly)
-  - Regularisation
-  - Transfer learning
-  - CNNs
-  - Transformers
-  - Workflow (project structure, experiment tracking etc.)
-  - GPUs / HPC / VMs etc.
-  - Back propagation
+See the web-site LINK
+
+
+## Notebooks
+
+To run the notebooks yourself, clone the repo then:
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start jupyter:
+
+```bash
+jupyter notebook
+```
+
+Then browse to the `notebooks/` directory in the jupyter interface. 
+
+## Build the book
+
+```
+jupyter-book build .
+```
+

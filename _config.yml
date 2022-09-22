@@ -1,0 +1,6 @@
+# In _config.yml
+title: Learning Deep Learning
+author: Jack Roberts
+execute:
+  execute_notebooks: cache
+  timeout: 240

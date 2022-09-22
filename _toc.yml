@@ -1,0 +1,9 @@
+# In _toc.yml
+format: jb-book
+root: index
+chapters:
+- file: notebooks/01_linear_regression
+- file: notebooks/02_logistic_regression
+- file: notebooks/03_backprop
+- file: notebooks/04_nonlinear_regression
+- file: notebooks/05_multiclass
