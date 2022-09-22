@@ -727,7 +727,7 @@ L = \frac{1}{2m} \sum_{i=1}^{m} (\hat{y_i} - y_i)^2 = \frac{1}{2m} \sum_{i=1}^{m
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \frac{\partial L}{\partial w_1} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{1,i} \\
-\frac{\partial L}{\partial w_2} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{1,i} \\
+\frac{\partial L}{\partial w_2} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{2,i} \\
 \frac{\partial L}{\partial b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i)
 \end{split}\]</div>
 <p>Above I’ve replaced <span class="math notranslate nohighlight">\(N\)</span>, the number of samples in the dataset, with <span class="math notranslate nohighlight">\(m \leq N\)</span>, to indicate that we could choose to update the parameters based on the loss of a subset of the data.</p>
@@ -924,9 +924,9 @@ b = b - \alpha\frac{\partial L}{\partial b}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[-0.2148,  0.5047]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 0.5571, -0.0686]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0981], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.5092], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -951,16 +951,16 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0981], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.2867],
-        [ 0.1455],
-        [ 0.2790],
-        [-0.2323],
-        [-0.5890],
-        [-0.0911],
-        [ 0.2751],
-        [ 0.0886],
-        [-0.4687],
-        [-0.0083]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0800],
+        [ 0.1770],
+        [ 0.5156],
+        [ 0.4662],
+        [ 0.3958],
+        [-0.1475],
+        [ 0.6350],
+        [ 0.7793],
+        [ 1.5684],
+        [ 0.3168]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -1048,7 +1048,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0981], grad_fn=&lt;Sl
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7050]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-7.9423e-10], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-1.9440e-09], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/01_linear_regression_41_1.png" src="../_images/01_linear_regression_41_1.png" />
