@@ -7,6 +7,12 @@ execute:
   execute_notebooks: force
   timeout: 240
 
+html:
+  favicon: img/favicon.ico
+  use_repository_button: true
+  use_issues_button: true
+  use_edit_page_button: true
+
 repository:
   url: https://github.com/jack89roberts/learning-deep-learning
   branch: main
