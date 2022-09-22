@@ -6,6 +6,9 @@ on:
     branches:
     - main
 
+permissions:
+  contents: write
+
 # This job installs dependencies, build the book, and pushes it to `gh-pages`
 jobs:
   deploy-book:
@@ -22,13 +25,14 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+    
     # Build the book
     - name: Build the book
       run: |
         jupyter-book build .
-    # Push the book's HTML to github-pages
-    - name: GitHub Pages action
-      uses: peaceiris/actions-gh-pages@v3.5.9
+
+    # Deploy to github pages 
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: _build/html
+        folder: _build # The folder the action should deploy.

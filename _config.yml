@@ -2,5 +2,5 @@
 title: Learning Deep Learning
 author: Jack Roberts
 execute:
-  execute_notebooks: cache
+  execute_notebooks: force
   timeout: 240
