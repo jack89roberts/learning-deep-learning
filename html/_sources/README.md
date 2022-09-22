@@ -4,7 +4,7 @@ A collection of notebooks, packaged into a book, to document my journey in learn
 
 ## Book
 
-See the web-site LINK
+See the web-site: https://jack89roberts.github.io/learning-deep-learning/
 
 
 ## Notebooks
