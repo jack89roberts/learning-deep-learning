@@ -1,6 +1,12 @@
 # In _config.yml
 title: Learning Deep Learning
 author: Jack Roberts
+logo: img/logo.png
+
 execute:
   execute_notebooks: force
   timeout: 240
+
+repository:
+  url: https://github.com/jack89roberts/learning-deep-learning
+  branch: main

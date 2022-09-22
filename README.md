@@ -1,5 +1,7 @@
 # learning-deep-learning
 
+<img src="img/logo.png" alt="logo" width="100"/> 
+
 A collection of notebooks, packaged into a book, to document my journey in learning applied deep learning.
 
 ## Book
