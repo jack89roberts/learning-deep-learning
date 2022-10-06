@@ -391,10 +391,65 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#id1">
    Back Propagation
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-1-computing-the-gradient-for-b-1-2">
+     Example 1: Computing the gradient for
+     <span class="math notranslate nohighlight">
+      \(b_1^{[2]}\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-2-computing-the-gradient-for-w-2-1">
+     Example 2: Computing the gradient for
+     <span class="math notranslate nohighlight">
+      \(w_2^{[1]}\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multiple-paths">
+     Multiple Paths
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#back-propagation-and-efficiency">
+     Back Propagation and Efficiency
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#multiple-paths">
-   Multiple Paths
+  <a class="reference internal nav-link" href="#neural-network-matrix-notation">
+   Neural Network Matrix Notation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background-vectors-matrices-and-numpy">
+   Background: Vectors, Matrices, and NumPy
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dot-products">
+     Dot Products
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrix-multiplication">
+     Matrix Multiplication
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#broadcasting">
+     Broadcasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computation-graphs-and-auto-differentiation">
+   Computation Graphs and Auto-Differentiation
   </a>
  </li>
 </ul>
@@ -442,10 +497,65 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#id1">
    Back Propagation
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-1-computing-the-gradient-for-b-1-2">
+     Example 1: Computing the gradient for
+     <span class="math notranslate nohighlight">
+      \(b_1^{[2]}\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-2-computing-the-gradient-for-w-2-1">
+     Example 2: Computing the gradient for
+     <span class="math notranslate nohighlight">
+      \(w_2^{[1]}\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multiple-paths">
+     Multiple Paths
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#back-propagation-and-efficiency">
+     Back Propagation and Efficiency
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#multiple-paths">
-   Multiple Paths
+  <a class="reference internal nav-link" href="#neural-network-matrix-notation">
+   Neural Network Matrix Notation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background-vectors-matrices-and-numpy">
+   Background: Vectors, Matrices, and NumPy
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dot-products">
+     Dot Products
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrix-multiplication">
+     Matrix Multiplication
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#broadcasting">
+     Broadcasting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computation-graphs-and-auto-differentiation">
+   Computation Graphs and Auto-Differentiation
   </a>
  </li>
 </ul>
@@ -518,7 +628,6 @@ w_1^{[1]}  = w_1^{[1]} - \alpha\frac{\partial \mathcal{L}}{\partial w_1^{[1]}}
 </section>
 <section id="background-chain-rule">
 <h2>Background: Chain Rule<a class="headerlink" href="#background-chain-rule" title="Permalink to this headline">#</a></h2>
-<p>computation graphs</p>
 <div class="math notranslate nohighlight">
 \[
 h(x) = f(g(x))
@@ -548,12 +657,107 @@ h'(x) = 2(e^x + x)(e^x + 1) \\
 </section>
 <section id="id1">
 <h2>Back Propagation<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
-<p>Here’s the example network again, but with each edge (arrow) labelled by the partial derviative between the two connected nodes:</p>
+<p>Here’s the example network again, but with each edge (arrow) labeled by the partial derviative between the two connected nodes:</p>
 <p><img alt="" src="../_images/03_backprop_example_diffs.png" /></p>
+<p>To compute the derivative of the loss with respect to any term in the network we can use the chain rule. Starting with the loss on the right, we move “backwards” through the network, multiplying the partial derivatives until we get to the term we want.</p>
+<section id="example-1-computing-the-gradient-for-b-1-2">
+<h3>Example 1: Computing the gradient for <span class="math notranslate nohighlight">\(b_1^{[2]}\)</span><a class="headerlink" href="#example-1-computing-the-gradient-for-b-1-2" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+\frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} = \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}} \frac{\partial z_1^{[2]}}{\color{blue}{\partial b_1^{[2]}}}
+\]</div>
+<p>Log loss for one data point (remembering that <span class="math notranslate nohighlight">\(\hat{y} = a_1^{[2]}\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathcal{L} = - y \log(a_1^{[2]}) - (1 - y)\log(1 - a_1^{[2]}) \\
+\frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} = -\frac{y}{a_1^{[2]}} + \frac{1-y}{1-a_1^{[2]}}
+\end{split}\]</div>
+<p>If using a sigmoid activation function:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+a_1^{[2]} = \frac{1}{1+\exp(-z_1^{[2]})} \\
+\frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}} = a_1^{[2]} (1 - a_1^{[2]})
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(z_1^{[2]}\)</span> is a linear combination of its inputs:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+z_1^{[2]} = w_1^{[2]}a_1^{[1]} + w_2^{[2]}a_2^{[1]} + b_1^{[2]} \\
+\frac{\partial z_1^{[2]}}{\color{blue}{\partial b_1^{[2]}}} = 1
+\end{split}\]</div>
+<p>So overall we could write the loss derivative with respect to the bias as:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} = \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}. 1 = \frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}}
+\]</div>
+</section>
+<section id="example-2-computing-the-gradient-for-w-2-1">
+<h3>Example 2: Computing the gradient for <span class="math notranslate nohighlight">\(w_2^{[1]}\)</span><a class="headerlink" href="#example-2-computing-the-gradient-for-w-2-1" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+\frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
+\frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}}
+\frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
+\frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}}
+\frac{\color{orange}{\partial a_2^{[1]}}}{\color{gray}{\partial z_2^{[1]}}}
+\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}}
+\]</div>
+<p>We’ve seen the form of all the derivatives above in the first example, except for the last term:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+z_2^{[1]} = w_2^{[1]}x + b_2^{[1]} \\
+\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}} = x
+\end{split}\]</div>
+<p>For the weights after the first layer, the inputs <span class="math notranslate nohighlight">\(x\)</span> are replaced by node activations <span class="math notranslate nohighlight">\(a\)</span>. We can relabel <span class="math notranslate nohighlight">\(x = a_1^{[0]}\)</span> to make the general trend clearer.</p>
+<p>The first four terms on the right side of the expression for the derivative can be simplified to <span class="math notranslate nohighlight">\(\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}\)</span>. Then we have:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
+\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
+\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}}
+=
+\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
+a_1^{[0]}
+\]</div>
 </section>
 <section id="multiple-paths">
-<h2>Multiple Paths<a class="headerlink" href="#multiple-paths" title="Permalink to this headline">#</a></h2>
+<h3>Multiple Paths<a class="headerlink" href="#multiple-paths" title="Permalink to this headline">#</a></h3>
+<p>There is one case not covered by the simplified network and examples above - where you have multiple paths from the output (loss) back to the term of interest. Such as this:</p>
 <p><img alt="" src="../_images/03_backprop_multipath.png" /></p>
+<p>In this case you must sum all the possible paths (this also follows from the multi-variate chain rule).</p>
+</section>
+<section id="back-propagation-and-efficiency">
+<h3>Back Propagation and Efficiency<a class="headerlink" href="#back-propagation-and-efficiency" title="Permalink to this headline">#</a></h3>
+<p>It’s important to note that:</p>
+<ul class="simple">
+<li><p>The derivatives in the two examples share many terms in common (e.g. the derivative of the loss with respect to the final output)</p></li>
+<li><p>Each term is a fairly simple combination of quantities that must be computed during the forward pass (like the activation values in hidden layers)</p></li>
+</ul>
+<p>These properties of back propagation form the basis for efficient implementations in major frameworks (pytorch, Tensorflow, JAX etc.), mostly via:</p>
+<ul class="simple">
+<li><p>Matrix operations</p></li>
+<li><p>Computation graphs</p></li>
+<li><p>Caching intermediate values</p></li>
+<li><p>Automatic differentiation</p></li>
+</ul>
+</section>
+</section>
+<section id="neural-network-matrix-notation">
+<h2>Neural Network Matrix Notation<a class="headerlink" href="#neural-network-matrix-notation" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="background-vectors-matrices-and-numpy">
+<h2>Background: Vectors, Matrices, and NumPy<a class="headerlink" href="#background-vectors-matrices-and-numpy" title="Permalink to this headline">#</a></h2>
+<section id="dot-products">
+<h3>Dot Products<a class="headerlink" href="#dot-products" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="matrix-multiplication">
+<h3>Matrix Multiplication<a class="headerlink" href="#matrix-multiplication" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="broadcasting">
+<h3>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this headline">#</a></h3>
+</section>
+</section>
+<section id="computation-graphs-and-auto-differentiation">
+<h2>Computation Graphs and Auto-Differentiation<a class="headerlink" href="#computation-graphs-and-auto-differentiation" title="Permalink to this headline">#</a></h2>
 </section>
 </section>
 
