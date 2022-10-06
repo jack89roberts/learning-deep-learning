@@ -1,0 +1,49 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.10.7/x64/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.10.7/x64/lib/python3.10/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.10.7/x64/lib/python3.10/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/opt/hostedtoolcache/Python/3.10.7/x64/lib/python3.10/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/opt/hostedtoolcache/Python/3.10.7/x64/lib/python3.10/asyncio/base_events.py", line 646, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.10.7/x64/lib/python3.10/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.10.7/x64/lib/python3.10/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.10.7/x64/lib/python3.10/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+
+
+def dsigmoid_dx(z):
+    return sigmoid(z) * (1 - sigmoid(z))
+
+
+z = np.linspace(-10, 10, 100)
+fig, ax = plt.subplots(1, 2, sharex=True, sharey=True, figsize=(7, 3))
+ax[0].plot(z, sigmoid(z), color="b", label=r"$\sigma(z)$")
+ax[0].legend()
+ax[0].set_xlabel("z")
+ax[1].plot(z, dsigmoid_dx(z), color="orange", label=r"$\sigma'(z)$")
+ax[1].legend()
+ax[1].set_xlabel("z")
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn [1], line 9[0m
+[1;32m      5[0m [38;5;28;01mdef[39;00m [38;5;21mdsigmoid_dx[39m(z):
+[1;32m      6[0m     [38;5;28;01mreturn[39;00m sigmoid(z) [38;5;241m*[39m ([38;5;241m1[39m [38;5;241m-[39m sigmoid(z))
+[0;32m----> 9[0m z [38;5;241m=[39m np[38;5;241m.[39mlinspace([38;5;241m-[39m[38;5;241m10[39m, [38;5;241m10[39m, [38;5;241m100[39m)
+[1;32m     10[0m fig, ax [38;5;241m=[39m plt[38;5;241m.[39msubplots([38;5;241m1[39m, [38;5;241m2[39m, sharex[38;5;241m=[39m[38;5;28;01mTrue[39;00m, sharey[38;5;241m=[39m[38;5;28;01mTrue[39;00m, figsize[38;5;241m=[39m([38;5;241m7[39m, [38;5;241m3[39m))
+[1;32m     11[0m ax[[38;5;241m0[39m][38;5;241m.[39mplot(z, sigmoid(z), color[38;5;241m=[39m[38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m, label[38;5;241m=[39m[38;5;124mr[39m[38;5;124m"[39m[38;5;124m$[39m[38;5;124m\[39m[38;5;124msigma(z)$[39m[38;5;124m"[39m)
+
+[0;31mNameError[0m: name 'np' is not defined
+NameError: name 'np' is not defined
+
