@@ -580,10 +580,11 @@ title="Print to PDF"
 </ol>
 <section id="forward-pass-recap">
 <h2>Forward Pass: Recap<a class="headerlink" href="#forward-pass-recap" title="Permalink to this headline">#</a></h2>
-<p>Each node computes a linear combination of the output of all the nodes in the previous layer, for example:
-$<span class="math notranslate nohighlight">\(
+<p>Each node computes a linear combination of the output of all the nodes in the previous layer, for example:</p>
+<div class="math notranslate nohighlight">
+\[
 z_1^{[1]} = w_{1,1}^{[1]} x_1 + w_{2,1}^{[1]} x_2 + b_1^{[1]}
-\)</span>$</p>
+\]</div>
 <p>This is passed to an activation function, <span class="math notranslate nohighlight">\(g\)</span>, (assumed to be the same function in all layers here), to create the final output, or “activation”, of each node:</p>
 <div class="math notranslate nohighlight">
 \[
