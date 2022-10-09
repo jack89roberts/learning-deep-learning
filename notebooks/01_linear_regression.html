@@ -133,12 +133,17 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="04_relu.html">
+  <a class="reference internal" href="04_matrix_notation.html">
+   04: Matrix Notation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_relu.html">
    04: ReLU and Other Activation Functions
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="05_multiclass.html">
+  <a class="reference internal" href="06_multiclass.html">
    05:
   </a>
  </li>
@@ -992,9 +997,9 @@ b = b - \alpha\frac{\partial L}{\partial b}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 0.6119, -0.4528]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[-0.4111,  0.3170]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.1349], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.3080], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -1019,16 +1024,16 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.1349], grad_fn=&lt;S
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.7517],
-        [-0.4361],
-        [-0.2726],
-        [ 0.0917],
-        [ 0.3173],
-        [-0.5072],
-        [-0.1747],
-        [ 0.0871],
-        [ 1.1536],
-        [-0.2038]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.7213],
+        [ 0.5082],
+        [ 0.4054],
+        [ 0.1465],
+        [-0.0153],
+        [ 0.5463],
+        [ 0.3407],
+        [ 0.1613],
+        [-0.5619],
+        [ 0.3494]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -1116,7 +1121,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.1349], grad_fn=&lt;S
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7050]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-2.5262e-09], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-7.9564e-10], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/01_linear_regression_41_1.png" src="../_images/01_linear_regression_41_1.png" />

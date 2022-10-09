@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="04: ReLU and Other Activation Functions" href="04_relu.html" />
+    <link rel="next" title="04: Matrix Notation" href="04_matrix_notation.html" />
     <link rel="prev" title="02: Logistic Regression" href="02_logistic_regression.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -133,12 +133,17 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="04_relu.html">
+  <a class="reference internal" href="04_matrix_notation.html">
+   04: Matrix Notation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_relu.html">
    04: ReLU and Other Activation Functions
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="05_multiclass.html">
+  <a class="reference internal" href="06_multiclass.html">
    05:
   </a>
  </li>
@@ -421,33 +426,6 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#neural-network-matrix-notation">
-   Neural Network Matrix Notation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#background-vectors-matrices-and-numpy">
-   Background: Vectors, Matrices, and NumPy
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dot-products">
-     Dot Products
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#matrix-multiplication">
-     Matrix Multiplication
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#broadcasting">
-     Broadcasting
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#computation-graphs-and-auto-differentiation">
    Computation Graphs and Auto-Differentiation
   </a>
@@ -527,33 +505,6 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#neural-network-matrix-notation">
-   Neural Network Matrix Notation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#background-vectors-matrices-and-numpy">
-   Background: Vectors, Matrices, and NumPy
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dot-products">
-     Dot Products
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#matrix-multiplication">
-     Matrix Multiplication
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#broadcasting">
-     Broadcasting
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#computation-graphs-and-auto-differentiation">
    Computation Graphs and Auto-Differentiation
   </a>
@@ -583,7 +534,7 @@ title="Print to PDF"
 <p>Each node computes a linear combination of the output of all the nodes in the previous layer, for example:</p>
 <div class="math notranslate nohighlight">
 \[
-z_1^{[1]} = w_{1,1}^{[1]} x_1 + w_{2,1}^{[1]} x_2 + b_1^{[1]}
+z_1^{[1]} = w_{1 \rightarrow 1}^{[1]} x_1 + w_{2 \rightarrow 1}^{[1]} x_2 + b_1^{[1]}
 \]</div>
 <p>This is passed to an activation function, <span class="math notranslate nohighlight">\(g\)</span>, (assumed to be the same function in all layers here), to create the final output, or “activation”, of each node:</p>
 <div class="math notranslate nohighlight">
@@ -593,11 +544,11 @@ a_3^{[2]} = g(z_3^{[2]})
 <p>For example, <span class="math notranslate nohighlight">\(\hat{y}\)</span>, can be expressed in terms of the activation of the final layer as follows:</p>
 <div class="math notranslate nohighlight">
 \[
-\hat{y} = a_1^{[3]} = g\left(w_{1,1}^{[3]} a_{1}^{[2]} + w_{2,1}^{[3]} a_{2}^{[2]} + w_{3,1}^{[3]} a_{3}^{[2]} + b_1^{[3]}\right)
+\hat{y} = a_1^{[3]} = g\left(w_{1 \rightarrow 1}^{[3]} a_{1}^{[2]} + w_{2 \rightarrow 1}^{[3]} a_{2}^{[2]} + w_{3 \rightarrow 1}^{[3]} a_{3}^{[2]} + b_1^{[3]}\right)
 \]</div>
-<p>I’m going to introduce a more efficient syntax in a moment but terms not introduced above mean:</p>
+<p>The terms not introduced above mean:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(w_{j,k}^{[l]}\)</span>: The weight between node <span class="math notranslate nohighlight">\(j\)</span> in layer <span class="math notranslate nohighlight">\(l-1\)</span> and node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(w_{j \rightarrow k}^{[l]}\)</span>: The weight between node <span class="math notranslate nohighlight">\(j\)</span> in layer <span class="math notranslate nohighlight">\(l-1\)</span> and node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(a_k^{[l]}\)</span>: The activation of node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(b_k^{[l]}\)</span>: The bias term for node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span></p></li>
 </ul>
@@ -742,21 +693,6 @@ a_1^{[0]}
 </ul>
 </section>
 </section>
-<section id="neural-network-matrix-notation">
-<h2>Neural Network Matrix Notation<a class="headerlink" href="#neural-network-matrix-notation" title="Permalink to this headline">#</a></h2>
-</section>
-<section id="background-vectors-matrices-and-numpy">
-<h2>Background: Vectors, Matrices, and NumPy<a class="headerlink" href="#background-vectors-matrices-and-numpy" title="Permalink to this headline">#</a></h2>
-<section id="dot-products">
-<h3>Dot Products<a class="headerlink" href="#dot-products" title="Permalink to this headline">#</a></h3>
-</section>
-<section id="matrix-multiplication">
-<h3>Matrix Multiplication<a class="headerlink" href="#matrix-multiplication" title="Permalink to this headline">#</a></h3>
-</section>
-<section id="broadcasting">
-<h3>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this headline">#</a></h3>
-</section>
-</section>
 <section id="computation-graphs-and-auto-differentiation">
 <h2>Computation Graphs and Auto-Differentiation<a class="headerlink" href="#computation-graphs-and-auto-differentiation" title="Permalink to this headline">#</a></h2>
 </section>
@@ -796,10 +732,10 @@ a_1^{[0]}
             <p class="prev-next-title">02: Logistic Regression</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="04_relu.html" title="next page">
+    <a class='right-next' id="next-link" href="04_matrix_notation.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">04: ReLU and Other Activation Functions</p>
+        <p class="prev-next-title">04: Matrix Notation</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

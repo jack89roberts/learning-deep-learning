@@ -17,6 +17,9 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
+import numpy as np
+
+
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
@@ -37,13 +40,13 @@ ax[1].set_xlabel("z")
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn [1], line 9[0m
-[1;32m      5[0m [38;5;28;01mdef[39;00m [38;5;21mdsigmoid_dx[39m(z):
-[1;32m      6[0m     [38;5;28;01mreturn[39;00m sigmoid(z) [38;5;241m*[39m ([38;5;241m1[39m [38;5;241m-[39m sigmoid(z))
-[0;32m----> 9[0m z [38;5;241m=[39m np[38;5;241m.[39mlinspace([38;5;241m-[39m[38;5;241m10[39m, [38;5;241m10[39m, [38;5;241m100[39m)
-[1;32m     10[0m fig, ax [38;5;241m=[39m plt[38;5;241m.[39msubplots([38;5;241m1[39m, [38;5;241m2[39m, sharex[38;5;241m=[39m[38;5;28;01mTrue[39;00m, sharey[38;5;241m=[39m[38;5;28;01mTrue[39;00m, figsize[38;5;241m=[39m([38;5;241m7[39m, [38;5;241m3[39m))
-[1;32m     11[0m ax[[38;5;241m0[39m][38;5;241m.[39mplot(z, sigmoid(z), color[38;5;241m=[39m[38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m, label[38;5;241m=[39m[38;5;124mr[39m[38;5;124m"[39m[38;5;124m$[39m[38;5;124m\[39m[38;5;124msigma(z)$[39m[38;5;124m"[39m)
+Cell [0;32mIn [1], line 13[0m
+[1;32m      9[0m     [38;5;28;01mreturn[39;00m sigmoid(z) [38;5;241m*[39m ([38;5;241m1[39m [38;5;241m-[39m sigmoid(z))
+[1;32m     12[0m z [38;5;241m=[39m np[38;5;241m.[39mlinspace([38;5;241m-[39m[38;5;241m10[39m, [38;5;241m10[39m, [38;5;241m100[39m)
+[0;32m---> 13[0m fig, ax [38;5;241m=[39m [43mplt[49m[38;5;241m.[39msubplots([38;5;241m1[39m, [38;5;241m2[39m, sharex[38;5;241m=[39m[38;5;28;01mTrue[39;00m, sharey[38;5;241m=[39m[38;5;28;01mTrue[39;00m, figsize[38;5;241m=[39m([38;5;241m7[39m, [38;5;241m3[39m))
+[1;32m     14[0m ax[[38;5;241m0[39m][38;5;241m.[39mplot(z, sigmoid(z), color[38;5;241m=[39m[38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m, label[38;5;241m=[39m[38;5;124mr[39m[38;5;124m"[39m[38;5;124m$[39m[38;5;124m\[39m[38;5;124msigma(z)$[39m[38;5;124m"[39m)
+[1;32m     15[0m ax[[38;5;241m0[39m][38;5;241m.[39mlegend()
 
-[0;31mNameError[0m: name 'np' is not defined
-NameError: name 'np' is not defined
+[0;31mNameError[0m: name 'plt' is not defined
+NameError: name 'plt' is not defined
 
