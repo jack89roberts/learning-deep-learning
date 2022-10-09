@@ -371,6 +371,11 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-network-and-definitions">
+   Example Network and Definitions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#forward-pass">
    Forward Pass
   </a>
@@ -422,6 +427,11 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-network-and-definitions">
+   Example Network and Definitions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#forward-pass">
    Forward Pass
   </a>
@@ -467,8 +477,12 @@ title="Print to PDF"
 <h1>04: Matrix Notation<a class="headerlink" href="#matrix-notation" title="Permalink to this headline">#</a></h1>
 <p>So far we’ve explicitly written individual terms for every parameter, data feature, and intermediate value in the network in the examples. This makes it clear exactly what is going on at each step, but it gets clumsy, long, and inefficient.</p>
 <p>Here we show how we can represent networks with matrices, creating a much simpler (if less explicit) notation.</p>
+<section id="example-network-and-definitions">
+<h2>Example Network and Definitions<a class="headerlink" href="#example-network-and-definitions" title="Permalink to this headline">#</a></h2>
+<p>We’ll refer back to the network below throughout this section. It has an unspecified number of layers (and nodes in each layer), but we assume 2 input data features, 3 nodes in the first layer, and 1 output node for the examples.</p>
 <p><img alt="" src="../_images/04_matrix_network.png" /></p>
-<p>Size of the network and dataset:</p>
+<p>We have labelled the notation we’re going to start to use to represent the values/parameters in whole layers, rather than at individual nodes/connections. The terms are:</p>
+<p><strong>Size of the network and dataset:</strong></p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(L\)</span> - the number of layers in the network</p></li>
 <li><p><span class="math notranslate nohighlight">\(n^{[l]}\)</span> - the number of nodes in layer <span class="math notranslate nohighlight">\([l]\)</span></p>
@@ -479,7 +493,7 @@ title="Print to PDF"
 </li>
 <li><p><span class="math notranslate nohighlight">\(m\)</span> - the number of data samples per gradient descent iteration (aka the batch size)</p></li>
 </ul>
-<p>Parameters of, and computed values in, the network:</p>
+<p><strong>Parameters of, and computed values in, the network:</strong></p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(W^{[l]}\)</span> - the weights (arrows) between all the activations in layer <span class="math notranslate nohighlight">\([l-1]\)</span> and layer <span class="math notranslate nohighlight">\([l]\)</span>, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, n^{[l-1]})\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(b^{[l]}\)</span> - the bias for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span>, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span></p></li>
@@ -492,6 +506,7 @@ title="Print to PDF"
 </li>
 <li><p><span class="math notranslate nohighlight">\(\mathcal{L}(y, \hat{y})\)</span> - the total loss (cost) for all the data samples, dimensions: (1)</p></li>
 </ul>
+</section>
 <section id="forward-pass">
 <h2>Forward Pass<a class="headerlink" href="#forward-pass" title="Permalink to this headline">#</a></h2>
 <section id="value-for-a-single-node-and-data-sample-dot-products">
