@@ -5,5 +5,6 @@ chapters:
 - file: notebooks/01_linear_regression
 - file: notebooks/02_logistic_regression
 - file: notebooks/03_backprop
-- file: notebooks/04_relu
-- file: notebooks/05_multiclass
+- file: notebooks/04_matrix_notation
+- file: notebooks/05_relu
+- file: notebooks/06_multiclass
