@@ -50,8 +50,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -412,11 +410,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#can-the-network-learn-y-x-2">
-   Can the network learn
-   <span class="math notranslate nohighlight">
-    \(y = x^2\)
-   </span>
-   ?
+   Can the network learn $y = x^2$ ?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -490,11 +484,7 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#can-the-network-learn-y-x-2">
-   Can the network learn
-   <span class="math notranslate nohighlight">
-    \(y = x^2\)
-   </span>
-   ?
+   Can the network learn $y = x^2$ ?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -661,39 +651,37 @@ title="Print to PDF"
 <section id="id1">
 <h2>Linear Regression<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <p>I want to use the data ~~so I can have more oranges to eat~~ so the Turing can arrange its deliveries to maximise happiness by fitting this model:</p>
-<div class="math notranslate nohighlight">
-\[
+<p>$$
 \hat{y} = w_1 x_1 + w_2 x_2 + b
-\]</div>
+$$</p>
 <p>where:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\hat{y}\)</span> : Predicted Turing happiness</p></li>
-<li><p><span class="math notranslate nohighlight">\(x_1\)</span> : Number of oranges available 🍊</p>
+<li><p>$\hat{y}$ : Predicted Turing happiness</p></li>
+<li><p>$x_1$ : Number of oranges available 🍊</p>
 <ul>
-<li><p><span class="math notranslate nohighlight">\(w_1\)</span> : Happiness increase per orange</p></li>
+<li><p>$w_1$ : Happiness increase per orange</p></li>
 </ul>
 </li>
-<li><p><span class="math notranslate nohighlight">\(x_2\)</span> : Cups of coffee available ☕️</p>
+<li><p>$x_2$ : Cups of coffee available ☕️</p>
 <ul>
-<li><p><span class="math notranslate nohighlight">\(w_2\)</span> : Happiness increase per cup of coffee</p></li>
+<li><p>$w_2$ : Happiness increase per cup of coffee</p></li>
 </ul>
 </li>
-<li><p><span class="math notranslate nohighlight">\(b\)</span> : Intercept (happiness if no oranges or coffee 😱)</p></li>
+<li><p>$b$ : Intercept (happiness if no oranges or coffee 😱)</p></li>
 </ul>
-<p>Learn “best” values of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, and <span class="math notranslate nohighlight">\(b\)</span></p>
+<p>Learn “best” values of $w_1$, $w_2$, and $b$</p>
 <ul class="simple">
 <li><p>how?</p></li>
 </ul>
 </section>
 <section id="loss-function">
 <h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">#</a></h2>
-<p>Choose <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, <span class="math notranslate nohighlight">\(b\)</span> to minimise the mean squared error between the predicted and actual value:</p>
-<div class="math notranslate nohighlight">
-\[
+<p>Choose $w_1$, $w_2$, $b$ to minimise the mean squared error between the predicted and actual value:</p>
+<p>$$
 L = \frac{1}{2N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
-\]</div>
+$$</p>
 <p>(divided by 2 to tidy up some maths later)</p>
-<p>Here’s an example for one choice of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. The loss is the sum of the lengths of the vertical black lines (squared) - the difference between the predicted and actual value:</p>
+<p>Here’s an example for one choice of $w_1$, $w_2$ and $b$. The loss is the sum of the lengths of the vertical black lines (squared) - the difference between the predicted and actual value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
@@ -729,7 +717,7 @@ L = \frac{1}{2N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
 <img alt="../_images/01_linear_regression_9_0.png" src="../_images/01_linear_regression_9_0.png" />
 </div>
 </div>
-<p>We can compute the loss for many different values of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, and <span class="math notranslate nohighlight">\(b\)</span> (here varying only one or two of the parameters due to be able to plot nicely):</p>
+<p>We can compute the loss for many different values of $w_1$, $w_2$, and $b$ (here varying only one or two of the parameters due to be able to plot nicely):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_loss_grid_2d</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
@@ -787,29 +775,27 @@ L = \frac{1}{2N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
 <img alt="../_images/01_linear_regression_11_0.png" src="../_images/01_linear_regression_11_0.png" />
 </div>
 </div>
-<p>The best choice of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, and <span class="math notranslate nohighlight">\(b\)</span> is the one that minimises the loss (the bottom of the valleys above) - how to find where that is?</p>
+<p>The best choice of $w_1$, $w_2$, and $b$ is the one that minimises the loss (the bottom of the valleys above) - how to find where that is?</p>
 </section>
 <section id="gradient-descent">
 <h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">#</a></h2>
-<p>The loss function again (expanded to include the definition of <span class="math notranslate nohighlight">\(\hat{y}\)</span>):</p>
-<div class="math notranslate nohighlight">
-\[
+<p>The loss function again (expanded to include the definition of $\hat{y}$):</p>
+<p>$$
 L = \frac{1}{2m} \sum_{i=1}^{m} (\hat{y_i} - y_i)^2 = \frac{1}{2m} \sum_{i=1}^{m} (w_1 x_{1,i} + w_2 x_{2,i} + b - y)^2
-\]</div>
+$$</p>
 <p>The minimum loss will be found where the partial derivatives of the loss function with respect to the parameters is zero:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\frac{\partial L}{\partial w_1} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{1,i} \\
-\frac{\partial L}{\partial w_2} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{2,i} \\
+<p>$$
+\frac{\partial L}{\partial w_1} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{1,i} \
+\frac{\partial L}{\partial w_2} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{2,i} \
 \frac{\partial L}{\partial b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i)
-\end{split}\]</div>
-<p>Above I’ve replaced <span class="math notranslate nohighlight">\(N\)</span>, the number of samples in the dataset, with <span class="math notranslate nohighlight">\(m \leq N\)</span>, to indicate that we could choose to update the parameters based on the loss of a subset of the data.</p>
-<p><span class="math notranslate nohighlight">\(m\)</span> is known as the <strong>batch size</strong></p>
-<p>Different values of <span class="math notranslate nohighlight">\(m\)</span> correspond to different forms of gradient descent:</p>
+$$</p>
+<p>Above I’ve replaced $N$, the number of samples in the dataset, with $m \leq N$, to indicate that we could choose to update the parameters based on the loss of a subset of the data.</p>
+<p>$m$ is known as the <strong>batch size</strong></p>
+<p>Different values of $m$ correspond to different forms of gradient descent:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(m = N\)</span> : Batch Gradient Descent (or just Gradient Descent)</p></li>
-<li><p><span class="math notranslate nohighlight">\(1 &lt; m &lt; N\)</span> : Mini Batch Gradient Descent (or Mini Batch Stochastic Gradient Descent)</p></li>
-<li><p><span class="math notranslate nohighlight">\(m = 1\)</span>: Stochastic Gradient Descent</p></li>
+<li><p>$m = N$ : Batch Gradient Descent (or just Gradient Descent)</p></li>
+<li><p>$1 &lt; m &lt; N$ : Mini Batch Gradient Descent (or Mini Batch Stochastic Gradient Descent)</p></li>
+<li><p>$m = 1$: Stochastic Gradient Descent</p></li>
 </ul>
 <p>The random (stochastic) nature of mini batch and stochastic gradient descent come from needing to select a sample of the dataset for each parameter update.</p>
 <p>Broadly:</p>
@@ -817,18 +803,17 @@ L = \frac{1}{2m} \sum_{i=1}^{m} (\hat{y_i} - y_i)^2 = \frac{1}{2m} \sum_{i=1}^{m
 <li><p>Batch gradient descent: Slower, better convergence</p></li>
 <li><p>(Mini batch) stochastic gradient descent: Faster, worse convergence</p></li>
 </ul>
-<p>We can pick some initial values for <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, and <span class="math notranslate nohighlight">\(b\)</span>, and then iteratively update them towards the values that will zero the partial derivatives of the loss:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-w_1 = w_1 - \alpha \frac{\partial L}{\partial w_1} \\
-w_2 = w_2 - \alpha\frac{\partial L}{\partial w_2} \\
+<p>We can pick some initial values for $w_1$, $w_2$, and $b$, and then iteratively update them towards the values that will zero the partial derivatives of the loss:</p>
+<p>$$
+w_1 = w_1 - \alpha \frac{\partial L}{\partial w_1} \
+w_2 = w_2 - \alpha\frac{\partial L}{\partial w_2} \
 b = b - \alpha\frac{\partial L}{\partial b}
-\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is the “learning rate” (or the relative size of the parameter updates we’re going to make after each iteration)</p>
+$$</p>
+<p>where $\alpha$ is the “learning rate” (or the relative size of the parameter updates we’re going to make after each iteration)</p>
 <p>The learning rate is a hyperparameter:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> too large - gradient descent may not converge</p></li>
-<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> too small - gradient descent will take too long to converge</p></li>
+<li><p>$\alpha$ too large - gradient descent may not converge</p></li>
+<li><p>$\alpha$ too small - gradient descent will take too long to converge</p></li>
 </ul>
 <p>Gradient descent will converge faster if all the features are on the same scale, so we can standardise them (to have mean zero and standard deviation of one):</p>
 <div class="cell docutils container">
@@ -987,7 +972,7 @@ b = b - \alpha\frac{\partial L}{\partial b}
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">nn.Sequential</span></code> builds a neural network from a sequence of layers - for our model a single “linear layer” with 2 inputs (<span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>) and 1 output (<span class="math notranslate nohighlight">\(\hat{y}\)</span>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">nn.Sequential</span></code> builds a neural network from a sequence of layers - for our model a single “linear layer” with 2 inputs ($x_1$, $x_2$) and 1 output ($\hat{y}$).</p>
 <p>The layer specification is enough for pytorch to know the parameters we have to learn, and these are given random initial values (see <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Linear.html#torch.nn.Linear">here</a>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -997,14 +982,14 @@ b = b - \alpha\frac{\partial L}{\partial b}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[-0.2152, -0.3649]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[-0.3932, -0.3074]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0082], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.1072], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
 </div>
-<p>As before we have 2 weights (<span class="math notranslate nohighlight">\(w_1\)</span> and <span class="math notranslate nohighlight">\(w_2\)</span>, but now both  in <code class="docutils literal notranslate"><span class="pre">0.weight</span></code>), and an intercept or <strong>bias</strong> term (<span class="math notranslate nohighlight">\(b\)</span> before, and now in <code class="docutils literal notranslate"><span class="pre">0.bias</span></code>).</p>
+<p>As before we have 2 weights ($w_1$ and $w_2$, but now both  in <code class="docutils literal notranslate"><span class="pre">0.weight</span></code>), and an intercept or <strong>bias</strong> term ($b$ before, and now in <code class="docutils literal notranslate"><span class="pre">0.bias</span></code>).</p>
 <p>pytorch works with its own “tensor” data structure (like a numpy array optimised for working with GPUs and automatic differentiation), so we need to convert our data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1024,16 +1009,16 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0082], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.2674],
-        [ 0.2026],
-        [-0.1443],
-        [ 0.3089],
-        [ 0.6503],
-        [ 0.6240],
-        [-0.2250],
-        [-0.1735],
-        [-0.2714],
-        [ 0.2303]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.3374],
+        [ 0.1874],
+        [-0.2480],
+        [ 0.1815],
+        [ 0.5168],
+        [ 0.6856],
+        [-0.3637],
+        [-0.3681],
+        [-0.7369],
+        [ 0.1630]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -1121,7 +1106,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0082], grad_fn=&lt;Sl
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7050]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-7.9910e-10], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-8.3651e-09], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/01_linear_regression_41_1.png" src="../_images/01_linear_regression_41_1.png" />
@@ -1130,7 +1115,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-7.9910e-10], grad_fn=&
 </section>
 <section id="adding-nodes-and-layers">
 <h2>Adding nodes and layers<a class="headerlink" href="#adding-nodes-and-layers" title="Permalink to this headline">#</a></h2>
-<p>Here’s a slightly bigger network (but with only one input feature, <span class="math notranslate nohighlight">\(x\)</span>):</p>
+<p>Here’s a slightly bigger network (but with only one input feature, $x$):</p>
 <p><img alt="" src="../_images/01_two_hidden_layers.png" /></p>
 <ul class="simple">
 <li><p>Additional layers between the input and output layer are known as <strong>hidden layers</strong>.</p></li>
@@ -1138,21 +1123,18 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-7.9910e-10], grad_fn=&
 <li><p>All the layers are still <em>dense</em> layers (each node connected to all the nodes in the next layer)</p></li>
 </ul>
 <p>Example output from a node in the first hidden layer:</p>
-<div class="math notranslate nohighlight">
-\[
+<p>$$
 h_{(1,1)} = w_{x\rightarrow(1,1)} x + b_{(1,1)}
-\]</div>
+$$</p>
 <p>Example output from a node in the second hidden layer:</p>
-<div class="math notranslate nohighlight">
-\[
+<p>$$
 h_{(2,1)} = w_{(1,1)\rightarrow(2,1)} h_{(1,1)} + w_{(1,2)\rightarrow(2,1)} h_{(1,2)} + w_{(1,3)\rightarrow(2,1)} h_{(1,3)} + b_{(2,1)}
-\]</div>
+$$</p>
 <p>Final output:</p>
-<div class="math notranslate nohighlight">
-\[
+<p>$$
 \hat{y} = w_{(2,1)\rightarrow y} h_{(2,1)} + w_{(2,2)\rightarrow y}h_{(2,2)} + b_{y}
-\]</div>
-<p>The weights and biases aren’t labeled on the diagram, but the notation <span class="math notranslate nohighlight">\(w_{(1,3)\rightarrow(2,1)}\)</span> means the arrow from node 3 in the first hidden layer, to node 1 in the second hidden layer.</p>
+$$</p>
+<p>The weights and biases aren’t labeled on the diagram, but the notation $w_{(1,3)\rightarrow(2,1)}$ means the arrow from node 3 in the first hidden layer, to node 1 in the second hidden layer.</p>
 <p>Here’s the network implemented in pytorch:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1197,9 +1179,9 @@ Layer: 2.bias | Size: torch.Size([1])
 </section>
 <section id="what-types-of-functions-can-this-network-learn">
 <h2>What types of functions can this network learn?<a class="headerlink" href="#what-types-of-functions-can-this-network-learn" title="Permalink to this headline">#</a></h2>
-<p>a) Linear (with terms up to <span class="math notranslate nohighlight">\(x\)</span>)</p>
-<p>b) Quadratic (with terms up to <span class="math notranslate nohighlight">\(x^2\)</span>)</p>
-<p>c) Cubic (with terms up to <span class="math notranslate nohighlight">\(x^3\)</span>)</p>
+<p>a) Linear (with terms up to $x$)</p>
+<p>b) Quadratic (with terms up to $x^2$)</p>
+<p>c) Cubic (with terms up to $x^3$)</p>
 <p>d) Higher order</p>
 <p>Remember that:</p>
 <ul class="simple">
@@ -1208,7 +1190,7 @@ Layer: 2.bias | Size: torch.Size([1])
 </ul>
 </section>
 <section id="can-the-network-learn-y-x-2">
-<h2>Can the network learn <span class="math notranslate nohighlight">\(y = x^2\)</span> ?<a class="headerlink" href="#can-the-network-learn-y-x-2" title="Permalink to this headline">#</a></h2>
+<h2>Can the network learn $y = x^2$ ?<a class="headerlink" href="#can-the-network-learn-y-x-2" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
@@ -1248,21 +1230,20 @@ Layer: 2.bias | Size: torch.Size([1])
 <img alt="../_images/01_linear_regression_49_0.png" src="../_images/01_linear_regression_49_0.png" />
 </div>
 </div>
-<p>No! The new neural network is still a linear regression model that could be reduced to <span class="math notranslate nohighlight">\(\hat{y} = wx + b\)</span>.</p>
+<p>No! The new neural network is still a linear regression model that could be reduced to $\hat{y} = wx + b$.</p>
 </section>
 <section id="why">
 <h2>Why?<a class="headerlink" href="#why" title="Permalink to this headline">#</a></h2>
 <p>The neural network can be broken down in to two main mini-structures (that can appear anywhere in the network, not necessarily in the input and output layers as shown below):</p>
 <p><img alt="" src="../_images/01_mini_networks.png" /></p>
 <p>Left: The linear regression model we fit in the first example earlier.</p>
-<p>Right: Wasn’t intuitive to me that this is still 1st-order linear regression (I would have guessed the extra layer creates an <span class="math notranslate nohighlight">\(x^2\)</span> term). So I had to write it out:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-h = w_x x + b_h \\
-\hat{y} = w_h h + b_y \\
-\hat{y} = w_h(w_x x + b_h) + b_y \\
+<p>Right: Wasn’t intuitive to me that this is still 1st-order linear regression (I would have guessed the extra layer creates an $x^2$ term). So I had to write it out:</p>
+<p>$$
+h = w_x x + b_h \
+\hat{y} = w_h h + b_y \
+\hat{y} = w_h(w_x x + b_h) + b_y \
 \hat{y} = (w_h w_x) x + (w_h b_h + b_y)
-\end{split}\]</div>
+$$</p>
 <p>The weights get multiplied, but not the input features.</p>
 </section>
 <section id="what-s-missing">

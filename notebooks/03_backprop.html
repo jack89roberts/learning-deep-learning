@@ -50,8 +50,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -370,136 +368,129 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#forward-pass-recap">
-   Forward Pass: Recap
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   03: Back Propagation
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#gradient-descent">
-   Gradient Descent
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#chain-rule-for-derivatives">
-   Chain Rule (for derivatives)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
-     Case 1:
-     <span class="math notranslate nohighlight">
-      \(f\)
-     </span>
-     is a function of
-     <span class="math notranslate nohighlight">
-      \(g\)
-     </span>
-     , and
-     <span class="math notranslate nohighlight">
-      \(g\)
-     </span>
-     is a function of
-     <span class="math notranslate nohighlight">
-      \(x\)
-     </span>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-pass-recap">
+     Forward Pass: Recap
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-descent">
+     Gradient Descent
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#chain-rule-for-derivatives">
+     Chain Rule (for derivatives)
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#example">
-       Example
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
+       Case 1: $f$ is a function of $g$, and $g$ is a function of $x$
       </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#example">
+         Example
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
+       Case 2: $f$ is a function of $g$ and $h$, which are both functions of $x$
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id1">
+         Example
+        </a>
+       </li>
+      </ul>
      </li>
     </ul>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
-     Case 2:
-     <span class="math notranslate nohighlight">
-      \(f\)
-     </span>
-     is a function of
-     <span class="math notranslate nohighlight">
-      \(g\)
-     </span>
-     and
-     <span class="math notranslate nohighlight">
-      \(h\)
-     </span>
-     , which are both functions of
-     <span class="math notranslate nohighlight">
-      \(x\)
-     </span>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Back Propagation
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id1">
-       Example
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-1-computing-the-gradient-for-b-1-2">
+       Example 1: Computing the gradient for $b_1^{[2]}$
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-2-computing-the-gradient-for-w-2-1">
+       Example 2: Computing the gradient for $w_2^{[1]}$
       </a>
      </li>
     </ul>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   Back Propagation
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frac-color-red-partial-mathcal-l-color-magenta-partial-w-2-1-frac-color-gray-partial-z-2-1-color-magenta-partial-w-2-1-frac-color-red-partial-mathcal-l-color-gray-partial-z-2-1">
+   $$
+\frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
+\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}}
+\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-1-computing-the-gradient-for-b-1-2">
-     Example 1: Computing the gradient for
-     <span class="math notranslate nohighlight">
-      \(b_1^{[2]}\)
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-2-computing-the-gradient-for-w-2-1">
-     Example 2: Computing the gradient for
-     <span class="math notranslate nohighlight">
-      \(w_2^{[1]}\)
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#multiple-paths">
      Multiple Paths
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#back-propagation-and-efficiency">
      Back Propagation and Efficiency
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#computation-graphs-and-auto-differentiation">
-   Computation Graphs and Auto-Differentiation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     Example
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computation-graphs-and-auto-differentiation">
+     Computation Graphs and Auto-Differentiation
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#forward-pass">
-       Forward pass
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Example
       </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#forward-pass">
+         Forward pass
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#backward-pass">
+         Backward pass
+        </a>
+       </li>
+      </ul>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#backward-pass">
-       Backward pass
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pytorch">
+       Pytorch
       </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id4">
+         Forward Pass
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id5">
+         Backward Pass
+        </a>
+       </li>
+      </ul>
      </li>
     </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pytorch">
-     Pytorch
-    </a>
    </li>
   </ul>
  </li>
@@ -522,136 +513,129 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#forward-pass-recap">
-   Forward Pass: Recap
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   03: Back Propagation
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#gradient-descent">
-   Gradient Descent
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#chain-rule-for-derivatives">
-   Chain Rule (for derivatives)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
-     Case 1:
-     <span class="math notranslate nohighlight">
-      \(f\)
-     </span>
-     is a function of
-     <span class="math notranslate nohighlight">
-      \(g\)
-     </span>
-     , and
-     <span class="math notranslate nohighlight">
-      \(g\)
-     </span>
-     is a function of
-     <span class="math notranslate nohighlight">
-      \(x\)
-     </span>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-pass-recap">
+     Forward Pass: Recap
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-descent">
+     Gradient Descent
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#chain-rule-for-derivatives">
+     Chain Rule (for derivatives)
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#example">
-       Example
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
+       Case 1: $f$ is a function of $g$, and $g$ is a function of $x$
       </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#example">
+         Example
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
+       Case 2: $f$ is a function of $g$ and $h$, which are both functions of $x$
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id1">
+         Example
+        </a>
+       </li>
+      </ul>
      </li>
     </ul>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
-     Case 2:
-     <span class="math notranslate nohighlight">
-      \(f\)
-     </span>
-     is a function of
-     <span class="math notranslate nohighlight">
-      \(g\)
-     </span>
-     and
-     <span class="math notranslate nohighlight">
-      \(h\)
-     </span>
-     , which are both functions of
-     <span class="math notranslate nohighlight">
-      \(x\)
-     </span>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Back Propagation
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id1">
-       Example
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-1-computing-the-gradient-for-b-1-2">
+       Example 1: Computing the gradient for $b_1^{[2]}$
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-2-computing-the-gradient-for-w-2-1">
+       Example 2: Computing the gradient for $w_2^{[1]}$
       </a>
      </li>
     </ul>
    </li>
   </ul>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   Back Propagation
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frac-color-red-partial-mathcal-l-color-magenta-partial-w-2-1-frac-color-gray-partial-z-2-1-color-magenta-partial-w-2-1-frac-color-red-partial-mathcal-l-color-gray-partial-z-2-1">
+   $$
+\frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
+\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}}
+\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-1-computing-the-gradient-for-b-1-2">
-     Example 1: Computing the gradient for
-     <span class="math notranslate nohighlight">
-      \(b_1^{[2]}\)
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-2-computing-the-gradient-for-w-2-1">
-     Example 2: Computing the gradient for
-     <span class="math notranslate nohighlight">
-      \(w_2^{[1]}\)
-     </span>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#multiple-paths">
      Multiple Paths
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#back-propagation-and-efficiency">
      Back Propagation and Efficiency
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#computation-graphs-and-auto-differentiation">
-   Computation Graphs and Auto-Differentiation
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     Example
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computation-graphs-and-auto-differentiation">
+     Computation Graphs and Auto-Differentiation
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#forward-pass">
-       Forward pass
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Example
       </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#forward-pass">
+         Forward pass
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#backward-pass">
+         Backward pass
+        </a>
+       </li>
+      </ul>
      </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#backward-pass">
-       Backward pass
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pytorch">
+       Pytorch
       </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id4">
+         Forward Pass
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id5">
+         Backward Pass
+        </a>
+       </li>
+      </ul>
      </li>
     </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pytorch">
-     Pytorch
-    </a>
    </li>
   </ul>
  </li>
@@ -679,50 +663,45 @@ title="Print to PDF"
 <p><img alt="" src="../_images/03_forward_backward.png" /></p>
 <p>The training loop for a neural network involves:</p>
 <ol class="simple">
-<li><p>A <strong>forward pass</strong>: Feed the input features (<span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>) through all the layers of the network to compute our predictions, <span class="math notranslate nohighlight">\(\hat{y}\)</span>.</p></li>
-<li><p>Compute the <strong>loss</strong> (or cost), <span class="math notranslate nohighlight">\(\mathcal{L}(y, \hat{y})\)</span>, a function of the predicted values <span class="math notranslate nohighlight">\(\hat{y}\)</span> and the actual values <span class="math notranslate nohighlight">\(y\)</span>.</p></li>
-<li><p>A <strong>backward pass</strong> (or <em>back propagation</em>): Feed the loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> back through the network to compute the rate of change of the loss (i.e. the derivative) with respect to the network parameters (the weights and biases for each node, <span class="math notranslate nohighlight">\(w\)</span>, <span class="math notranslate nohighlight">\(b\)</span>)</p></li>
-<li><p>Given their derivatives, update the network parameters (<span class="math notranslate nohighlight">\(w\)</span>, <span class="math notranslate nohighlight">\(b\)</span>) using an algorithm like gradient descent.</p></li>
+<li><p>A <strong>forward pass</strong>: Feed the input features ($x_1$, $x_2$) through all the layers of the network to compute our predictions, $\hat{y}$.</p></li>
+<li><p>Compute the <strong>loss</strong> (or cost), $\mathcal{L}(y, \hat{y})$, a function of the predicted values $\hat{y}$ and the actual values $y$.</p></li>
+<li><p>A <strong>backward pass</strong> (or <em>back propagation</em>): Feed the loss $\mathcal{L}$ back through the network to compute the rate of change of the loss (i.e. the derivative) with respect to the network parameters (the weights and biases for each node, $w$, $b$)</p></li>
+<li><p>Given their derivatives, update the network parameters ($w$, $b$) using an algorithm like gradient descent.</p></li>
 </ol>
 <section id="forward-pass-recap">
 <h2>Forward Pass: Recap<a class="headerlink" href="#forward-pass-recap" title="Permalink to this headline">#</a></h2>
 <p>Each node computes a linear combination of the output of all the nodes in the previous layer, for example:</p>
-<div class="math notranslate nohighlight">
-\[
+<p>$$
 z_1^{[1]} = w_{1 \rightarrow 1}^{[1]} x_1 + w_{2 \rightarrow 1}^{[1]} x_2 + b_1^{[1]}
-\]</div>
-<p>This is passed to an activation function, <span class="math notranslate nohighlight">\(g\)</span>, (assumed to be the same function in all layers here), to create the final output, or “activation”, of each node:</p>
-<div class="math notranslate nohighlight">
-\[
+$$</p>
+<p>This is passed to an activation function, $g$, (assumed to be the same function in all layers here), to create the final output, or “activation”, of each node:</p>
+<p>$$
 a_3^{[2]} = g(z_3^{[2]})
-\]</div>
-<p>For example, <span class="math notranslate nohighlight">\(\hat{y}\)</span>, can be expressed in terms of the activation of the final layer as follows:</p>
-<div class="math notranslate nohighlight">
-\[
+$$</p>
+<p>For example, $\hat{y}$, can be expressed in terms of the activation of the final layer as follows:</p>
+<p>$$
 \hat{y} = a_1^{[3]} = g\left(w_{1 \rightarrow 1}^{[3]} a_{1}^{[2]} + w_{2 \rightarrow 1}^{[3]} a_{2}^{[2]} + w_{3 \rightarrow 1}^{[3]} a_{3}^{[2]} + b_1^{[3]}\right)
-\]</div>
+$$</p>
 <p>The terms not introduced above mean:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(w_{j \rightarrow k}^{[l]}\)</span>: The weight between node <span class="math notranslate nohighlight">\(j\)</span> in layer <span class="math notranslate nohighlight">\(l-1\)</span> and node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(a_k^{[l]}\)</span>: The activation of node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(b_k^{[l]}\)</span>: The bias term for node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span></p></li>
+<li><p>$w_{j \rightarrow k}^{[l]}$: The weight between node $j$ in layer $l-1$ and node $k$ in layer $l$.</p></li>
+<li><p>$a_k^{[l]}$: The activation of node $k$ in layer $l$</p></li>
+<li><p>$b_k^{[l]}$: The bias term for node $k$ in layer $l$</p></li>
 </ul>
 </section>
 <section id="gradient-descent">
 <h2>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">#</a></h2>
 <p>Let’s consider a simpler network, with one input, two hidden nodes, and one output:</p>
 <p><img alt="" src="../_images/03_backprop_example_params.png" /></p>
-<p>Here I’ve also included a node after the network’s output to represent the calculation of the loss, <span class="math notranslate nohighlight">\(\mathcal{L}(y, \hat{y})\)</span>, where <span class="math notranslate nohighlight">\(\hat{y} = g(z_1^{[2]})\)</span> is the predicted value from the network and <span class="math notranslate nohighlight">\(y\)</span> the true value.</p>
-<p>This network has seven parameters: <span class="math notranslate nohighlight">\(w_1^{[1]}\)</span>, <span class="math notranslate nohighlight">\(w_2^{[1]}\)</span>, <span class="math notranslate nohighlight">\(b_1^{[1]}\)</span>, <span class="math notranslate nohighlight">\(b_2^{[1]}\)</span>, <span class="math notranslate nohighlight">\(w_1^{[2]}\)</span>, <span class="math notranslate nohighlight">\(w_2^{[2]}\)</span>, <span class="math notranslate nohighlight">\(b_1^{[2]}\)</span></p>
+<p>Here I’ve also included a node after the network’s output to represent the calculation of the loss, $\mathcal{L}(y, \hat{y})$, where $\hat{y} = g(z_1^{[2]})$ is the predicted value from the network and $y$ the true value.</p>
+<p>This network has seven parameters: $w_1^{[1]}$, $w_2^{[1]}$, $b_1^{[1]}$, $b_2^{[1]}$, $w_1^{[2]}$, $w_2^{[2]}$, $b_1^{[2]}$</p>
 <p>In gradient descent we use the partial derivative of the loss function with respect to the parameters to update the network, making small changes to the parameters like:</p>
-<div class="math notranslate nohighlight">
-\[
+<p>$$
 w_1^{[1]}  = w_1^{[1]} - \alpha\frac{\partial \mathcal{L}}{\partial w_1^{[1]}}
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is the learning rate.</p>
+$$</p>
+<p>where $\alpha$ is the learning rate.</p>
 <p>So to perform gradient descent we need the derivatives for each parameter, i.e. we need to compute:</p>
-<div class="math notranslate nohighlight">
-\[
+<p>$$
 \frac{\partial \mathcal{L}}{\partial w_1^{[1]}},
 \frac{\partial \mathcal{L}}{\partial w_2^{[1]}},
 \frac{\partial \mathcal{L}}{\partial b_1^{[1]}},
@@ -730,78 +709,69 @@ w_1^{[1]}  = w_1^{[1]} - \alpha\frac{\partial \mathcal{L}}{\partial w_1^{[1]}}
 \frac{\partial \mathcal{L}}{\partial w_1^{[2]}},
 \frac{\partial \mathcal{L}}{\partial w_2^{[2]}},
 \frac{\partial \mathcal{L}}{\partial b_1^{[2]}}
-\]</div>
+$$</p>
 <p>How can we compute all those terms?</p>
 </section>
 <section id="chain-rule-for-derivatives">
 <h2>Chain Rule (for derivatives)<a class="headerlink" href="#chain-rule-for-derivatives" title="Permalink to this headline">#</a></h2>
 <section id="case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
-<h3>Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span><a class="headerlink" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x" title="Permalink to this headline">#</a></h3>
-<div class="math notranslate nohighlight">
-\[
+<h3>Case 1: $f$ is a function of $g$, and $g$ is a function of $x$<a class="headerlink" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x" title="Permalink to this headline">#</a></h3>
+<p>$$
 f = f(g(x))
-\]</div>
-<p>The chain rule states that the derivative of <span class="math notranslate nohighlight">\(w\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span> is given by:</p>
-<div class="math notranslate nohighlight">
-\[
+$$</p>
+<p>The chain rule states that the derivative of $w$ with respect to $x$ is given by:</p>
+<p>$$
 \frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\mathrm{d} f}{\mathrm{d} g} \frac{\mathrm{d} g}{\mathrm{d} x}
-\]</div>
+$$</p>
 <section id="example">
 <h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h4>
-<p>Find the derivative of <span class="math notranslate nohighlight">\(f(x) = (e^x + x)^2\)</span>:</p>
+<p>Find the derivative of $f(x) = (e^x + x)^2$:</p>
 <p>Let:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-g(x) = e^x + x \\
-f(g) = g^2 \\
-\end{split}\]</div>
+<p>$$
+g(x) = e^x + x \
+f(g) = g^2 \
+$$</p>
 <p>Then by chain rule:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\frac{\mathrm{d} f}{\mathrm{d} g} = 2g \\
-\frac{\mathrm{d} g}{\mathrm{d} x} = e^x + 1 \\
-\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\mathrm{d} f}{\mathrm{d} g} \frac{\mathrm{d} g}{\mathrm{d} x} = 2g(e^x + 1) \\
-\frac{\mathrm{d} f}{\mathrm{d}x} = 2(e^x + x)(e^x + 1) 
-\end{split}\]</div>
+<p>$$
+\frac{\mathrm{d} f}{\mathrm{d} g} = 2g \
+\frac{\mathrm{d} g}{\mathrm{d} x} = e^x + 1 \
+\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\mathrm{d} f}{\mathrm{d} g} \frac{\mathrm{d} g}{\mathrm{d} x} = 2g(e^x + 1) \
+\frac{\mathrm{d} f}{\mathrm{d}x} = 2(e^x + x)(e^x + 1)
+$$</p>
 </section>
 </section>
 <section id="case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
-<h3>Case 2: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span>, which are both functions of <span class="math notranslate nohighlight">\(x\)</span><a class="headerlink" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x" title="Permalink to this headline">#</a></h3>
-<div class="math notranslate nohighlight">
-\[
+<h3>Case 2: $f$ is a function of $g$ and $h$, which are both functions of $x$<a class="headerlink" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x" title="Permalink to this headline">#</a></h3>
+<p>$$
 f = f(g(x), h(x))
-\]</div>
-<p>To find the derivative of <span class="math notranslate nohighlight">\(f\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span>, the chain rule states that you must sum over its (partial) derivatives for each input (<span class="math notranslate nohighlight">\(g\)</span>, <span class="math notranslate nohighlight">\(h\)</span>):</p>
-<div class="math notranslate nohighlight">
-\[
+$$</p>
+<p>To find the derivative of $f$ with respect to $x$, the chain rule states that you must sum over its (partial) derivatives for each input ($g$, $h$):</p>
+<p>$$
 \frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\partial f}{\partial g} \frac{\mathrm{d} g}{\mathrm{d} x} + \frac{\partial f}{\partial h} \frac{\mathrm{d} h}{\mathrm{d} x}
-\]</div>
+$$</p>
 <p>This is the <em>multi-variable</em> chain rule.</p>
 <section id="id1">
 <h4>Example<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <p>Find the derivative of:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-f(x) = x^2(3x+1) - \sin(x^2) \\
-\end{split}\]</div>
+<p>$$
+f(x) = x^2(3x+1) - \sin(x^2) \
+$$</p>
 <p>which can be written as:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-f(g, h) = h g - \sin(h) \\
-g(x) = 3x + 1 \\
+<p>$$
+f(g, h) = h g - \sin(h) \
+g(x) = 3x + 1 \
 h(x) = x^2
-\end{split}\]</div>
+$$</p>
 <p>Then by chain rule:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\frac{\partial f}{\partial g} = h\\
-\frac{\mathrm{d} g}{\mathrm{d} x} = 3 \\
-\frac{\partial f}{\partial h} = g - \cos(h) \\
-\frac{\mathrm{d} h}{\mathrm{d} x} = 2x \\
+<p>$$
+\frac{\partial f}{\partial g} = h\
+\frac{\mathrm{d} g}{\mathrm{d} x} = 3 \
+\frac{\partial f}{\partial h} = g - \cos(h) \
+\frac{\mathrm{d} h}{\mathrm{d} x} = 2x \
 \frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\partial f}{\partial g} \frac{\mathrm{d} g}{\mathrm{d} x} + \frac{\partial f}{\partial h} \frac{\mathrm{d} h}{\mathrm{d} x} =
-3h + 2x\left(g-\cos(h)\right) \\
+3h + 2x\left(g-\cos(h)\right) \
 \frac{\mathrm{d} f}{\mathrm{d}x} = 3x^2 + 2x\left(3x + 1 -\cos(x^2)\right)
-\end{split}\]</div>
+$$</p>
 </section>
 </section>
 </section>
@@ -811,75 +781,69 @@ h(x) = x^2
 <p><img alt="" src="../_images/03_backprop_example_diffs.png" /></p>
 <p>To compute the derivative of the loss with respect to any term in the network we can use the chain rule. Starting with the loss on the right, we move “backwards” through the network, multiplying the partial derivatives until we get to the term we want.</p>
 <section id="example-1-computing-the-gradient-for-b-1-2">
-<h3>Example 1: Computing the gradient for <span class="math notranslate nohighlight">\(b_1^{[2]}\)</span><a class="headerlink" href="#example-1-computing-the-gradient-for-b-1-2" title="Permalink to this headline">#</a></h3>
-<div class="math notranslate nohighlight">
-\[
+<h3>Example 1: Computing the gradient for $b_1^{[2]}$<a class="headerlink" href="#example-1-computing-the-gradient-for-b-1-2" title="Permalink to this headline">#</a></h3>
+<p>$$
 \frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} = \frac{\partial z_1^{[2]}}{\color{blue}{\partial b_1^{[2]}}} \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}} \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}}
-\]</div>
-<p>Log loss for one data point (remembering that <span class="math notranslate nohighlight">\(\hat{y} = a_1^{[2]}\)</span>):</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\mathcal{L} = - y \log(a_1^{[2]}) - (1 - y)\log(1 - a_1^{[2]}) \\
+$$</p>
+<p>Log loss for one data point (remembering that $\hat{y} = a_1^{[2]}$):</p>
+<p>$$
+\mathcal{L} = - y \log(a_1^{[2]}) - (1 - y)\log(1 - a_1^{[2]}) \
 \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} = -\frac{y}{a_1^{[2]}} + \frac{1-y}{1-a_1^{[2]}}
-\end{split}\]</div>
+$$</p>
 <p>If using a sigmoid activation function:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-a_1^{[2]} = \frac{1}{1+\exp(-z_1^{[2]})} \\
+<p>$$
+a_1^{[2]} = \frac{1}{1+\exp(-z_1^{[2]})} \
 \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}} = a_1^{[2]} (1 - a_1^{[2]})
-\end{split}\]</div>
-<p><span class="math notranslate nohighlight">\(z_1^{[2]}\)</span> is a linear combination of its inputs:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-z_1^{[2]} = w_1^{[2]}a_1^{[1]} + w_2^{[2]}a_2^{[1]} + b_1^{[2]} \\
+$$</p>
+<p>$z_1^{[2]}$ is a linear combination of its inputs:</p>
+<p>$$
+z_1^{[2]} = w_1^{[2]}a_1^{[1]} + w_2^{[2]}a_2^{[1]} + b_1^{[2]} \
 \frac{\partial z_1^{[2]}}{\color{blue}{\partial b_1^{[2]}}} = 1
-\end{split}\]</div>
+$$</p>
 <p>So overall we could write the loss derivative with respect to the bias as:</p>
-<div class="math notranslate nohighlight">
-\[
+<p>$$
 \frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} =
 1 . \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
 \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} =
 \frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}}
-\]</div>
+$$</p>
 </section>
 <section id="example-2-computing-the-gradient-for-w-2-1">
-<h3>Example 2: Computing the gradient for <span class="math notranslate nohighlight">\(w_2^{[1]}\)</span><a class="headerlink" href="#example-2-computing-the-gradient-for-w-2-1" title="Permalink to this headline">#</a></h3>
-<div class="math notranslate nohighlight">
-\[
+<h3>Example 2: Computing the gradient for $w_2^{[1]}$<a class="headerlink" href="#example-2-computing-the-gradient-for-w-2-1" title="Permalink to this headline">#</a></h3>
+<p>$$
 \frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
 \frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}}
 \frac{\color{orange}{\partial a_2^{[1]}}}{\color{gray}{\partial z_2^{[1]}}}
 \frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}}
 \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
 \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}}
-\]</div>
+$$</p>
 <p>We’ve seen the form of all the derivatives above in the first example, except for the first term:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-z_2^{[1]} = w_2^{[1]}x + b_2^{[1]} \\
+<p>$$
+z_2^{[1]} = w_2^{[1]}x + b_2^{[1]} \
 \frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}} = x
-\end{split}\]</div>
-<p>For the weights after the first layer, the inputs <span class="math notranslate nohighlight">\(x\)</span> are replaced by node activations <span class="math notranslate nohighlight">\(a\)</span>. We can relabel <span class="math notranslate nohighlight">\(x = a_1^{[0]}\)</span> to make the general trend clearer.</p>
-<p>The last four terms on the right side of the expression for the derivative can be simplified to <span class="math notranslate nohighlight">\(\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}\)</span>. Then we have:</p>
-<div class="math notranslate nohighlight">
-\[
+$$</p>
+<p>For the weights after the first layer, the inputs $x$ are replaced by node activations $a$. We can relabel $x = a_1^{[0]}$ to make the general trend clearer.</p>
+<p>The last four terms on the right side of the expression for the derivative can be simplified to $\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}$. Then we have:</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="frac-color-red-partial-mathcal-l-color-magenta-partial-w-2-1-frac-color-gray-partial-z-2-1-color-magenta-partial-w-2-1-frac-color-red-partial-mathcal-l-color-gray-partial-z-2-1">
+<h1>$$
 \frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
 \frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}}
-\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
-=
-a_1^{[0]}\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
-\]</div>
-<p>We can also compute that <span class="math notranslate nohighlight">\(\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial b_2^{[1]}}} = 1\)</span> (see example 1), so it follows that <span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial w_2^{[1]}} =\frac{\partial \mathcal{L}}{\partial z_2^{[1]}}\)</span>.</p>
-</section>
+\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}<a class="headerlink" href="#frac-color-red-partial-mathcal-l-color-magenta-partial-w-2-1-frac-color-gray-partial-z-2-1-color-magenta-partial-w-2-1-frac-color-red-partial-mathcal-l-color-gray-partial-z-2-1" title="Permalink to this headline">#</a></h1>
+<p>a_1^{[0]}\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
+$$</p>
+<p>We can also compute that $\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial b_2^{[1]}}} = 1$ (see example 1), so it follows that $\frac{\partial \mathcal{L}}{\partial w_2^{[1]}} =\frac{\partial \mathcal{L}}{\partial z_2^{[1]}}$.</p>
 <section id="multiple-paths">
-<h3>Multiple Paths<a class="headerlink" href="#multiple-paths" title="Permalink to this headline">#</a></h3>
+<h2>Multiple Paths<a class="headerlink" href="#multiple-paths" title="Permalink to this headline">#</a></h2>
 <p>There is one case not covered by the simplified network and examples above - where you have multiple paths from the output (loss) back to the term of interest. Such as this:</p>
 <p><img alt="" src="../_images/03_backprop_multipath.png" /></p>
 <p>In this case you must sum all the possible paths (this also follows from the multi-variable chain rule).</p>
 </section>
 <section id="back-propagation-and-efficiency">
-<h3>Back Propagation and Efficiency<a class="headerlink" href="#back-propagation-and-efficiency" title="Permalink to this headline">#</a></h3>
+<h2>Back Propagation and Efficiency<a class="headerlink" href="#back-propagation-and-efficiency" title="Permalink to this headline">#</a></h2>
 <p>It’s important to note that:</p>
 <ul class="simple">
 <li><p>The derivatives in the two examples share many terms in common (e.g. the derivative of the loss with respect to the final output)</p></li>
@@ -893,16 +857,15 @@ a_1^{[0]}\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]
 <li><p>Automatic differentiation</p></li>
 </ul>
 </section>
-</section>
 <section id="computation-graphs-and-auto-differentiation">
 <h2>Computation Graphs and Auto-Differentiation<a class="headerlink" href="#computation-graphs-and-auto-differentiation" title="Permalink to this headline">#</a></h2>
 <p>In the background, large frameworks like pytorch use computation graphs and “auto-differentiation” to be able to compute gradients efficiently.</p>
 <section id="id3">
 <h3>Example<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <p>Here’s an example of a simple logistic regression (one layer) network in the form of a <em>computation graph</em>:</p>
-<img src="../img/03_computation_graph.png" alt="Computation graph" width="500">
+<a class="reference internal image-reference" href="../_images/03_computation_graph.png"><img alt="Computation graph" src="../_images/03_computation_graph.png" style="width: 500px;" /></a>
 <ul class="simple">
-<li><p>Each node represents either an input variable/parameter (white/clear background), or an operation that applies to one or more of the previously defined values. In this graph the operations are summation (<span class="math notranslate nohighlight">\(+\)</span>), multiplication (<span class="math notranslate nohighlight">\(*\)</span>), sigmoid (<span class="math notranslate nohighlight">\(g\)</span>), and log loss (<span class="math notranslate nohighlight">\(\mathcal{L}\)</span>).</p></li>
+<li><p>Each node represents either an input variable/parameter (white/clear background), or an operation that applies to one or more of the previously defined values. In this graph the operations are summation ($+$), multiplication ($*$), sigmoid ($g$), and log loss ($\mathcal{L}$).</p></li>
 <li><p>The values of all the nodes on a row must be known before the next row can be calculated.</p></li>
 </ul>
 <p>In the computation graph we’ll store:</p>
@@ -1029,7 +992,8 @@ dL_db = -0.3775
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code> for the parameters we’re interested in the gradients of (w1, w2, and b) - we’ll come back to this later</p></li>
 <li><p>Use torch’s implementations of sigmoid (<code class="docutils literal notranslate"><span class="pre">torch.sigmoid</span></code>) and log loss (<code class="docutils literal notranslate"><span class="pre">torch.nn.functional.binary_cross_entropy</span></code>).</p></li>
 </ul>
-<p>Here’s the forward pass again:</p>
+<section id="id4">
+<h4>Forward Pass<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Forward pass</span>
@@ -1081,6 +1045,9 @@ L = 0.4741
 </div>
 </div>
 <p>Note the values are the same as our own version above.</p>
+</section>
+<section id="id5">
+<h4>Backward Pass<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
 <p>Now for the magic - in the background pytorch has built a computation graph from the variables we’ve defined and can compute the gradients (do a backward pass) for us automatically (for the parameters where we’ve specified <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code>). You’ll notice that the <code class="docutils literal notranslate"><span class="pre">yhat</span></code> tensor above contains both its value and a function for computing gradients with respect to it (<code class="docutils literal notranslate"><span class="pre">&lt;SigmoidBackward0&gt;</span></code>).</p>
 <p>To do the backward pass and compute the gradients we just need to do:</p>
 <div class="cell docutils container">
@@ -1103,6 +1070,7 @@ dL_db = tensor([-0.3775])
 </div>
 <p>Again, these match the gradients in our own version, but with a lot fewer lines of code (for us) 🎉</p>
 <p>You might remember seeing <code class="docutils literal notranslate"><span class="pre">.backward()</span></code> before in the linear/logistic regression notebooks - hopefully this gives you the intuition for what it’s doing!</p>
+</section>
 </section>
 </section>
 </section>
