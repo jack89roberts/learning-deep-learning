@@ -381,19 +381,68 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#background-chain-rule">
-   Background: Chain Rule
+  <a class="reference internal nav-link" href="#chain-rule-for-derivatives">
+   Chain Rule (for derivatives)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#multi-variate-chain-rule">
-     Multi-variate chain rule
+    <a class="reference internal nav-link" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
+     Case 1:
+     <span class="math notranslate nohighlight">
+      \(f\)
+     </span>
+     is a function of
+     <span class="math notranslate nohighlight">
+      \(g\)
+     </span>
+     , and
+     <span class="math notranslate nohighlight">
+      \(g\)
+     </span>
+     is a function of
+     <span class="math notranslate nohighlight">
+      \(x\)
+     </span>
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example">
+       Example
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
+     Case 2:
+     <span class="math notranslate nohighlight">
+      \(f\)
+     </span>
+     is a function of
+     <span class="math notranslate nohighlight">
+      \(g\)
+     </span>
+     and
+     <span class="math notranslate nohighlight">
+      \(h\)
+     </span>
+     , which are both functions of
+     <span class="math notranslate nohighlight">
+      \(x\)
+     </span>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Example
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
+  <a class="reference internal nav-link" href="#id2">
    Back Propagation
   </a>
   <ul class="nav section-nav flex-column">
@@ -460,19 +509,68 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#background-chain-rule">
-   Background: Chain Rule
+  <a class="reference internal nav-link" href="#chain-rule-for-derivatives">
+   Chain Rule (for derivatives)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#multi-variate-chain-rule">
-     Multi-variate chain rule
+    <a class="reference internal nav-link" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
+     Case 1:
+     <span class="math notranslate nohighlight">
+      \(f\)
+     </span>
+     is a function of
+     <span class="math notranslate nohighlight">
+      \(g\)
+     </span>
+     , and
+     <span class="math notranslate nohighlight">
+      \(g\)
+     </span>
+     is a function of
+     <span class="math notranslate nohighlight">
+      \(x\)
+     </span>
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example">
+       Example
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
+     Case 2:
+     <span class="math notranslate nohighlight">
+      \(f\)
+     </span>
+     is a function of
+     <span class="math notranslate nohighlight">
+      \(g\)
+     </span>
+     and
+     <span class="math notranslate nohighlight">
+      \(h\)
+     </span>
+     , which are both functions of
+     <span class="math notranslate nohighlight">
+      \(x\)
+     </span>
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Example
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
+  <a class="reference internal nav-link" href="#id2">
    Back Propagation
   </a>
   <ul class="nav section-nav flex-column">
@@ -578,37 +676,80 @@ w_1^{[1]}  = w_1^{[1]} - \alpha\frac{\partial \mathcal{L}}{\partial w_1^{[1]}}
 \]</div>
 <p>How can we compute all those terms?</p>
 </section>
-<section id="background-chain-rule">
-<h2>Background: Chain Rule<a class="headerlink" href="#background-chain-rule" title="Permalink to this headline">#</a></h2>
+<section id="chain-rule-for-derivatives">
+<h2>Chain Rule (for derivatives)<a class="headerlink" href="#chain-rule-for-derivatives" title="Permalink to this headline">#</a></h2>
+<section id="case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
+<h3>Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span><a class="headerlink" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x" title="Permalink to this headline">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-h(x) = f(g(x))
+f = f(g(x))
 \]</div>
+<p>The chain rule states that the derivative of <span class="math notranslate nohighlight">\(w\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\mathrm{d} f}{\mathrm{d} g} \frac{\mathrm{d} g}{\mathrm{d} x}
+\]</div>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h4>
+<p>Find the derivative of <span class="math notranslate nohighlight">\(f(x) = (e^x + x)^2\)</span>:</p>
+<p>Let:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\frac{\mathrm{d} h(x)}{\mathrm{d}x} = \frac{\mathrm{d} f(u)}{\mathrm{d}u} \frac{\mathrm{d} g(x)}{\mathrm{d}x} \\
-h'(x) = f'(u)g'(x)
+g(x) = e^x + x \\
+f(g) = g^2 \\
 \end{split}\]</div>
-<p>e.g.</p>
+<p>Then by chain rule:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-f(u) = u^2 \\
-g(x) = e^x + x  \\
-h(x) = f(g(x)) = (e^x + x)^2 \\
+\frac{\mathrm{d} f}{\mathrm{d} g} = 2g \\
+\frac{\mathrm{d} g}{\mathrm{d} x} = e^x + 1 \\
+\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\mathrm{d} f}{\mathrm{d} g} \frac{\mathrm{d} g}{\mathrm{d} x} = 2g(e^x + 1) \\
+\frac{\mathrm{d} f}{\mathrm{d}x} = 2(e^x + x)(e^x + 1) 
 \end{split}\]</div>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-g'(x) = e^x + 1 \\
-f'(u) = 2u \\
-u = g(x) = e^x + x \\
-h'(x) = 2(e^x + x)(e^x + 1) \\
-\end{split}\]</div>
-<section id="multi-variate-chain-rule">
-<h3>Multi-variate chain rule<a class="headerlink" href="#multi-variate-chain-rule" title="Permalink to this headline">#</a></h3>
 </section>
 </section>
+<section id="case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
+<h3>Case 2: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span>, which are both functions of <span class="math notranslate nohighlight">\(x\)</span><a class="headerlink" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+f = f(g(x), h(x))
+\]</div>
+<p>To find the derivative of <span class="math notranslate nohighlight">\(f\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span>, the chain rule states that you must sum over its (partial) derivatives for each input (<span class="math notranslate nohighlight">\(g\)</span>, <span class="math notranslate nohighlight">\(h\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\partial f}{\partial g} \frac{\mathrm{d} g}{\mathrm{d} x} + \frac{\partial f}{\partial h} \frac{\mathrm{d} h}{\mathrm{d} x}
+\]</div>
+<p>This is the <em>multi-variable</em> chain rule.</p>
 <section id="id1">
-<h2>Back Propagation<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<h4>Example<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
+<p>Find the derivative of:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x) = x^2(3x+1) - \sin(x^2) \\
+\end{split}\]</div>
+<p>which can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(g, h) = h g - \sin(h) \\
+g(x) = 3x + 1 \\
+h(x) = x^2
+\end{split}\]</div>
+<p>Then by chain rule:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial f}{\partial g} = h\\
+\frac{\mathrm{d} g}{\mathrm{d} x} = 3 \\
+\frac{\partial f}{\partial h} = g - \cos(h) \\
+\frac{\mathrm{d} h}{\mathrm{d} x} = 2x \\
+\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\partial f}{\partial g} \frac{\mathrm{d} g}{\mathrm{d} x} + \frac{\partial f}{\partial h} \frac{\mathrm{d} h}{\mathrm{d} x} =
+3h + 2x\left(g-\cos(h)\right) \\
+\frac{\mathrm{d} f}{\mathrm{d}x} = 3x^2 + 2x\left(3x + 1 -\cos(x^2)\right)
+\end{split}\]</div>
+</section>
+</section>
+</section>
+<section id="id2">
+<h2>Back Propagation<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>Here’s the example network again, but with each edge (arrow) labeled by the partial derviative between the two connected nodes:</p>
 <p><img alt="" src="../_images/03_backprop_example_diffs.png" /></p>
 <p>To compute the derivative of the loss with respect to any term in the network we can use the chain rule. Starting with the loss on the right, we move “backwards” through the network, multiplying the partial derivatives until we get to the term we want.</p>
@@ -616,7 +757,7 @@ h'(x) = 2(e^x + x)(e^x + 1) \\
 <h3>Example 1: Computing the gradient for <span class="math notranslate nohighlight">\(b_1^{[2]}\)</span><a class="headerlink" href="#example-1-computing-the-gradient-for-b-1-2" title="Permalink to this headline">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} = \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}} \frac{\partial z_1^{[2]}}{\color{blue}{\partial b_1^{[2]}}}
+\frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} = \frac{\partial z_1^{[2]}}{\color{blue}{\partial b_1^{[2]}}} \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}} \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}}
 \]</div>
 <p>Log loss for one data point (remembering that <span class="math notranslate nohighlight">\(\hat{y} = a_1^{[2]}\)</span>):</p>
 <div class="math notranslate nohighlight">
@@ -639,7 +780,10 @@ z_1^{[2]} = w_1^{[2]}a_1^{[1]} + w_2^{[2]}a_2^{[1]} + b_1^{[2]} \\
 <p>So overall we could write the loss derivative with respect to the bias as:</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} = \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}. 1 = \frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}}
+\frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} =
+1 . \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
+\frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} =
+\frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}}
 \]</div>
 </section>
 <section id="example-2-computing-the-gradient-for-w-2-1">
@@ -647,35 +791,34 @@ z_1^{[2]} = w_1^{[2]}a_1^{[1]} + w_2^{[2]}a_2^{[1]} + b_1^{[2]} \\
 <div class="math notranslate nohighlight">
 \[
 \frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
-\frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}}
-\frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
-\frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}}
-\frac{\color{orange}{\partial a_2^{[1]}}}{\color{gray}{\partial z_2^{[1]}}}
 \frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}}
+\frac{\color{orange}{\partial a_2^{[1]}}}{\color{gray}{\partial z_2^{[1]}}}
+\frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}}
+\frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
+\frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}}
 \]</div>
-<p>We’ve seen the form of all the derivatives above in the first example, except for the last term:</p>
+<p>We’ve seen the form of all the derivatives above in the first example, except for the first term:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 z_2^{[1]} = w_2^{[1]}x + b_2^{[1]} \\
 \frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}} = x
 \end{split}\]</div>
 <p>For the weights after the first layer, the inputs <span class="math notranslate nohighlight">\(x\)</span> are replaced by node activations <span class="math notranslate nohighlight">\(a\)</span>. We can relabel <span class="math notranslate nohighlight">\(x = a_1^{[0]}\)</span> to make the general trend clearer.</p>
-<p>The first four terms on the right side of the expression for the derivative can be simplified to <span class="math notranslate nohighlight">\(\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}\)</span>. Then we have:</p>
+<p>The last four terms on the right side of the expression for the derivative can be simplified to <span class="math notranslate nohighlight">\(\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}\)</span>. Then we have:</p>
 <div class="math notranslate nohighlight">
 \[
 \frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
-\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
 \frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}}
-=
 \frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
-a_1^{[0]}
+=
+a_1^{[0]}\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
 \]</div>
 </section>
 <section id="multiple-paths">
 <h3>Multiple Paths<a class="headerlink" href="#multiple-paths" title="Permalink to this headline">#</a></h3>
 <p>There is one case not covered by the simplified network and examples above - where you have multiple paths from the output (loss) back to the term of interest. Such as this:</p>
 <p><img alt="" src="../_images/03_backprop_multipath.png" /></p>
-<p>In this case you must sum all the possible paths (this also follows from the multi-variate chain rule).</p>
+<p>In this case you must sum all the possible paths (this also follows from the multi-variable chain rule).</p>
 </section>
 <section id="back-propagation-and-efficiency">
 <h3>Back Propagation and Efficiency<a class="headerlink" href="#back-propagation-and-efficiency" title="Permalink to this headline">#</a></h3>
