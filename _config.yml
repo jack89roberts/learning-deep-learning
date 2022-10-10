@@ -16,3 +16,7 @@ html:
 repository:
   url: https://github.com/jack89roberts/learning-deep-learning
   branch: main
+
+parse:
+  myst_enable_extensions:
+    - html_image
