@@ -615,13 +615,22 @@ $$</p>
 <p>where the second line shows the dimensions of each term.</p>
 <p>To compute the node activations $\mathbf{A^{[l]}}$, we apply the activation function $g$ (element-wise):</p>
 <p>$$
-\mathbf{A^{[l]}} = g(\mathbf{Z^{[l]}})
+\mathbf{A^{[l]}} = g^{[l]}(\mathbf{Z^{[l]}})
 $$</p>
-<p>Different activation functions can be used in different layers, so $g^{[l]}(\mathbf{Z^{[l]})}$ would be a more accurate notation.</p>
+<p>Where $g^{[l]}$ is the activation function for layer $l$ (different layers may use different activation functions).</p>
 </section>
 </section>
 <section id="backward-pass">
 <h2>Backward Pass<a class="headerlink" href="#backward-pass" title="Permalink to this headline">#</a></h2>
+<p>From https://www.coursera.org/learn/neural-networks-deep-learning/supplement/E79Uh/clarification-for-what-does-this-have-to-do-with-the-brain</p>
+<p>$$
+\frac{\partial \mathcal{L}}{\partial W^{[l]}} = \frac{1}{m} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} A^{[l-1]^T} \
+\frac{\partial \mathcal{L}}{\partial b^{[l]}} = \frac{1}{m} \sum_{\mathrm{cols}} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} \
+$$</p>
+<p>$$
+\frac{\partial \mathcal{L}}{\partial Z^{[L]}} = A^{[L]} - Y \
+\frac{\partial \mathcal{L}}{\partial Z^{[l]}} = W^{[l]^T} \frac{\partial \mathcal{L}}{\partial Z^{[l+1]}} * \frac{\partial A^{[l]}}{\partial Z^{[l]}}
+$$</p>
 </section>
 </section>
 

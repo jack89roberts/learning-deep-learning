@@ -782,6 +782,12 @@ $$</p>
 <p>To compute the derivative of the loss with respect to any term in the network we can use the chain rule. Starting with the loss on the right, we move “backwards” through the network, multiplying the partial derivatives until we get to the term we want.</p>
 <section id="example-1-computing-the-gradient-for-b-1-2">
 <h3>Example 1: Computing the gradient for $b_1^{[2]}$<a class="headerlink" href="#example-1-computing-the-gradient-for-b-1-2" title="Permalink to this headline">#</a></h3>
+<p>Why the chain rule/why multiply backwards along arrows?</p>
+<ul class="simple">
+<li><p>$\mathcal{L}$ is a function of $a_1^{[2]}$,  $a_1^{[2]}$ is a function of $z_1^{[2]}$, and $z_1^{[2]}$ is a function of $b_1^{[2]}$</p></li>
+<li><p>We could write that like $\mathcal{L}\left(a_1^{[2]}\left(z_1^{[2]}\left(b_1^{[2]}\right)\right)\right)$, which has the form of “case 1” of the chain rule above except with 3 functions instead of 2, i.e. a composed function like $f\left(g\left(h\left(x\right)\right)\right)$</p></li>
+</ul>
+<p>So, applying the chain rule and multiplying derivatives backwards along the diagram:</p>
 <p>$$
 \frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} = \frac{\partial z_1^{[2]}}{\color{blue}{\partial b_1^{[2]}}} \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}} \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}}
 $$</p>
@@ -807,6 +813,12 @@ $$</p>
 \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} =
 \frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}}
 $$</p>
+<p>Substituting in the earlier results above and simplifying gives:</p>
+<p>$$
+\frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} =
+\frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}} =
+a_1^{[2]} - y
+$$</p>
 </section>
 <section id="example-2-computing-the-gradient-for-w-2-1">
 <h3>Example 2: Computing the gradient for $w_2^{[1]}$<a class="headerlink" href="#example-2-computing-the-gradient-for-w-2-1" title="Permalink to this headline">#</a></h3>
@@ -818,12 +830,19 @@ $$</p>
 \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
 \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}}
 $$</p>
-<p>We’ve seen the form of all the derivatives above in the first example, except for the first term:</p>
+<p>We’ve seen the form of all the derivatives above in the first example, except for the first and third terms:</p>
+<p><strong>First term:</strong></p>
 <p>$$
 z_2^{[1]} = w_2^{[1]}x + b_2^{[1]} \
-\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}} = x
+\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}} = x = a_1^{[0]}
 $$</p>
 <p>For the weights after the first layer, the inputs $x$ are replaced by node activations $a$. We can relabel $x = a_1^{[0]}$ to make the general trend clearer.</p>
+<p><strong>Third term:</strong></p>
+<p>$$
+z_1^{[2]} = w_1^{[2]} a_1^{[1]} + w_2^{[2]} a_2^{[1]} + b_1^{[2]} \
+\frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}} = w_2^{[2]}
+$$</p>
+<p><strong>Overall:</strong></p>
 <p>The last four terms on the right side of the expression for the derivative can be simplified to $\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}$. Then we have:</p>
 </section>
 </section>
@@ -836,6 +855,20 @@ $$</p>
 <p>a_1^{[0]}\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
 $$</p>
 <p>We can also compute that $\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial b_2^{[1]}}} = 1$ (see example 1), so it follows that $\frac{\partial \mathcal{L}}{\partial w_2^{[1]}} =\frac{\partial \mathcal{L}}{\partial z_2^{[1]}}$.</p>
+<p>From the previous results (here and in example 1) we can derive $\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}$:</p>
+<p>$$
+\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}} =
+\frac{\color{orange}{\partial a_2^{[1]}}}{\color{gray}{\partial z_2^{[1]}}}
+\frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}}
+\frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
+\frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} =
+\frac{\color{orange}{\partial a_2^{[1]}}}{\color{gray}{\partial z_2^{[1]}}}
+\frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}}
+\frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}} \
+\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}} =
+a_2^{[1]} (1 - a_2^{[1]}) w_2^{[2]}\frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}}
+$$</p>
+<p>Note we already derived the value of the last term, $\color{red}{\partial \mathcal{L}} / \partial z_1^{[2]}$, in Example 1, so we don’t need to re-compute it here.</p>
 <section id="multiple-paths">
 <h2>Multiple Paths<a class="headerlink" href="#multiple-paths" title="Permalink to this headline">#</a></h2>
 <p>There is one case not covered by the simplified network and examples above - where you have multiple paths from the output (loss) back to the term of interest. Such as this:</p>
@@ -846,7 +879,7 @@ $$</p>
 <h2>Back Propagation and Efficiency<a class="headerlink" href="#back-propagation-and-efficiency" title="Permalink to this headline">#</a></h2>
 <p>It’s important to note that:</p>
 <ul class="simple">
-<li><p>The derivatives in the two examples share many terms in common (e.g. the derivative of the loss with respect to the final output)</p></li>
+<li><p>The derivatives in layer $l$ depend on the derivatives in layer $l + 1$ (so we pass gradients “backwards” through the network)</p></li>
 <li><p>Each term is a fairly simple combination of quantities that must be computed during the forward pass (like the activation values in hidden layers)</p></li>
 </ul>
 <p>These properties of back propagation form the basis for efficient implementations in major frameworks (pytorch, Tensorflow, JAX etc.), mostly via:</p>
@@ -952,7 +985,7 @@ L = 0.4741
 <span class="c1"># Row 3 in diagram</span>
 <span class="c1"># =================</span>
 <span class="n">dz_dw1x1</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># summation nodes pass the same gradient backwards</span>
-<span class="n">dz_dw2x2</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># z = w1x1 + w2x2 + b, dz/d(w2x2) = 1</span>
+<span class="n">dz_dw2x2</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># e.g. z = w1x1 + w2x2 + b, dz/d(w2x2) = 1</span>
 <span class="n">dz_db</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="n">dL_dw1x1</span> <span class="o">=</span> <span class="n">dz_dw1x1</span> <span class="o">*</span> <span class="n">dL_dz</span>
@@ -962,7 +995,7 @@ L = 0.4741
 <span class="c1"># =================</span>
 <span class="c1"># Row 2 in diagram</span>
 <span class="c1"># =================</span>
-<span class="n">dw1x1_dw1</span> <span class="o">=</span> <span class="n">x1</span>  <span class="c1"># multiplication node gradients take the value of the other node</span>
+<span class="n">dw1x1_dw1</span> <span class="o">=</span> <span class="n">x1</span>  <span class="c1"># multiplication node gradients take the value of the other input</span>
 <span class="n">dw2x2_dw2</span> <span class="o">=</span> <span class="n">x2</span>  <span class="c1"># e.g. d(w2x2) / d(w2) = x2</span>
 
 <span class="n">dL_dw1</span> <span class="o">=</span> <span class="n">dw1x1_dw1</span> <span class="o">*</span> <span class="n">dL_dw1x1</span>
