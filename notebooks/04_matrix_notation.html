@@ -50,6 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -482,155 +484,166 @@ title="Print to PDF"
 <p>We have labelled the notation we’re going to start to use to represent the values/parameters in whole layers, rather than at individual nodes/connections. The terms are:</p>
 <p><strong>Size of the network and dataset:</strong></p>
 <ul class="simple">
-<li><p>$L$ - the number of layers in the network</p></li>
-<li><p>$n^{[l]}$ - the number of nodes in layer $[l]$</p>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> - the number of layers in the network</p></li>
+<li><p><span class="math notranslate nohighlight">\(n^{[l]}\)</span> - the number of nodes in layer <span class="math notranslate nohighlight">\([l]\)</span></p>
 <ul>
-<li><p>$n^{[0]}$ - the number of input features (the number of nodes $x_i$ in the input layer)</p></li>
-<li><p>$n^{[L]}$ - the number of outputs (one in all the networks we’ve considered so far)</p></li>
+<li><p><span class="math notranslate nohighlight">\(n^{[0]}\)</span> - the number of input features (the number of nodes <span class="math notranslate nohighlight">\(x_i\)</span> in the input layer)</p></li>
+<li><p><span class="math notranslate nohighlight">\(n^{[L]}\)</span> - the number of outputs (one in all the networks we’ve considered so far)</p></li>
 </ul>
 </li>
-<li><p>$m$ - the number of data samples per gradient descent iteration (aka the batch size)</p></li>
+<li><p><span class="math notranslate nohighlight">\(m\)</span> - the number of data samples per gradient descent iteration (aka the batch size)</p></li>
 </ul>
 <p><strong>Parameters of, and computed values in, the network:</strong></p>
 <ul class="simple">
-<li><p>$W^{[l]}$ - the weights (arrows) between all the activations in layer $[l-1]$ and layer $[l]$, dimensions: $(n^{[l]}, n^{[l-1]})$</p></li>
-<li><p>$b^{[l]}$ - the bias for all the nodes in layer $[l]$, dimensions: $(n^{[l]}, 1)$</p></li>
-<li><p>$Z^{[l]}$ - the linear predictor for all the nodes in layer $[l]$ for all the data samples, dimensions: $(n^{[l]}, m)$</p></li>
-<li><p>$A^{[l]}$ - the activation for all the nodes in layer $[l]$ for all the data samples, dimensions: $(n^{[l]}, m)$</p>
+<li><p><span class="math notranslate nohighlight">\(W^{[l]}\)</span> - the weights (arrows) between all the activations in layer <span class="math notranslate nohighlight">\([l-1]\)</span> and layer <span class="math notranslate nohighlight">\([l]\)</span>, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, n^{[l-1]})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(b^{[l]}\)</span> - the bias for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span>, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Z^{[l]}\)</span> - the linear predictor for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span> for all the data samples, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, m)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(A^{[l]}\)</span> - the activation for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span> for all the data samples, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, m)\)</span></p>
 <ul>
-<li><p>$X = A^{[0]}$ - we can represent the input dataset as the activations of the zeroth layer</p></li>
-<li><p>$\hat{y} = A^{[L]}$ - the activations of the last layer are the predictions $\hat{y}$</p></li>
+<li><p><span class="math notranslate nohighlight">\(X = A^{[0]}\)</span> - we can represent the input dataset as the activations of the zeroth layer</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{y} = A^{[L]}\)</span> - the activations of the last layer are the predictions <span class="math notranslate nohighlight">\(\hat{y}\)</span></p></li>
 </ul>
 </li>
-<li><p>$\mathcal{L}(y, \hat{y})$ - the total loss (cost) for all the data samples, dimensions: (1)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{L}(y, \hat{y})\)</span> - the total loss (cost) for all the data samples, dimensions: (1)</p></li>
 </ul>
 </section>
 <section id="forward-pass">
 <h2>Forward Pass<a class="headerlink" href="#forward-pass" title="Permalink to this headline">#</a></h2>
 <section id="value-for-a-single-node-and-data-sample-dot-products">
 <h3>Value for a single node and data sample: Dot products<a class="headerlink" href="#value-for-a-single-node-and-data-sample-dot-products" title="Permalink to this headline">#</a></h3>
-<p>In the network above, the value of $z_1^{<span class="xref myst">1</span>}$ (the first node in the first hidden layer) for a single data point, $(j)$, can be written as:</p>
-<p>$$
-z_1^{<span class="xref myst">1</span>} = w_{1 \rightarrow 1}^{[1]} x_1^{(j)} + w_{2 \rightarrow 1}^{[1]} x_2^{(j)} + b_1^{[1]}
-$$</p>
+<p>In the network above, the value of <span class="math notranslate nohighlight">\(z_1^{[1](j)}\)</span> (the first node in the first hidden layer) for a single data point, <span class="math notranslate nohighlight">\((j)\)</span>, can be written as:</p>
+<div class="math notranslate nohighlight">
+\[
+z_1^{[1](j)} = w_{1 \rightarrow 1}^{[1]} x_1^{(j)} + w_{2 \rightarrow 1}^{[1]} x_2^{(j)} + b_1^{[1]}
+\]</div>
 <p>The first two terms on the right (multiplying the inputs by the weights) can be expressed as a <em>dot product</em>:</p>
-<p>$$
-z_1^{<span class="xref myst">1</span>} = \mathbf{w_{1}^{[1]} . x^{(j)}} + b_1^{[1]}
-$$</p>
+<div class="math notranslate nohighlight">
+\[
+z_1^{[1](j)} = \mathbf{w_{1}^{[1]} . x^{(j)}} + b_1^{[1]}
+\]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p>$\mathbf{w_{1}^{[1]}}$ is a <em>row vector</em> of all the weights to the first node in the first layer</p></li>
-<li><p>$\mathbf{x}^{(j)}$ is a <em>column vector</em> of all the data feature values for data sample $(j)$</p></li>
-<li><p>$b_1^{[1]}$ is the bias term for the first node in the first layer</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{w_{1}^{[1]}}\)</span> is a <em>row vector</em> of all the weights to the first node in the first layer</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}^{(j)}\)</span> is a <em>column vector</em> of all the data feature values for data sample <span class="math notranslate nohighlight">\((j)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(b_1^{[1]}\)</span> is the bias term for the first node in the first layer</p></li>
 </ul>
 <p>which can be expanded as follows:</p>
-<p>$$
-z_1^{<span class="xref myst">1</span>} =
+<div class="math notranslate nohighlight">
+\[\begin{split}
+z_1^{[1](j)} =
 \begin{bmatrix}w_{1 \rightarrow 1}^{[1]} &amp; w_{2 \rightarrow 1}^{[1]}\end{bmatrix}
 \begin{bmatrix}
-x_{1}^{(j)} \
-x_{2}^{(j)} \
-\end{bmatrix}</p>
-<ul class="simple">
-<li><p>b_1^{[1]}
-$$</p></li>
-</ul>
+x_{1}^{(j)} \\
+x_{2}^{(j)} \\
+\end{bmatrix}
+ + b_1^{[1]}
+\end{split}\]</div>
 <p>and represents the same expression as the first equation above.</p>
 </section>
 <section id="values-for-all-nodes-in-a-layer-for-all-data-in-a-batch-matrix-multiplication">
 <h3>Values for all nodes in a layer for all data in a batch: Matrix multiplication<a class="headerlink" href="#values-for-all-nodes-in-a-layer-for-all-data-in-a-batch-matrix-multiplication" title="Permalink to this headline">#</a></h3>
 <p>By moving from vectors to matrices we can represent the terms for a whole layer (rather than a single node) and for a whole dataset in an efficient way.</p>
 <p>Sticking the the first layer in the network above as an example, the six weights (2 input nodes * 3 layer 1 nodes) can be represented as:</p>
-<p>$$
-\mathbf{W^{[1]}} =
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{W^{[1]}} = 
 \begin{bmatrix}
-w_{1 \rightarrow 1}^{[1]} &amp; w_{2 \rightarrow 1}^{[1]} \
-w_{1 \rightarrow 2}^{[1]} &amp; w_{2 \rightarrow 2}^{[1]} \
+w_{1 \rightarrow 1}^{[1]} &amp; w_{2 \rightarrow 1}^{[1]} \\
+w_{1 \rightarrow 2}^{[1]} &amp; w_{2 \rightarrow 2}^{[1]} \\
 w_{1 \rightarrow 3}^{[1]} &amp; w_{2 \rightarrow 3}^{[1]}
 \end{bmatrix}
-$$</p>
+\end{split}\]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p>each <em>row</em> corresponds to a node in the current layer (the 1st layer in this case) - there are $n^{[1]}$ rows.</p></li>
-<li><p>each <em>column</em> corresponds to a node in the previous layer (the zeroth layer in this case, aka the data inputs) -  there are $n^{[0]}$ columns.</p></li>
-<li><p>the values are the weights between those nodes (e.g. the value at row 3, column 2 is the weight between the 2nd input, $x_2$, and the 3rd node in the first layer).</p></li>
+<li><p>each <em>row</em> corresponds to a node in the current layer (the 1st layer in this case) - there are <span class="math notranslate nohighlight">\(n^{[1]}\)</span> rows.</p></li>
+<li><p>each <em>column</em> corresponds to a node in the previous layer (the zeroth layer in this case, aka the data inputs) -  there are <span class="math notranslate nohighlight">\(n^{[0]}\)</span> columns.</p></li>
+<li><p>the values are the weights between those nodes (e.g. the value at row 3, column 2 is the weight between the 2nd input, <span class="math notranslate nohighlight">\(x_2\)</span>, and the 3rd node in the first layer).</p></li>
 </ul>
 <p>And the data as:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \mathbf{X} = \mathbf{A^{[0]}} =
-\begin{bmatrix}
-x_{1}^{(1)} &amp; x_{1}^{(2)} &amp; x_{1}^{(3)} &amp; \dots &amp; x_{1}^{(m)} \
-x_{2}^{(1)} &amp; x_{2}^{(2)} &amp; x_{2}^{(3)} &amp; \dots &amp; x_{2}^{(m)} \
+\begin{bmatrix} 
+x_{1}^{(1)} &amp; x_{1}^{(2)} &amp; x_{1}^{(3)} &amp; \dots &amp; x_{1}^{(m)} \\
+x_{2}^{(1)} &amp; x_{2}^{(2)} &amp; x_{2}^{(3)} &amp; \dots &amp; x_{2}^{(m)} \\
 \end{bmatrix}
-$$</p>
+\end{split}\]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p>each <em>row</em> corresponds to a feature in the data (or more generally a node activation in the previous layer) - there are $n^{[0]}$ rows.</p></li>
-<li><p>each <em>column</em> corresponds to a data sample - there are $m$ columns.</p></li>
+<li><p>each <em>row</em> corresponds to a feature in the data (or more generally a node activation in the previous layer) - there are <span class="math notranslate nohighlight">\(n^{[0]}\)</span> rows.</p></li>
+<li><p>each <em>column</em> corresponds to a data sample - there are <span class="math notranslate nohighlight">\(m\)</span> columns.</p></li>
 </ul>
 <p>The linear predictor values for all the nodes in the first layer can then be expressed as:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \mathbf{Z^{[1]} = W^{[1]} X + b^{[l]}}
-$$</p>
-<p>The first term, $\mathbf{W^{[1]} X}$, is a <em>matrix multiplication</em>, that (by the definition of matrix multiplication and given the way we have defined $\mathbf{W^{[1]}}$ and $\mathbf{X}$), contains the dot product of the inputs and the weights for every node (each of the 3 nodes in the first layer) and every data sample:</p>
-<p>$$
+\]</div>
+<p>The first term, <span class="math notranslate nohighlight">\(\mathbf{W^{[1]} X}\)</span>, is a <em>matrix multiplication</em>, that (by the definition of matrix multiplication and given the way we have defined <span class="math notranslate nohighlight">\(\mathbf{W^{[1]}}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>), contains the dot product of the inputs and the weights for every node (each of the 3 nodes in the first layer) and every data sample:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \mathbf{W^{[1]} X} =
 \begin{bmatrix}
-\mathbf{w_{1}^{[1]} . x^{(1)}} &amp; \mathbf{w_{1}^{[1]} . x^{(2)}} &amp; \mathbf{w_{1}^{[1]} . x^{(3)}} &amp; \dots &amp;  \mathbf{w_{1}^{[1]} . x^{(m)}} \
-\mathbf{w_{2}^{[1]} . x^{(1)}} &amp; \mathbf{w_{2}^{[1]} . x^{(2)}} &amp; \mathbf{w_{2}^{[1]} . x^{(3)}} &amp; \dots &amp;  \mathbf{w_{1}^{[1]} . x^{(m)}} \
+\mathbf{w_{1}^{[1]} . x^{(1)}} &amp; \mathbf{w_{1}^{[1]} . x^{(2)}} &amp; \mathbf{w_{1}^{[1]} . x^{(3)}} &amp; \dots &amp;  \mathbf{w_{1}^{[1]} . x^{(m)}} \\
+\mathbf{w_{2}^{[1]} . x^{(1)}} &amp; \mathbf{w_{2}^{[1]} . x^{(2)}} &amp; \mathbf{w_{2}^{[1]} . x^{(3)}} &amp; \dots &amp;  \mathbf{w_{1}^{[1]} . x^{(m)}} \\
 \mathbf{w_{3}^{[1]} . x^{(1)}} &amp; \mathbf{w_{3}^{[1]} . x^{(2)}} &amp; \mathbf{w_{3}^{[1]} . x^{(3)}} &amp; \dots &amp;  \mathbf{w_{1}^{[1]} . x^{(m)}}
 \end{bmatrix}
-$$</p>
+\end{split}\]</div>
 </section>
 <section id="broadcasting">
 <h3>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this headline">#</a></h3>
-<p>$\mathbf{b^{[l]}}$, the last term in $\mathbf{Z^{[1]}}$, is a <em>column vector</em> containing the bias for each node in the layer:</p>
-<p>$$
+<p><span class="math notranslate nohighlight">\(\mathbf{b^{[l]}}\)</span>, the last term in <span class="math notranslate nohighlight">\(\mathbf{Z^{[1]}}\)</span>, is a <em>column vector</em> containing the bias for each node in the layer:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \mathbf{b^{[l]}} =
-\begin{bmatrix}
-b_{1}^{[1]} \
-b_{2}^{[1]} \
-b_{3}^{[1]} \
+\begin{bmatrix} 
+b_{1}^{[1]} \\
+b_{2}^{[1]} \\
+b_{3}^{[1]} \\
 \end{bmatrix}
-$$</p>
-<p>But now there’s a problem, we need to add $\mathbf{W^{[1]} X}$ and $\mathbf{b^{[l]}}$ to  but they have different dimensions - $(3, m)$ and $(3, 1)$ respectively.</p>
-<p>We want to add the same bias values for each data sample. To do this we use <em>broadcasting</em> (which might be familiar to you from <code class="docutils literal notranslate"><span class="pre">numpy</span></code>). In other words, we create a $(3, m)$ matrix by copying $\mathbf{b^{[l]}}$ $m$ times:</p>
-<p>$$
-\begin{bmatrix}
-b_{1}^{[1]} &amp; b_{1}^{[1]} &amp; b_{1}^{[1]} &amp; \dots &amp; b_{1}^{[1]} \
-b_{2}^{[1]} &amp; b_{2}^{[1]} &amp; b_{2}^{[1]} &amp; \dots &amp; b_{2}^{[1]} \
+\end{split}\]</div>
+<p>But now there’s a problem, we need to add <span class="math notranslate nohighlight">\(\mathbf{W^{[1]} X}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b^{[l]}}\)</span> to  but they have different dimensions - <span class="math notranslate nohighlight">\((3, m)\)</span> and <span class="math notranslate nohighlight">\((3, 1)\)</span> respectively.</p>
+<p>We want to add the same bias values for each data sample. To do this we use <em>broadcasting</em> (which might be familiar to you from <code class="docutils literal notranslate"><span class="pre">numpy</span></code>). In other words, we create a <span class="math notranslate nohighlight">\((3, m)\)</span> matrix by copying <span class="math notranslate nohighlight">\(\mathbf{b^{[l]}}\)</span> <span class="math notranslate nohighlight">\(m\)</span> times:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix} 
+b_{1}^{[1]} &amp; b_{1}^{[1]} &amp; b_{1}^{[1]} &amp; \dots &amp; b_{1}^{[1]} \\
+b_{2}^{[1]} &amp; b_{2}^{[1]} &amp; b_{2}^{[1]} &amp; \dots &amp; b_{2}^{[1]} \\
 b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; \dots &amp; b_{3}^{[1]}
 \end{bmatrix}
-$$</p>
-<p>where each column is $\mathbf{b^{[l]}}$, and there are $m$ columns. This matrix has the same dimensions as $\mathbf{W^{[1]} X}$, so the two can now be added together.</p>
+\end{split}\]</div>
+<p>where each column is <span class="math notranslate nohighlight">\(\mathbf{b^{[l]}}\)</span>, and there are <span class="math notranslate nohighlight">\(m\)</span> columns. This matrix has the same dimensions as <span class="math notranslate nohighlight">\(\mathbf{W^{[1]} X}\)</span>, so the two can now be added together.</p>
 </section>
 <section id="summary">
 <h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h3>
 <p>We’ve now seen all the structures and operations that are needed to represent a forward pass through the network for a whole batch of data.</p>
 <p>The general form for computing the linear predictor in any layer is:</p>
-<p>$$
-\mathbf{Z^{[l]}} = \mathbf{W^{[l]}} \mathbf{A^{[l-1]}} + \mathbf{b^{[l]}} \
-(n^{[l]}, m) = (n^{[l]}, n^{[l-1]}) \times (n^{[l-1]}, m) + (n^{[l]}, 1) \
-$$</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{Z^{[l]}} = \mathbf{W^{[l]}} \mathbf{A^{[l-1]}} + \mathbf{b^{[l]}} \\
+(n^{[l]}, m) = (n^{[l]}, n^{[l-1]}) \times (n^{[l-1]}, m) + (n^{[l]}, 1) \\
+\end{split}\]</div>
 <p>where the second line shows the dimensions of each term.</p>
-<p>To compute the node activations $\mathbf{A^{[l]}}$, we apply the activation function $g$ (element-wise):</p>
-<p>$$
+<p>To compute the node activations <span class="math notranslate nohighlight">\(\mathbf{A^{[l]}}\)</span>, we apply the activation function <span class="math notranslate nohighlight">\(g\)</span> (element-wise):</p>
+<div class="math notranslate nohighlight">
+\[
 \mathbf{A^{[l]}} = g^{[l]}(\mathbf{Z^{[l]}})
-$$</p>
-<p>Where $g^{[l]}$ is the activation function for layer $l$ (different layers may use different activation functions).</p>
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\(g^{[l]}\)</span> is the activation function for layer <span class="math notranslate nohighlight">\(l\)</span> (different layers may use different activation functions).</p>
 </section>
 </section>
 <section id="backward-pass">
 <h2>Backward Pass<a class="headerlink" href="#backward-pass" title="Permalink to this headline">#</a></h2>
-<p>From https://www.coursera.org/learn/neural-networks-deep-learning/supplement/E79Uh/clarification-for-what-does-this-have-to-do-with-the-brain</p>
-<p>$$
-\frac{\partial \mathcal{L}}{\partial W^{[l]}} = \frac{1}{m} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} A^{[l-1]^T} \
-\frac{\partial \mathcal{L}}{\partial b^{[l]}} = \frac{1}{m} \sum_{\mathrm{cols}} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} \
-$$</p>
-<p>$$
-\frac{\partial \mathcal{L}}{\partial Z^{[L]}} = A^{[L]} - Y \
+<p>From <a class="reference external" href="https://www.coursera.org/learn/neural-networks-deep-learning/supplement/E79Uh/clarification-for-what-does-this-have-to-do-with-the-brain">https://www.coursera.org/learn/neural-networks-deep-learning/supplement/E79Uh/clarification-for-what-does-this-have-to-do-with-the-brain</a></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \mathcal{L}}{\partial W^{[l]}} = \frac{1}{m} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} A^{[l-1]^T} \\
+\frac{\partial \mathcal{L}}{\partial b^{[l]}} = \frac{1}{m} \sum_{\mathrm{cols}} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} \\
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \mathcal{L}}{\partial Z^{[L]}} = A^{[L]} - Y \\
 \frac{\partial \mathcal{L}}{\partial Z^{[l]}} = W^{[l]^T} \frac{\partial \mathcal{L}}{\partial Z^{[l+1]}} * \frac{\partial A^{[l]}}{\partial Z^{[l]}}
-$$</p>
+\end{split}\]</div>
 </section>
 </section>
 

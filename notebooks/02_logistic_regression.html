@@ -50,6 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -405,7 +407,15 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#what-type-of-decision-boundary-can-this-network-fit-given-x-1-and-x-2">
-   What type of decision boundary can this network fit (given $x_1$ and $x_2$)?
+   What type of decision boundary can this network fit (given
+   <span class="math notranslate nohighlight">
+    \(x_1\)
+   </span>
+   and
+   <span class="math notranslate nohighlight">
+    \(x_2\)
+   </span>
+   )?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -425,7 +435,15 @@ title="Print to PDF"
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#what-type-of-decision-boundary-can-this-network-fit-given-only-the-original-features-x-1-and-x-2">
-       What type of decision boundary can this network fit (given only the original features $x_1$ and $x_2$)?
+       What type of decision boundary can this network fit (given only the original features
+       <span class="math notranslate nohighlight">
+        \(x_1\)
+       </span>
+       and
+       <span class="math notranslate nohighlight">
+        \(x_2\)
+       </span>
+       )?
       </a>
      </li>
     </ul>
@@ -503,7 +521,15 @@ title="Print to PDF"
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#what-type-of-decision-boundary-can-this-network-fit-given-x-1-and-x-2">
-   What type of decision boundary can this network fit (given $x_1$ and $x_2$)?
+   What type of decision boundary can this network fit (given
+   <span class="math notranslate nohighlight">
+    \(x_1\)
+   </span>
+   and
+   <span class="math notranslate nohighlight">
+    \(x_2\)
+   </span>
+   )?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -523,7 +549,15 @@ title="Print to PDF"
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#what-type-of-decision-boundary-can-this-network-fit-given-only-the-original-features-x-1-and-x-2">
-       What type of decision boundary can this network fit (given only the original features $x_1$ and $x_2$)?
+       What type of decision boundary can this network fit (given only the original features
+       <span class="math notranslate nohighlight">
+        \(x_1\)
+       </span>
+       and
+       <span class="math notranslate nohighlight">
+        \(x_2\)
+       </span>
+       )?
       </a>
      </li>
     </ul>
@@ -571,14 +605,14 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>In the first part we created a neural network for linear regression (i.e. for a continuous output value $y$). In this part we’ll move on to binary classification (i.e. where $y$ can belong to one of two classes $y \in {0, 1}$), starting with logistic regression.</p>
+<p>In the first part we created a neural network for linear regression (i.e. for a continuous output value <span class="math notranslate nohighlight">\(y\)</span>). In this part we’ll move on to binary classification (i.e. where <span class="math notranslate nohighlight">\(y\)</span> can belong to one of two classes <span class="math notranslate nohighlight">\(y \in \{0, 1\}\)</span>), starting with logistic regression.</p>
 <section id="why-not-just-use-linear-regression-for-classification">
 <h2>Why not just use linear regression for classification?<a class="headerlink" href="#why-not-just-use-linear-regression-for-classification" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p>Linear regression returns a continuous value ($-\infty \leq y \leq \infty$), but we want a class probability ($0 \leq y \leq 1$)</p></li>
+<li><p>Linear regression returns a continuous value (<span class="math notranslate nohighlight">\(-\infty \leq y \leq \infty\)</span>), but we want a class probability (<span class="math notranslate nohighlight">\(0 \leq y \leq 1\)</span>)</p></li>
 <li><p>Very sensitive to outliers/imbalanced data</p></li>
 </ul>
-<p>Here’s an example of using linear regression on a classification dataset with a single feature, $x$:</p>
+<p>Here’s an example of using linear regression on a classification dataset with a single feature, <span class="math notranslate nohighlight">\(x\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_and_plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -613,16 +647,17 @@ title="Print to PDF"
 </div>
 <p>Note that:</p>
 <ul class="simple">
-<li><p>The range of $y$ is not limited to between 0 and 1</p></li>
-<li><p>The presence of the outliers changes the predicted class of a point (and e.g. changes the value of $y$ from around -0.2 to +0.2 for $x = -1.5$)</p></li>
+<li><p>The range of <span class="math notranslate nohighlight">\(y\)</span> is not limited to between 0 and 1</p></li>
+<li><p>The presence of the outliers changes the predicted class of a point (and e.g. changes the value of <span class="math notranslate nohighlight">\(y\)</span> from around -0.2 to +0.2 for <span class="math notranslate nohighlight">\(x = -1.5\)</span>)</p></li>
 </ul>
 </section>
 <section id="the-solution-sigmoid">
 <h2>The solution: Sigmoid<a class="headerlink" href="#the-solution-sigmoid" title="Permalink to this headline">#</a></h2>
 <p>To get around this we apply the <strong>sigmoid</strong> function:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \textrm{sigmoid}(z) = \frac{1}{1 + \exp(-z)}
-$$</p>
+\]</div>
 <p>which is bounded between zero and one, and looks like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -646,17 +681,19 @@ $$</p>
 </div>
 </div>
 <p>The logistic regression model is:</p>
-<p>$$
+<div class="math notranslate nohighlight">
+\[
 \hat{y} = \textrm{sigmoid}(w x + b)
-$$</p>
-<p>So we still have a linear predictor ($z = wx + b$) on the input features, but we apply the sigmoid function to create our final output (mapping the continuous value of the linear predictor to be between zero and one).</p>
+\]</div>
+<p>So we still have a linear predictor (<span class="math notranslate nohighlight">\(z = wx + b\)</span>) on the input features, but we apply the sigmoid function to create our final output (mapping the continuous value of the linear predictor to be between zero and one).</p>
 </section>
 <section id="loss-function">
 <h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">#</a></h2>
-<p>In linear regression we used mean squared error as the metric to optimise the weights of the model. In logistic regression we use the <strong>log loss</strong>, also known as the <strong>(binary) cross-entropy</strong> loss. It’s defined as follows (remember that $y$, the true class, is always zero or one):</p>
-<p>$$
+<p>In linear regression we used mean squared error as the metric to optimise the weights of the model. In logistic regression we use the <strong>log loss</strong>, also known as the <strong>(binary) cross-entropy</strong> loss. It’s defined as follows (remember that <span class="math notranslate nohighlight">\(y\)</span>, the true class, is always zero or one):</p>
+<div class="math notranslate nohighlight">
+\[
 L = - \frac{1}{N} \sum_i^N y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i})
-$$</p>
+\]</div>
 <p>Which looks like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -737,15 +774,17 @@ $$</p>
 <h2>Neural Network for Logistic Regression<a class="headerlink" href="#neural-network-for-logistic-regression" title="Permalink to this headline">#</a></h2>
 <p>To modify our simple linear regression neural network for logistic regression we need to add an <strong>activation function</strong>:</p>
 <p><img alt="" src="../_images/02_logistic_regression_net.png" /></p>
-<p>Where $z$ is still the a linear combination of the output node’s inputs:</p>
-<p>$$
+<p>Where <span class="math notranslate nohighlight">\(z\)</span> is still the a linear combination of the output node’s inputs:</p>
+<div class="math notranslate nohighlight">
+\[
 z = w_1 x_1 + w_2 x_2 + b
-$$</p>
-<p>which then has the <strong>sigmoid activation function</strong>, $g(z)$, applied to it to create the final output:</p>
-<p>$$
+\]</div>
+<p>which then has the <strong>sigmoid activation function</strong>, <span class="math notranslate nohighlight">\(g(z)\)</span>, applied to it to create the final output:</p>
+<div class="math notranslate nohighlight">
+\[
 g(z) = \textrm{sigmoid}(z) = \frac{1}{1 + \exp(-z)}
-$$</p>
-<p>Often you’ll see $g(z)$ (i.e. the computation of $z$ and the application of $g$) drawn as a single node in diagrams, rather than explicitly separating them.</p>
+\]</div>
+<p>Often you’ll see <span class="math notranslate nohighlight">\(g(z)\)</span> (i.e. the computation of <span class="math notranslate nohighlight">\(z\)</span> and the application of <span class="math notranslate nohighlight">\(g\)</span>) drawn as a single node in diagrams, rather than explicitly separating them.</p>
 </section>
 <section id="pytorch">
 <h2>Pytorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">#</a></h2>
@@ -791,7 +830,7 @@ $$</p>
 </div>
 </div>
 </div>
-<p>Note that sigmoid no longer appears in the network definition, and if the model is trained this way its output will be $z$, not $g(z)$ (i.e. we need to apply the sigmoid function to the output to recover the class probabilities).</p>
+<p>Note that sigmoid no longer appears in the network definition, and if the model is trained this way its output will be <span class="math notranslate nohighlight">\(z\)</span>, not <span class="math notranslate nohighlight">\(g(z)\)</span> (i.e. we need to apply the sigmoid function to the output to recover the class probabilities).</p>
 <p>Everything else about training the network is the same we saw in the first part for linear regression:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -843,9 +882,9 @@ $$</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4346]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.5025]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8148], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8283], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -876,11 +915,11 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8148], grad_fn=&lt;Sl
 <img alt="../_images/02_logistic_regression_24_0.png" src="../_images/02_logistic_regression_24_0.png" />
 </div>
 </div>
-<p>Also shown is the <strong>decision boundary</strong> - all samples with $x$ to the left of the boundary are predicted to have $y = 0$, and all values to the right $y = 1$ (assuming we predict $y = 1$ when $\hat{y} \geq 0.5$).</p>
+<p>Also shown is the <strong>decision boundary</strong> - all samples with <span class="math notranslate nohighlight">\(x\)</span> to the left of the boundary are predicted to have <span class="math notranslate nohighlight">\(y = 0\)</span>, and all values to the right <span class="math notranslate nohighlight">\(y = 1\)</span> (assuming we predict <span class="math notranslate nohighlight">\(y = 1\)</span> when <span class="math notranslate nohighlight">\(\hat{y} \geq 0.5\)</span>).</p>
 </section>
 <section id="adding-a-second-feature">
 <h2>Adding a second feature<a class="headerlink" href="#adding-a-second-feature" title="Permalink to this headline">#</a></h2>
-<p>Now let’s consider a more interesting dataset with two features, $x_1$, $x_2$, and a non-linear decision boundary. In this case samples belong to class 1 if $x_1^3 - x_1 - x_2 &gt; 0$ (and class 0 otherwise):</p>
+<p>Now let’s consider a more interesting dataset with two features, <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, and a non-linear decision boundary. In this case samples belong to class 1 if <span class="math notranslate nohighlight">\(x_1^3 - x_1 - x_2 &gt; 0\)</span> (and class 0 otherwise):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_cubic_data</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
@@ -934,7 +973,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8148], grad_fn=&lt;Sl
 </div>
 </section>
 <section id="what-type-of-decision-boundary-can-this-network-fit-given-x-1-and-x-2">
-<h2>What type of decision boundary can this network fit (given $x_1$ and $x_2$)?<a class="headerlink" href="#what-type-of-decision-boundary-can-this-network-fit-given-x-1-and-x-2" title="Permalink to this headline">#</a></h2>
+<h2>What type of decision boundary can this network fit (given <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span>)?<a class="headerlink" href="#what-type-of-decision-boundary-can-this-network-fit-given-x-1-and-x-2" title="Permalink to this headline">#</a></h2>
 <p>a) Linear</p>
 <p>b) Non-linear</p>
 <p>Reminder: We’ve added a non-linear activation function (sigmoid)</p>
@@ -1056,20 +1095,21 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8148], grad_fn=&lt;Sl
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.2898, -2.8500]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.4925, -2.9156]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0035], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0196], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/02_logistic_regression_34_1.png" src="../_images/02_logistic_regression_34_1.png" />
 </div>
 </div>
 <p>Logistic regression, and our neural network that recreates it, can only fit <em>linear</em> decision boundaries. We could fit a non-linear boundary by adding polynomial features. In this case we’d need up cubic terms so we might try to fit something like this:</p>
-<p>$$
-z = w_1 x_1^3 + w_2 x_1^2 x_2 + w_3 x_1 x_2^2 + w_4 x_2^3 + w_5 x_1 ^2 + w_6 x_1 x_2 + w_7 x_2^2 + w_8 x_1 + w_9 x_2 + b \
+<div class="math notranslate nohighlight">
+\[\begin{split}
+z = w_1 x_1^3 + w_2 x_1^2 x_2 + w_3 x_1 x_2^2 + w_4 x_2^3 + w_5 x_1 ^2 + w_6 x_1 x_2 + w_7 x_2^2 + w_8 x_1 + w_9 x_2 + b \\
 \hat{y} = \textrm{sigmoid}(z)
-$$</p>
-<p>Note that $z$ is linear in the weights so this is still logistic regression.</p>
+\end{split}\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(z\)</span> is linear in the weights so this is still logistic regression.</p>
 <p>Could neural networks provide an alternative to creating all these features manually?</p>
 </section>
 <section id="adding-nodes-and-layers-moving-away-from-logistic-regression">
@@ -1081,7 +1121,7 @@ $$</p>
 <p><img alt="" src="../_images/02_1hidden.png" /></p>
 <p>Note that we’re also applying the activation function (in this case sigmoid) on the output of the hidden nodes.</p>
 <section id="what-type-of-decision-boundary-can-this-network-fit-given-only-the-original-features-x-1-and-x-2">
-<h4>What type of decision boundary can this network fit (given only the original features $x_1$ and $x_2$)?<a class="headerlink" href="#what-type-of-decision-boundary-can-this-network-fit-given-only-the-original-features-x-1-and-x-2" title="Permalink to this headline">#</a></h4>
+<h4>What type of decision boundary can this network fit (given only the original features <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span>)?<a class="headerlink" href="#what-type-of-decision-boundary-can-this-network-fit-given-only-the-original-features-x-1-and-x-2" title="Permalink to this headline">#</a></h4>
 <p>a) Linear</p>
 <p>b) Non-linear</p>
 <p>Let’s see. Here’s the new network in pytorch:</p>
@@ -1104,14 +1144,14 @@ $$</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[-11.1989,  -9.8141],
-        [ -1.4772,   0.6084]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[-1.4268,  0.6536],
+        [11.0577, 10.1335]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.0028, -0.0677], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.1589,  0.2208], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 16.4365, -27.6978]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[-24.9043, -14.0119]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([5.4093], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([18.8943], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/02_logistic_regression_40_1.png" src="../_images/02_logistic_regression_40_1.png" />
