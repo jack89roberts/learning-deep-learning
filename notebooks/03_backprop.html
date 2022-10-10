@@ -1081,7 +1081,8 @@ L = 0.4741
 </div>
 </div>
 <p>Note the values are the same as our own version above.</p>
-<p>Now for the magic - in the background pytorch has built a computation graph from the variables we’ve defined and can compute the gradients (do a backward pass) for us automatically (for the parameters where we’ve specified <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code>), as follows:</p>
+<p>Now for the magic - in the background pytorch has built a computation graph from the variables we’ve defined and can compute the gradients (do a backward pass) for us automatically (for the parameters where we’ve specified <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code>). You’ll notice that the <code class="docutils literal notranslate"><span class="pre">yhat</span></code> tensor above contains both its value and a function for computing gradients with respect to it (<code class="docutils literal notranslate"><span class="pre">&lt;SigmoidBackward0&gt;</span></code>).</p>
+<p>To do the backward pass and compute the gradients we just need to do:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
