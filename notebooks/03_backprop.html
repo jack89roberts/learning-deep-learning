@@ -915,7 +915,7 @@ z_1^{[2]} = w_1^{[2]} a_1^{[1]} + w_2^{[2]} a_2^{[1]} + b_1^{[2]} \\
 =
 a_1^{[0]}\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
 \]</div>
-<p>We can also compute that <span class="math notranslate nohighlight">\(\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial b_2^{[1]}}} = 1\)</span> (see example 1), so it follows that <span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial w_2^{[1]}} =\frac{\partial \mathcal{L}}{\partial z_2^{[1]}}\)</span>.</p>
+<p>We can also compute that <span class="math notranslate nohighlight">\(\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial b_2^{[1]}}} = 1\)</span> (see example 1), so it follows that <span class="math notranslate nohighlight">\(\frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial b_2^{[1]}}} =\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}\)</span>.</p>
 <p>From the previous results (here and in example 1) we can derive <span class="math notranslate nohighlight">\(\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -1106,14 +1106,14 @@ dL_db = -0.3775
 </div>
 </div>
 </div>
-<p>This is an extremely verbose way of representing this, we’ll see matrix notation in the next section that will let us represent networks in a much more concise way.</p>
+<p>This is an extremely verbose way of representing this, we’ll see matrix notation in the next notebook that will let us represent networks in a much more concise way.</p>
 </section>
 </section>
 <section id="pytorch">
 <h3>Pytorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">#</a></h3>
 <p>We can manually do the same operations in pytorch and with pytorch’s tensor class, being careful to:</p>
 <ul class="simple">
-<li><p>Set <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code> for the parameters we’re interested in the gradients of (w1, w2, and b) - we’ll come back to this later</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code> for the parameters we’re interested in the gradients of (<code class="docutils literal notranslate"><span class="pre">w1</span></code>, <code class="docutils literal notranslate"><span class="pre">w2</span></code>, and <code class="docutils literal notranslate"><span class="pre">b</span></code>) - we’ll come back to this later</p></li>
 <li><p>Use torch’s implementations of sigmoid (<code class="docutils literal notranslate"><span class="pre">torch.sigmoid</span></code>) and log loss (<code class="docutils literal notranslate"><span class="pre">torch.nn.functional.binary_cross_entropy</span></code>).</p></li>
 </ul>
 <section id="id4">

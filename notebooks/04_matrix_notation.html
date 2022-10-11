@@ -376,6 +376,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#notation-cheat-sheet">
+   Notation Cheat Sheet
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#forward-pass">
    Forward Pass
   </a>
@@ -432,6 +437,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#notation-cheat-sheet">
+   Notation Cheat Sheet
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#forward-pass">
    Forward Pass
   </a>
@@ -481,6 +491,9 @@ title="Print to PDF"
 <h2>Example Network and Definitions<a class="headerlink" href="#example-network-and-definitions" title="Permalink to this headline">#</a></h2>
 <p>We’ll refer back to the network below throughout this section. It has an unspecified number of layers (and nodes in each layer), but we assume 2 input data features, 3 nodes in the first layer, and 1 output node for the examples.</p>
 <p><img alt="" src="../_images/04_matrix_network.png" /></p>
+</section>
+<section id="notation-cheat-sheet">
+<h2>Notation Cheat Sheet<a class="headerlink" href="#notation-cheat-sheet" title="Permalink to this headline">#</a></h2>
 <p>We have labelled the notation we’re going to start to use to represent the values/parameters in whole layers, rather than at individual nodes/connections. The terms are:</p>
 <p><strong>Size of the network and dataset:</strong></p>
 <ul class="simple">
@@ -505,6 +518,13 @@ title="Print to PDF"
 </ul>
 </li>
 <li><p><span class="math notranslate nohighlight">\(\mathcal{L}(y, \hat{y})\)</span> - the total loss (cost) for all the data samples, dimensions: (1)</p></li>
+</ul>
+<p><strong>Matrix/vector operations:</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{p . q}\)</span> is the dot product of a row vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> with dimensions <span class="math notranslate nohighlight">\((1, j)\)</span>, and a column vector <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> with dimensions <span class="math notranslate nohighlight">\((j, 1)\)</span>, and the result is a scalar value</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{PQ}\)</span> is matrix multiplication, where <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> has dimensions <span class="math notranslate nohighlight">\((i, k)\)</span>, <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> has dimensions <span class="math notranslate nohighlight">\((k, j)\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{PQ}\)</span> has dimensions <span class="math notranslate nohighlight">\((i, j)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{P * Q}\)</span> is element-wise multiplication, where <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> have the same dimensions <span class="math notranslate nohighlight">\((i, j)\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{P * Q}\)</span> also has dimensions <span class="math notranslate nohighlight">\((i, j)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{P}^T\)</span> is the <em>transpose</em> of <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> has dimensions <span class="math notranslate nohighlight">\((i, j)\)</span> and <span class="math notranslate nohighlight">\(\mathbf{P}^T\)</span> has dimensions <span class="math notranslate nohighlight">\((j, i)\)</span></p></li>
 </ul>
 </section>
 <section id="forward-pass">
@@ -637,13 +657,29 @@ b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; \dots &amp; b_{3}^{[1]}
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \frac{\partial \mathcal{L}}{\partial W^{[l]}} = \frac{1}{m} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} A^{[l-1]^T} \\
-\frac{\partial \mathcal{L}}{\partial b^{[l]}} = \frac{1}{m} \sum_{\mathrm{cols}} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} \\
+\frac{\partial \mathcal{L}}{\partial b^{[l]}} = \frac{1}{m} \sum_{\mathrm{rows}} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} \\
+\frac{\partial \mathcal{L}}{\partial Z^{[l]}} = \frac{\partial \mathcal{L}}{\partial A^{[l]}} * \frac{\partial A^{[l]}}{\partial Z^{[l]}}
 \end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(\partial A^{[l]} / \partial Z^{[l]}\)</span> is the derivative of the activation function. For example, for sigmoid activation:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-\frac{\partial \mathcal{L}}{\partial Z^{[L]}} = A^{[L]} - Y \\
-\frac{\partial \mathcal{L}}{\partial Z^{[l]}} = W^{[l]^T} \frac{\partial \mathcal{L}}{\partial Z^{[l+1]}} * \frac{\partial A^{[l]}}{\partial Z^{[l]}}
-\end{split}\]</div>
+\[
+\frac{\partial A^{[l]}}{\partial Z^{[l]}} = A^{[l]} * (1 - A^{[l]})
+\]</div>
+<p>For all layers except the last (output) layer:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial A^{[l]}} = W^{[l+1]^T} \frac{\partial \mathcal{L}}{\partial Z^{[l+1]}}
+\]</div>
+<p>For the output layer (<span class="math notranslate nohighlight">\(L\)</span>) this takes a different form, dependent on the activation function used in the output layer and the loss function used. For log loss and sigmoid activation:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial Z^{[L]}} = A^{[L]} - Y
+\]</div>
+<p>For mean squared error loss and linear activation:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial Z^{[L]}} = 2\left(Z^{[L]} - Y\right)
+\]</div>
 </section>
 </section>
 

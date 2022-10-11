@@ -690,9 +690,8 @@ title="Print to PDF"
 <p>Choose <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, <span class="math notranslate nohighlight">\(b\)</span> to minimise the mean squared error between the predicted and actual value:</p>
 <div class="math notranslate nohighlight">
 \[
-L = \frac{1}{2N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
+L = \frac{1}{N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
 \]</div>
-<p>(divided by 2 to tidy up some maths later)</p>
 <p>Here’s an example for one choice of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. The loss is the sum of the lengths of the vertical black lines (squared) - the difference between the predicted and actual value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -701,7 +700,7 @@ L = \frac{1}{2N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
 
 
 <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">((</span><span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">plot_predictions</span><span class="p">(</span><span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -794,16 +793,17 @@ L = \frac{1}{2N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
 <p>The loss function again (expanded to include the definition of <span class="math notranslate nohighlight">\(\hat{y}\)</span>):</p>
 <div class="math notranslate nohighlight">
 \[
-L = \frac{1}{2m} \sum_{i=1}^{m} (\hat{y_i} - y_i)^2 = \frac{1}{2m} \sum_{i=1}^{m} (w_1 x_{1,i} + w_2 x_{2,i} + b - y)^2
+L = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i)^2 = \frac{1}{m} \sum_{i=1}^{m} (w_1 x_{1,i} + w_2 x_{2,i} + b - y)^2
 \]</div>
 <p>The minimum loss will be found where the partial derivatives of the loss function with respect to the parameters is zero:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\frac{\partial L}{\partial w_1} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{1,i} \\
-\frac{\partial L}{\partial w_2} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{2,i} \\
-\frac{\partial L}{\partial b} = \frac{1}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i)
+\frac{\partial L}{\partial w_1} = \frac{2}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{1,i} \\
+\frac{\partial L}{\partial w_2} = \frac{2}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i) x_{2,i} \\
+\frac{\partial L}{\partial b} = \frac{2}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i)
 \end{split}\]</div>
-<p>Above I’ve replaced <span class="math notranslate nohighlight">\(N\)</span>, the number of samples in the dataset, with <span class="math notranslate nohighlight">\(m \leq N\)</span>, to indicate that we could choose to update the parameters based on the loss of a subset of the data.</p>
+<p>(sometimes you will see <span class="math notranslate nohighlight">\(L/2\)</span> used as a loss function instead, to avoid the factors 2 above)</p>
+<p>I’ve replaced <span class="math notranslate nohighlight">\(N\)</span>, the number of samples in the dataset, with <span class="math notranslate nohighlight">\(m \leq N\)</span>, to indicate that we could choose to update the parameters based on the loss of a subset of the data.</p>
 <p><span class="math notranslate nohighlight">\(m\)</span> is known as the <strong>batch size</strong></p>
 <p>Different values of <span class="math notranslate nohighlight">\(m\)</span> correspond to different forms of gradient descent:</p>
 <ul class="simple">
@@ -933,9 +933,9 @@ b = b - \alpha\frac{\partial L}{\partial b}
 
         <span class="n">y_hat</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
         <span class="n">delta</span> <span class="o">=</span> <span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span>
-        <span class="n">w_1</span> <span class="o">=</span> <span class="n">w_1</span> <span class="o">-</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;oranges&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="n">w_2</span> <span class="o">=</span> <span class="n">w_2</span> <span class="o">-</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;coffee&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="n">delta</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">w_1</span> <span class="o">=</span> <span class="n">w_1</span> <span class="o">-</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;oranges&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">w_2</span> <span class="o">=</span> <span class="n">w_2</span> <span class="o">-</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;coffee&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="n">delta</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">losses</span>
 </pre></div>
@@ -997,9 +997,9 @@ b = b - \alpha\frac{\partial L}{\partial b}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.4948, 0.4871]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 0.0078, -0.6318]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.2556], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.5362], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -1024,16 +1024,16 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.2556], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.3120],
-        [-0.1320],
-        [ 0.4713],
-        [-0.1803],
-        [-0.6827],
-        [-0.8348],
-        [ 0.6257],
-        [ 0.6038],
-        [ 1.0150],
-        [-0.1223]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.4936],
+        [-0.4343],
+        [-0.7779],
+        [-0.0791],
+        [ 0.4263],
+        [ 0.0382],
+        [-0.8318],
+        [-0.6571],
+        [-0.3123],
+        [-0.3007]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -1121,7 +1121,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.2556], grad_fn=&lt;Sl
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7050]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-1.4694e-09], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-2.5250e-09], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/01_linear_regression_41_1.png" src="../_images/01_linear_regression_41_1.png" />
