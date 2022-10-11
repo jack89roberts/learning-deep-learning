@@ -936,7 +936,34 @@ a_2^{[1]} (1 - a_2^{[1]}) w_2^{[2]}\frac{\color{red}{\partial \mathcal{L}}}{\par
 <h3>Multiple Paths<a class="headerlink" href="#multiple-paths" title="Permalink to this headline">#</a></h3>
 <p>There is one case not covered by the simplified network and examples above - where you have multiple paths from the output (loss) back to the term of interest. Such as this:</p>
 <p><img alt="" src="../_images/03_backprop_multipath.png" /></p>
-<p>In this case you must sum all the possible paths (this also follows from the multi-variable chain rule).</p>
+<p>In this case you must sum all the possible paths.</p>
+<p>Why?</p>
+<p>This also follows from the multi-variable chain rule (case 2 from earlier):</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is a function of <span class="math notranslate nohighlight">\(a_1^{[3]}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(a_1^{[3]}\)</span> is a function of <span class="math notranslate nohighlight">\(z_1^{[3]}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(z_1^{[3]}\)</span> is a function of <span class="math notranslate nohighlight">\(a_1^{[2]}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(a_2^{[2]}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(a_1^{[2]}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(a_2^{[2]}\)</span> are functions of <span class="math notranslate nohighlight">\(b_1^{[1]}\)</span> (through <span class="math notranslate nohighlight">\(z_1^{[2]}\)</span> and <span class="math notranslate nohighlight">\(z_2^{[2]}\)</span>)</p></li>
+</ul>
+<p>This could be written:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}\left(a_1^{[3]}\left(z_1^{[3]}\left(a_1^{[2]}\left(b_1^{[1]}\right), a_2^{[2]}\left(b_1^{[1]}\right)\right)\right)\right)
+\]</div>
+<p>which has the form:</p>
+<div class="math notranslate nohighlight">
+\[
+f\left(g\left(x\right), h\left(x\right)\right)
+\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(g, h) = \mathcal{L}\left(a_1^{[3]}\left(z_1^{[3]}\left(g, h\right)\right)\right) \\
+g(x) = a_1^{[2]}(x) \\
+h(x) = a_2^{[2]}(x) \\
+x = b_1^{[1]}
+\end{split}\]</div>
+<p>(here <span class="math notranslate nohighlight">\(x\)</span> is just an arbitrary label for a variable, <em>not</em> the input data)</p>
 </section>
 <section id="back-propagation-and-efficiency">
 <h3>Back Propagation and Efficiency<a class="headerlink" href="#back-propagation-and-efficiency" title="Permalink to this headline">#</a></h3>
