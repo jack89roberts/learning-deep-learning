@@ -411,6 +411,58 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#backward-pass">
    Backward Pass
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#key-equations">
+     Key Equations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#terms-needed-for-partial-mathcal-l-partial-mathbf-z-l">
+     Terms needed for
+     <span class="math notranslate nohighlight">
+      \(\partial \mathcal{L} / \partial \mathbf{Z}^{[l]}\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuition-why-are-these-the-right-equations">
+     Intuition - Why are these the right equations?
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#checking-dimensions">
+       Checking Dimensions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#activations">
+       Activations
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#linear-predictor">
+       Linear Predictor
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bias">
+       Bias
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#weights">
+       Weights
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-matrices">
+   Why matrices?
+  </a>
  </li>
 </ul>
 
@@ -472,6 +524,58 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#backward-pass">
    Backward Pass
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#key-equations">
+     Key Equations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#terms-needed-for-partial-mathcal-l-partial-mathbf-z-l">
+     Terms needed for
+     <span class="math notranslate nohighlight">
+      \(\partial \mathcal{L} / \partial \mathbf{Z}^{[l]}\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuition-why-are-these-the-right-equations">
+     Intuition - Why are these the right equations?
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#checking-dimensions">
+       Checking Dimensions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#activations">
+       Activations
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#linear-predictor">
+       Linear Predictor
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bias">
+       Bias
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#weights">
+       Weights
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-matrices">
+   Why matrices?
+  </a>
  </li>
 </ul>
 
@@ -508,16 +612,16 @@ title="Print to PDF"
 </ul>
 <p><strong>Parameters of, and computed values in, the network:</strong></p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(W^{[l]}\)</span> - the weights (arrows) between all the activations in layer <span class="math notranslate nohighlight">\([l-1]\)</span> and layer <span class="math notranslate nohighlight">\([l]\)</span>, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, n^{[l-1]})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(b^{[l]}\)</span> - the bias for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span>, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(Z^{[l]}\)</span> - the linear predictor for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span> for all the data samples, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, m)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(A^{[l]}\)</span> - the activation for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span> for all the data samples, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, m)\)</span></p>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{W}^{[l]}\)</span> - the weights (arrows) between all the activations in layer <span class="math notranslate nohighlight">\([l-1]\)</span> and layer <span class="math notranslate nohighlight">\([l]\)</span>, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, n^{[l-1]})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{b}^{[l]}\)</span> - the bias for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span>, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{Z}^{[l]}\)</span> - the linear predictor for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span> for all the data samples, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, m)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}^{[l]}\)</span> - the activation for all the nodes in layer <span class="math notranslate nohighlight">\([l]\)</span> for all the data samples, dimensions: <span class="math notranslate nohighlight">\((n^{[l]}, m)\)</span></p>
 <ul>
-<li><p><span class="math notranslate nohighlight">\(X = A^{[0]}\)</span> - we can represent the input dataset as the activations of the zeroth layer</p></li>
-<li><p><span class="math notranslate nohighlight">\(\hat{y} = A^{[L]}\)</span> - the activations of the last layer are the predictions <span class="math notranslate nohighlight">\(\hat{y}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{X} = \mathbf{A}^{[0]}\)</span> - we can represent the input dataset as the activations of the zeroth layer</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{\hat{y}} = \mathbf{A}^{[L]}\)</span> - the activations of the last layer are the predictions <span class="math notranslate nohighlight">\(\hat{y}\)</span></p></li>
 </ul>
 </li>
-<li><p><span class="math notranslate nohighlight">\(\mathcal{L}(y, \hat{y})\)</span> - the total loss (cost) for all the data samples, dimensions: (1)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{y}, \mathbf{\hat{y}})\)</span> - the total loss (cost) for all the data samples, dimensions: (1)</p></li>
 </ul>
 <p><strong>Matrix/vector operations:</strong></p>
 <ul class="simple">
@@ -539,11 +643,11 @@ z_1^{[1](j)} = w_{1 \rightarrow 1}^{[1]} x_1^{(j)} + w_{2 \rightarrow 1}^{[1]} x
 <p>The first two terms on the right (multiplying the inputs by the weights) can be expressed as a <em>dot product</em>:</p>
 <div class="math notranslate nohighlight">
 \[
-z_1^{[1](j)} = \mathbf{w_{1}^{[1]} . x^{(j)}} + b_1^{[1]}
+z_1^{[1](j)} = \mathbf{w_{1}}^{[1]} \mathbf{. x}^{(j)} + b_1^{[1]}
 \]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathbf{w_{1}^{[1]}}\)</span> is a <em>row vector</em> of all the weights to the first node in the first layer</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{w_1}^{[1]}\)</span> is a <em>row vector</em> of all the weights to the first node in the first layer</p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf{x}^{(j)}\)</span> is a <em>column vector</em> of all the data feature values for data sample <span class="math notranslate nohighlight">\((j)\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(b_1^{[1]}\)</span> is the bias term for the first node in the first layer</p></li>
 </ul>
@@ -563,10 +667,10 @@ x_{2}^{(j)} \\
 <section id="values-for-all-nodes-in-a-layer-for-all-data-in-a-batch-matrix-multiplication">
 <h3>Values for all nodes in a layer for all data in a batch: Matrix multiplication<a class="headerlink" href="#values-for-all-nodes-in-a-layer-for-all-data-in-a-batch-matrix-multiplication" title="Permalink to this headline">#</a></h3>
 <p>By moving from vectors to matrices we can represent the terms for a whole layer (rather than a single node) and for a whole dataset in an efficient way.</p>
-<p>Sticking the the first layer in the network above as an example, the six weights (2 input nodes * 3 layer 1 nodes) can be represented as:</p>
+<p>Sticking to the the first layer in the network above as an example, the six weights (2 input nodes * 3 layer 1 nodes) can be represented as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{W^{[1]}} = 
+\mathbf{W}^{[1]} = 
 \begin{bmatrix}
 w_{1 \rightarrow 1}^{[1]} &amp; w_{2 \rightarrow 1}^{[1]} \\
 w_{1 \rightarrow 2}^{[1]} &amp; w_{2 \rightarrow 2}^{[1]} \\
@@ -582,7 +686,7 @@ w_{1 \rightarrow 3}^{[1]} &amp; w_{2 \rightarrow 3}^{[1]}
 <p>And the data as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{X} = \mathbf{A^{[0]}} =
+\mathbf{X} = \mathbf{A}^{[0]} =
 \begin{bmatrix} 
 x_{1}^{(1)} &amp; x_{1}^{(2)} &amp; x_{1}^{(3)} &amp; \dots &amp; x_{1}^{(m)} \\
 x_{2}^{(1)} &amp; x_{2}^{(2)} &amp; x_{2}^{(3)} &amp; \dots &amp; x_{2}^{(m)} \\
@@ -596,33 +700,33 @@ x_{2}^{(1)} &amp; x_{2}^{(2)} &amp; x_{2}^{(3)} &amp; \dots &amp; x_{2}^{(m)} \\
 <p>The linear predictor values for all the nodes in the first layer can then be expressed as:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{Z^{[1]} = W^{[1]} X + b^{[l]}}
+\mathbf{Z}^{[1]} = \mathbf{W}^{[1]} \mathbf{X} + \mathbf{b}^{[1]}
 \]</div>
-<p>The first term, <span class="math notranslate nohighlight">\(\mathbf{W^{[1]} X}\)</span>, is a <em>matrix multiplication</em>, that (by the definition of matrix multiplication and given the way we have defined <span class="math notranslate nohighlight">\(\mathbf{W^{[1]}}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>), contains the dot product of the inputs and the weights for every node (each of the 3 nodes in the first layer) and every data sample:</p>
+<p>The first term, <span class="math notranslate nohighlight">\(\mathbf{W}^{[1]} \mathbf{X}\)</span>, is a <em>matrix multiplication</em>, that (by the definition of matrix multiplication and given the way we have defined <span class="math notranslate nohighlight">\(\mathbf{W}^{[1]}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>), contains the dot product of the inputs and the weights for every node (each of the 3 nodes in the first layer) and every data sample:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{W^{[1]} X} =
+\mathbf{W}^{[1]} \mathbf{X} =
 \begin{bmatrix}
-\mathbf{w_{1}^{[1]} . x^{(1)}} &amp; \mathbf{w_{1}^{[1]} . x^{(2)}} &amp; \mathbf{w_{1}^{[1]} . x^{(3)}} &amp; \dots &amp;  \mathbf{w_{1}^{[1]} . x^{(m)}} \\
-\mathbf{w_{2}^{[1]} . x^{(1)}} &amp; \mathbf{w_{2}^{[1]} . x^{(2)}} &amp; \mathbf{w_{2}^{[1]} . x^{(3)}} &amp; \dots &amp;  \mathbf{w_{1}^{[1]} . x^{(m)}} \\
-\mathbf{w_{3}^{[1]} . x^{(1)}} &amp; \mathbf{w_{3}^{[1]} . x^{(2)}} &amp; \mathbf{w_{3}^{[1]} . x^{(3)}} &amp; \dots &amp;  \mathbf{w_{1}^{[1]} . x^{(m)}}
+\mathbf{w_{1}}^{[1]} . \mathbf{x}^{(1)} &amp; \mathbf{w_{1}}^{[1]} . \mathbf{x}^{(2)} &amp; \mathbf{w_{1}}^{[1]} . \mathbf{x}^{(3)} &amp; \dots &amp;  \mathbf{w_{1}}^{[1]} . \mathbf{x}^{(m)} \\
+\mathbf{w_{2}}^{[1]} . \mathbf{x}^{(1)} &amp; \mathbf{w_{2}}^{[1]} . \mathbf{x}^{(2)} &amp; \mathbf{w_{2}}^{[1]} . \mathbf{x}^{(3)} &amp; \dots &amp;  \mathbf{w_{1}}^{[1]} . \mathbf{x}^{(m)} \\
+\mathbf{w_{3}}^{[1]} . \mathbf{x}^{(1)} &amp; \mathbf{w_{3}}^{[1]} . \mathbf{x}^{(2)} &amp; \mathbf{w_{3}}^{[1]} . \mathbf{x}^{(3)} &amp; \dots &amp;  \mathbf{w_{1}}^{[1]} . \mathbf{x}^{(m)}
 \end{bmatrix}
 \end{split}\]</div>
 </section>
 <section id="broadcasting">
 <h3>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this headline">#</a></h3>
-<p><span class="math notranslate nohighlight">\(\mathbf{b^{[l]}}\)</span>, the last term in <span class="math notranslate nohighlight">\(\mathbf{Z^{[1]}}\)</span>, is a <em>column vector</em> containing the bias for each node in the layer:</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{b}^{[l]}\)</span>, the last term in <span class="math notranslate nohighlight">\(\mathbf{Z}^{[1]}\)</span>, is a <em>column vector</em> containing the bias for each node in the layer:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{b^{[l]}} =
+\mathbf{b}^{[l]} =
 \begin{bmatrix} 
 b_{1}^{[1]} \\
 b_{2}^{[1]} \\
 b_{3}^{[1]} \\
 \end{bmatrix}
 \end{split}\]</div>
-<p>But now there’s a problem, we need to add <span class="math notranslate nohighlight">\(\mathbf{W^{[1]} X}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b^{[l]}}\)</span> to  but they have different dimensions - <span class="math notranslate nohighlight">\((3, m)\)</span> and <span class="math notranslate nohighlight">\((3, 1)\)</span> respectively.</p>
-<p>We want to add the same bias values for each data sample. To do this we use <em>broadcasting</em> (which might be familiar to you from <code class="docutils literal notranslate"><span class="pre">numpy</span></code>). In other words, we create a <span class="math notranslate nohighlight">\((3, m)\)</span> matrix by copying <span class="math notranslate nohighlight">\(\mathbf{b^{[l]}}\)</span> <span class="math notranslate nohighlight">\(m\)</span> times:</p>
+<p>But now there’s a problem, we need to add <span class="math notranslate nohighlight">\(\mathbf{W}^{[1]} \mathbf{X}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}^{[l]}\)</span> but they have different dimensions - <span class="math notranslate nohighlight">\((3, m)\)</span> and <span class="math notranslate nohighlight">\((3, 1)\)</span> respectively.</p>
+<p>We want to add the same bias values for each data sample. To do this we use <em>broadcasting</em> (which might be familiar to you from <code class="docutils literal notranslate"><span class="pre">numpy</span></code>). In other words, we create a <span class="math notranslate nohighlight">\((3, m)\)</span> matrix by copying <span class="math notranslate nohighlight">\(\mathbf{b}^{[l]}\)</span> <span class="math notranslate nohighlight">\(m\)</span> times:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{bmatrix} 
@@ -631,7 +735,7 @@ b_{2}^{[1]} &amp; b_{2}^{[1]} &amp; b_{2}^{[1]} &amp; \dots &amp; b_{2}^{[1]} \\
 b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; \dots &amp; b_{3}^{[1]}
 \end{bmatrix}
 \end{split}\]</div>
-<p>where each column is <span class="math notranslate nohighlight">\(\mathbf{b^{[l]}}\)</span>, and there are <span class="math notranslate nohighlight">\(m\)</span> columns. This matrix has the same dimensions as <span class="math notranslate nohighlight">\(\mathbf{W^{[1]} X}\)</span>, so the two can now be added together.</p>
+<p>where each column is <span class="math notranslate nohighlight">\(\mathbf{b}^{[l]}\)</span>, and there are <span class="math notranslate nohighlight">\(m\)</span> columns. This matrix has the same dimensions as <span class="math notranslate nohighlight">\(\mathbf{W}^{[1]} \mathbf{X}\)</span>, so the two can now be added together.</p>
 </section>
 <section id="summary">
 <h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h3>
@@ -639,47 +743,184 @@ b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; \dots &amp; b_{3}^{[1]}
 <p>The general form for computing the linear predictor in any layer is:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{Z^{[l]}} = \mathbf{W^{[l]}} \mathbf{A^{[l-1]}} + \mathbf{b^{[l]}} \\
+\mathbf{Z}^{[l]} = \mathbf{W}^{[l]} \mathbf{A}^{[l-1]} + \mathbf{b}^{[l]} \\
 (n^{[l]}, m) = (n^{[l]}, n^{[l-1]}) \times (n^{[l-1]}, m) + (n^{[l]}, 1) \\
 \end{split}\]</div>
 <p>where the second line shows the dimensions of each term.</p>
 <p>To compute the node activations <span class="math notranslate nohighlight">\(\mathbf{A^{[l]}}\)</span>, we apply the activation function <span class="math notranslate nohighlight">\(g\)</span> (element-wise):</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{A^{[l]}} = g^{[l]}(\mathbf{Z^{[l]}})
+\mathbf{A}^{[l]} = g^{[l]}(\mathbf{Z}^{[l]})
 \]</div>
 <p>Where <span class="math notranslate nohighlight">\(g^{[l]}\)</span> is the activation function for layer <span class="math notranslate nohighlight">\(l\)</span> (different layers may use different activation functions).</p>
 </section>
 </section>
 <section id="backward-pass">
 <h2>Backward Pass<a class="headerlink" href="#backward-pass" title="Permalink to this headline">#</a></h2>
-<p>From <a class="reference external" href="https://www.coursera.org/learn/neural-networks-deep-learning/supplement/E79Uh/clarification-for-what-does-this-have-to-do-with-the-brain">https://www.coursera.org/learn/neural-networks-deep-learning/supplement/E79Uh/clarification-for-what-does-this-have-to-do-with-the-brain</a></p>
+<section id="key-equations">
+<h3>Key Equations<a class="headerlink" href="#key-equations" title="Permalink to this headline">#</a></h3>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\frac{\partial \mathcal{L}}{\partial W^{[l]}} = \frac{1}{m} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} A^{[l-1]^T} \\
-\frac{\partial \mathcal{L}}{\partial b^{[l]}} = \frac{1}{m} \sum_{\mathrm{rows}} \frac{\partial \mathcal{L}}{\partial Z^{[l]}} \\
-\frac{\partial \mathcal{L}}{\partial Z^{[l]}} = \frac{\partial \mathcal{L}}{\partial A^{[l]}} * \frac{\partial A^{[l]}}{\partial Z^{[l]}}
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}} = \frac{1}{m} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} \mathbf{A}^{[l-1]^T} \\
+\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[l]}} = \frac{1}{m} \sum_{\mathrm{rows}} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} \\
+\frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} = \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[l]}} * \frac{\partial \mathbf{A}^{[l]}}{\partial \mathbf{Z}^{[l]}}
 \end{split}\]</div>
-<p><span class="math notranslate nohighlight">\(\partial A^{[l]} / \partial Z^{[l]}\)</span> is the derivative of the activation function. For example, for sigmoid activation:</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{\partial A^{[l]}}{\partial Z^{[l]}} = A^{[l]} * (1 - A^{[l]})
-\]</div>
+</section>
+<section id="terms-needed-for-partial-mathcal-l-partial-mathbf-z-l">
+<h3>Terms needed for <span class="math notranslate nohighlight">\(\partial \mathcal{L} / \partial \mathbf{Z}^{[l]}\)</span><a class="headerlink" href="#terms-needed-for-partial-mathcal-l-partial-mathbf-z-l" title="Permalink to this headline">#</a></h3>
 <p>For all layers except the last (output) layer:</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{\partial \mathcal{L}}{\partial A^{[l]}} = W^{[l+1]^T} \frac{\partial \mathcal{L}}{\partial Z^{[l+1]}}
+\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[l]}} = \mathbf{W}^{[l+1]^T} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l+1]}}
 \]</div>
-<p>For the output layer (<span class="math notranslate nohighlight">\(L\)</span>) this takes a different form, dependent on the activation function used in the output layer and the loss function used. For log loss and sigmoid activation:</p>
+<p>So:</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{\partial \mathcal{L}}{\partial Z^{[L]}} = A^{[L]} - Y
+\frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} = \mathbf{W}^{[l+1]^T} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l+1]}} * \frac{\partial \mathbf{A}^{[l]}}{\partial \mathbf{Z}^{[l]}}
 \]</div>
-<p>For mean squared error loss and linear activation:</p>
+<p>Where <span class="math notranslate nohighlight">\(\partial \mathbf{A}^{[l]} / \partial \mathbf{Z}^{[l]}\)</span> is the derivative of the activation function. For example, for sigmoid activation:</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{\partial \mathcal{L}}{\partial Z^{[L]}} = 2\left(Z^{[L]} - Y\right)
+\frac{\partial \mathbf{A}^{[l]}}{\partial \mathbf{Z}^{[l]}} = \mathbf{A}^{[l]} * (1 - \mathbf{A}^{[l]})
 \]</div>
+<p>For the output layer (<span class="math notranslate nohighlight">\(L\)</span>), the form of <span class="math notranslate nohighlight">\(\partial \mathcal{L}/\partial \mathbf{A}^{[L]}\)</span> depends on the the loss function used. Often the overall expression for <span class="math notranslate nohighlight">\(\partial \mathcal{L} / \partial \mathbf{Z}^{[L]}\)</span> (which you get by multiplying the loss and final activation function derivatives) has a convenient form. For log loss and sigmoid activation it’s:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[L]}} = \mathbf{A}^{[L]} - \mathbf{Y}
+\]</div>
+<p>For mean squared error loss and linear activation it’s:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[L]}} = 2\left(\mathbf{Z}^{[L]} - \mathbf{Y}\right)
+\]</div>
+</section>
+<section id="intuition-why-are-these-the-right-equations">
+<h3>Intuition - Why are these the right equations?<a class="headerlink" href="#intuition-why-are-these-the-right-equations" title="Permalink to this headline">#</a></h3>
+<p>You may have already noticed similarities between the equations in matrix form above and the back propagation equations without using matrix notation in the previous notebook. They are the same equations, of course, but it can be difficult to see how this emerges through matrix multiplication and other operations. I try to solidify the link between the two forms here.</p>
+<section id="checking-dimensions">
+<h4>Checking Dimensions<a class="headerlink" href="#checking-dimensions" title="Permalink to this headline">#</a></h4>
+<p>The notation cheat sheet earlier in this notebook gives the dimensions of all the terms we’re using. Derivatives take on the same dimension as the term in the denominator, e.g.</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}}
+\]</div>
+<p>is a matrix with the same dimensions as <span class="math notranslate nohighlight">\(\mathbf{W}^{[l]}\)</span>, namely <span class="math notranslate nohighlight">\((n^{[l]}, n^{[l-1]})\)</span>, where each element is the derivative of the loss with respect to a single weight.</p>
+<p>In the full expression for the weight derivatives in a layer, we can check the dimensions make mathematical sense:
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}} = \frac{1}{m} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} \mathbf{A}^{[l-1]^T} \\
+(n^{[l]}, n^{[l-1]}) = (1) * (n^{[l]}, m) \times (m, n^{[l-1]})
+\)</span>$</p>
+<p>These are the correct dimensions for a valid matrix multiplication, which gives some reassurance that it’s sensible at least! We can repeat this for the other key equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[l]}} = \frac{1}{m} \sum_{\mathrm{rows}} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} \\
+(n^{[l]}, 1) = (1) * \sum_{\mathrm{rows}} (n^{[l]}, m)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} = \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[l]}} * \frac{\partial \mathbf{A}^{[l]}}{\partial \mathbf{Z}^{[l]}} \\
+(n^{[l]}, m) = (n^{[l]}, m) * (n^{[l]}, m)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[l]}} = \mathbf{W}^{[l+1]^T} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l+1]}} \\
+(n^{[l]}, m) = (n^{[l]}, n^{[l+1]}) \times (n^{[l+1]}, m)
+\end{split}\]</div>
+</section>
+<section id="activations">
+<h4>Activations<a class="headerlink" href="#activations" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[l]}} = \mathbf{W}^{[l+1]^T} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l+1]}}
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{W}^{[l+1]^T} = 
+\begin{bmatrix}
+w_{1 \rightarrow 1}^{[l+1]} &amp; \dots &amp; w_{1 \rightarrow n^{[l+1]}}^{[l+1]} \\
+\vdots &amp; \ddots &amp; \vdots \\
+w_{n^{[l]} \rightarrow 1}^{[l+1]} &amp; \dots &amp; w_{n^{[l]} \rightarrow n^{[l+1]}}^{[l+1]} \\
+\end{bmatrix}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l+1]}} = 
+\begin{bmatrix}
+\partial \mathcal{L}/\partial z_1^{[l+1](1)} &amp; \dots &amp; \partial \mathcal{L}/\partial z_1^{[l+1](m)} \\
+\vdots &amp; \ddots &amp; \vdots \\
+\partial \mathcal{L}/\partial z_{n^{[l+1]}}^{[l+1](1)} &amp; \dots &amp; \partial \mathcal{L}/\partial z_{n^{[l+1]}}^{[l+1](m)} \\
+\end{bmatrix}
+\end{split}\]</div>
+<p>Gradient for the activation of node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span> for data sample <span class="math notranslate nohighlight">\(m\)</span>, i.e. element <span class="math notranslate nohighlight">\((k, m)\)</span> of <span class="math notranslate nohighlight">\(\partial \mathcal{L} / \partial \mathbf{A}^{[l]}\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial a_k^{[l](m)}} = w_{k \rightarrow 1}^{[l+1]} \frac{\partial \mathcal{L}}{\partial z_1^{[l+1](m)}} + \dots + w_{k \rightarrow n^{[l+1]}}^{[l+1]} \frac{\partial \mathcal{L}}{\partial z_{n^{[l+1]}}^{[l+1](m)}}
+\]</div>
+<p>This reads as:</p>
+<ul class="simple">
+<li><p>The loss gradient of the activation of node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span> for data sample <span class="math notranslate nohighlight">\(m\)</span> is the sum of…</p>
+<ul>
+<li><p>the loss gradients of the linear predictors for each node in the next layer…</p>
+<ul>
+<li><p>multiplied by the weights between node <span class="math notranslate nohighlight">\(k\)</span> in layer <span class="math notranslate nohighlight">\(l\)</span> and all the nodes in the next layer</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="linear-predictor">
+<h4>Linear Predictor<a class="headerlink" href="#linear-predictor" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} = \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[l]}} * \frac{\partial \mathbf{A}^{[l]}}{\partial \mathbf{Z}^{[l]}}
+\]</div>
+<p>This follows from the chain rule (as seen in the previous notebook), and we’ve already derived/explained the two terms on the right above.</p>
+</section>
+<section id="bias">
+<h4>Bias<a class="headerlink" href="#bias" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[l]}} = \frac{1}{m} \sum_{\mathrm{rows}} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}}
+\]</div>
+<p>In the previous notebook we derived that, for a single bias term for a single data point, <span class="math notranslate nohighlight">\(\partial \mathcal{L} / \partial b_k^{[l](m)} = \partial \mathcal{L} / \partial z_k^{[l](m)}\)</span>. The expression here computes the mean of the gradient for each bias term across the whole batch of data.</p>
+</section>
+<section id="weights">
+<h4>Weights<a class="headerlink" href="#weights" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}} = \frac{1}{m} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} \mathbf{A}^{[l-1]^T}
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} = 
+\begin{bmatrix}
+\partial \mathcal{L}/\partial z_1^{[l](1)} &amp; \dots &amp; \partial \mathcal{L}/\partial z_1^{[l](m)} \\
+\vdots &amp; \ddots &amp; \vdots \\
+\partial \mathcal{L}/\partial z_{n^{[l]}}^{[l](1)} &amp; \dots &amp; \partial \mathcal{L}/\partial z_{n^{[l]}}^{[l](m)}
+\end{bmatrix}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A}^{[l-1]^T} =
+\begin{bmatrix} 
+a_{1}^{[l-1](1)} &amp; \dots &amp; a_{n^{[l-1]}}^{[l-1](1)} \\
+\vdots &amp; \ddots &amp; \vdots \\
+a_{1}^{[l-1](m)} &amp; \dots &amp; a_{n^{[l-1]}}^{[l-1](m)}
+\end{bmatrix}
+\end{split}\]</div>
+<p>The element <span class="math notranslate nohighlight">\((q, p)\)</span> of <span class="math notranslate nohighlight">\(\partial \mathcal{L} / \partial \mathbf{W}^{[l]}\)</span> (row <span class="math notranslate nohighlight">\(q\)</span>, column <span class="math notranslate nohighlight">\(p\)</span>) contains the gradient of the weight between node <span class="math notranslate nohighlight">\(p\)</span> in layer <span class="math notranslate nohighlight">\([l-1]\)</span> and node <span class="math notranslate nohighlight">\(q\)</span> in layer <span class="math notranslate nohighlight">\([l]\)</span> (i.e. the loss gradient of <span class="math notranslate nohighlight">\(w_{p \rightarrow q}^{[l]}\)</span>), averaged across the whole batch of data:</p>
+<div class="math notranslate nohighlight">
+\[
+\left[ \frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}} \right]_{(q, p)}  = 
+\frac{\partial \mathcal{L}}{\partial w_{p \rightarrow q}^{[l]}} = \frac{1}{m} \left( \frac{\partial \mathcal{L}}{\partial z_q^{[l](1)}} a_{p}^{[l-1](1)} + \dots + \frac{\partial \mathcal{L}}{\partial z_q^{[l](m)}} a_{p}^{[l-1](m)} \right)
+\]</div>
+<p>For why terms like <span class="math notranslate nohighlight">\((\partial \mathcal{L} / \partial z_q^{[l](1)} ) a_{p}^{[l-1](1)}\)</span> are correct for computing the gradient for the weights, you can again refer back to the single data point examples in the previous notebook.</p>
+</section>
+</section>
+</section>
+<section id="why-matrices">
+<h2>Why matrices?<a class="headerlink" href="#why-matrices" title="Permalink to this headline">#</a></h2>
 </section>
 </section>
 
