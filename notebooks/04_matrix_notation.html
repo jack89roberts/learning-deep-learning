@@ -463,6 +463,23 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#why-matrices">
    Why matrices?
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-gpus">
+     Why GPUs?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-about-tpus">
+     What about TPUs?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
  </li>
 </ul>
 
@@ -575,6 +592,23 @@ title="Print to PDF"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#why-matrices">
    Why matrices?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-gpus">
+     Why GPUs?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-about-tpus">
+     What about TPUs?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
   </a>
  </li>
 </ul>
@@ -922,6 +956,48 @@ a_{1}^{[l-1](m)} &amp; \dots &amp; a_{n^{[l-1]}}^{[l-1](m)}
 </section>
 <section id="why-matrices">
 <h2>Why matrices?<a class="headerlink" href="#why-matrices" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>The equations are much shorter/neater</p></li>
+<li><p>There are efficient algorithms/libraries readily available for vector/matrix operations, everything from <code class="docutils literal notranslate"><span class="pre">numpy</span></code> in Python to recent developments like <a class="reference external" href="https://www.deepmind.com/blog/discovering-novel-algorithms-with-alphatensor">DeepMind’s AlphaTensor</a>.</p></li>
+<li><p>Matrix multiplication (for example) can be run in parallel, including on GPUs</p></li>
+</ul>
+<section id="why-gpus">
+<h3>Why GPUs?<a class="headerlink" href="#why-gpus" title="Permalink to this headline">#</a></h3>
+<p>Here’s a rough comparison between CPUs and GPUs in terms of their performance and suitability for certain tasks:</p>
+<ul class="simple">
+<li><p>CPUs (Central Processing Units)</p>
+<ul>
+<li><p>Few cores/threads (low throughput)</p></li>
+<li><p>Low latency (each core/thread is fast)</p></li>
+<li><p>Good at context switching/performing different tasks sequentially</p></li>
+</ul>
+</li>
+<li><p>GPUs (Graphics Processing Units)</p>
+<ul>
+<li><p>Hundreds/thousands of cores/threads (high throughput)</p></li>
+<li><p>High latency (each core/thread is slower than a CPU)</p></li>
+<li><p>Good at performing single, simple (especially floating point) tasks in parallel</p></li>
+<li><p>Some added cost (time) in transferring data to GPU memory and in setting up/initiating tasks</p></li>
+</ul>
+</li>
+</ul>
+<p>When training a neural network we need to perform some general linear algebra operations many times (e.g. for each data sample, each layer/node in the network etc.) And many of those operations can be performed in parallel, for example each element in the result of a matrix multiplication can be computed in parallel as it doesn’t depend on any of the other elements (only the input matrices). Deep learning workflows are well suited to GPUs as a result.</p>
+<p>Much of the potential of GPUs for deep learning has been unlocked by Nvidia’s development of CUDA, which is a toolkit and set of drivers for writing parallel code to run on GPUs.</p>
+</section>
+<section id="what-about-tpus">
+<h3>What about TPUs?<a class="headerlink" href="#what-about-tpus" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://cloud.google.com/tpu/docs/tpus">Tensor Processing Units, or “TPUs”</a> (originally developed by Google), and now GPUs with <a class="reference external" href="https://www.nvidia.com/en-gb/data-center/tensor-cores/">Tensor Cores</a> (originally developed by Nvidia) are more specialised hardware optimised for machine/deep learning workflows. Or, more precisely, they’re optimised for linear algebra, matrix operations, and their use in neural networks. They can be an order of magnitude faster than GPUs, especially for very large models, but are less common and more expensive than traditional GPUs.</p>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.coursera.org/learn/neural-networks-deep-learning/home/info"><em>“Neural Networks and Deep Learning”</em>, DeepLearning.AI, Andrew Ng (Coursera)</a></p></li>
+<li><p><a class="reference external" href="https://blogs.nvidia.com/blog/2012/09/10/what-is-cuda-2/"><em>“What is CUDA”</em>, NVIDIA</a></p></li>
+<li><p><a class="reference external" href="https://blogs.nvidia.com/blog/2009/12/16/whats-the-difference-between-a-cpu-and-a-gpu/"><em>“What’s the Difference Between a CPU and a GPU?
+“</em>, NVIDIA</a></p></li>
+<li><p><a class="reference external" href="https://cloud.google.com/tpu/docs/tpus"><em>“Cloud Tensor Processing Units (TPUs)”</em>, Google</a></p></li>
+</ul>
 </section>
 </section>
 
