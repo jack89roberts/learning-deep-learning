@@ -692,11 +692,12 @@ title="Print to PDF"
 </ul>
 <p>Learn “best” values of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, and <span class="math notranslate nohighlight">\(b\)</span></p>
 <ul class="simple">
-<li><p>how?</p></li>
+<li><p>How?</p></li>
 </ul>
 </section>
 <section id="from-maximum-likelihood-to-loss-functions">
 <h2>From Maximum Likelihood to Loss Functions<a class="headerlink" href="#from-maximum-likelihood-to-loss-functions" title="Permalink to this headline">#</a></h2>
+<p><em>Note: This section assumes some knowledge of probability and Bayesian statistics. It’s not necessary to understandd the rest of the notebook, but <a class="reference external" href="https://gregorygundersen.com/blog/2020/02/04/bayesian-linear-regression/">you might find this longer description helpful</a> if you’d like to learn more.</em></p>
 <p>In Bayesian linear regression we |model the true value (actual happiness), <span class="math notranslate nohighlight">\(y\)</span>, as being drawn from a normal distribution with mean equal to the predicted value (predicted happiness), <span class="math notranslate nohighlight">\(\hat{y_i}\)</span>, that we’re trying to derive (for a single data point <span class="math notranslate nohighlight">\(i\)</span>):</p>
 <div class="math notranslate nohighlight">
 \[
@@ -726,10 +727,15 @@ P(y \mid \hat{y}, \sigma) = \prod_{i=1}^{N} \mathcal{N}(y_i \mid \hat{y_i}, \sig
 \[
 \mathcal{L} = \frac{1}{N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
 \]</div>
+<p>The main difference to Bayesian linear regression in what follows is that:</p>
+<ul class="simple">
+<li><p>We don’t use a prior (or, equivalently, we use a non-informative prior so the parameters depend only on the data)</p></li>
+<li><p>We only compute the ‘maximum likelihood’ values for the parameter, not a full posterior.</p></li>
+</ul>
 </section>
 <section id="loss-function">
 <h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">#</a></h2>
-<p>Choose <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, <span class="math notranslate nohighlight">\(b\)</span> to minimise the mean squared error between the predicted and actual value:</p>
+<p>We choose <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, <span class="math notranslate nohighlight">\(b\)</span> to minimise the mean squared error between the predicted and actual value:</p>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L} = \frac{1}{N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
@@ -1039,9 +1045,9 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[-0.2172, -0.2453]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[-0.5174, -0.1721]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.4879], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.5041], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -1066,16 +1072,16 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.4879], grad_fn=&lt;S
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.2362],
-        [-0.3124],
-        [-0.5947],
-        [-0.2737],
-        [-0.0279],
-        [ 0.0199],
-        [-0.6652],
-        [-0.6470],
-        [-0.8108],
-        [-0.3102]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.0705],
+        [ 0.8525],
+        [ 0.4079],
+        [ 0.7152],
+        [ 0.9699],
+        [ 1.3323],
+        [ 0.2762],
+        [ 0.2067],
+        [-0.4016],
+        [ 0.7719]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -1163,7 +1169,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.4879], grad_fn=&lt;S
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7050]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-2.5289e-09], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-1.9420e-09], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/01_linear_regression_42_1.png" src="../_images/01_linear_regression_42_1.png" />

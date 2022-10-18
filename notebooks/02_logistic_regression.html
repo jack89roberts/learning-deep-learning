@@ -882,9 +882,9 @@ g(z) = \textrm{sigmoid}(z) = \frac{1}{1 + \exp(-z)}
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4496]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4545]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8178], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8187], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -1095,9 +1095,9 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8178], grad_fn=&lt;Sl
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.4397, -2.6708]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.4880, -2.6871]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.1398], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.0385], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/02_logistic_regression_34_1.png" src="../_images/02_logistic_regression_34_1.png" />
@@ -1144,14 +1144,14 @@ z = w_1 x_1^3 + w_2 x_1^2 x_2 + w_3 x_1 x_2^2 + w_4 x_2^3 + w_5 x_1 ^2 + w_6 x_1
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[ 1.4382, -0.5235],
-        [10.7092, 10.2610]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[11.0460,  9.4014],
+        [ 1.5066, -0.6164]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.1494,  0.1906], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.0312,  0.0007], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 27.8920, -16.4559]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[-16.7611,  28.3477]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.0758], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.9171], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/02_logistic_regression_40_1.png" src="../_images/02_logistic_regression_40_1.png" />
@@ -1293,7 +1293,7 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.0758], grad_fn=&lt;S
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1808/854895806.py:2: RuntimeWarning: overflow encountered in exp
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1882/854895806.py:2: RuntimeWarning: overflow encountered in exp
   return 1 / (1 + np.exp(-z))
 </pre></div>
 </div>
