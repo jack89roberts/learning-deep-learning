@@ -381,6 +381,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-maximum-likelihood-to-log-loss">
+   From Maximum Likelihood to Log Loss
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#loss-function">
    Loss Function
   </a>
@@ -463,6 +468,11 @@ title="Print to PDF"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#takeaway-message">
    Takeaway message
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
   </a>
  </li>
 </ul>
@@ -495,6 +505,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-maximum-likelihood-to-log-loss">
+   From Maximum Likelihood to Log Loss
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#loss-function">
    Loss Function
   </a>
@@ -577,6 +592,11 @@ title="Print to PDF"
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#takeaway-message">
    Takeaway message
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
   </a>
  </li>
 </ul>
@@ -687,6 +707,10 @@ title="Print to PDF"
 \]</div>
 <p>So we still have a linear predictor (<span class="math notranslate nohighlight">\(z = wx + b\)</span>) on the input features, but we apply the sigmoid function to create our final output (mapping the continuous value of the linear predictor to be between zero and one).</p>
 </section>
+<section id="from-maximum-likelihood-to-log-loss">
+<h2>From Maximum Likelihood to Log Loss<a class="headerlink" href="#from-maximum-likelihood-to-log-loss" title="Permalink to this headline">#</a></h2>
+<p>TODO - log loss is the maximum likelihood estimator for logistic regression</p>
+</section>
 <section id="loss-function">
 <h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">#</a></h2>
 <p>In linear regression we used mean squared error as the metric to optimise the weights of the model. In logistic regression we use the <strong>log loss</strong>, also known as the <strong>(binary) cross-entropy</strong> loss. It’s defined as follows (remember that <span class="math notranslate nohighlight">\(y\)</span>, the true class, is always zero or one):</p>
@@ -711,7 +735,7 @@ L = - \frac{1}{N} \sum_i^N y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i})
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;loss&#39;)
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_10_1.png" src="../_images/02_logistic_regression_10_1.png" />
+<img alt="../_images/02_logistic_regression_11_1.png" src="../_images/02_logistic_regression_11_1.png" />
 </div>
 </div>
 <p>Why not just use mean squared error?</p>
@@ -766,7 +790,7 @@ L = - \frac{1}{N} \sum_i^N y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i})
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;loss&#39;)
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_12_1.png" src="../_images/02_logistic_regression_12_1.png" />
+<img alt="../_images/02_logistic_regression_13_1.png" src="../_images/02_logistic_regression_13_1.png" />
 </div>
 </div>
 </section>
@@ -882,7 +906,7 @@ g(z) = \textrm{sigmoid}(z) = \frac{1}{1 + \exp(-z)}
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4545]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4543]], grad_fn=&lt;SliceBackward0&gt;) 
 
 Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8187], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
@@ -912,7 +936,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8187], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/02_logistic_regression_24_0.png" src="../_images/02_logistic_regression_24_0.png" />
+<img alt="../_images/02_logistic_regression_25_0.png" src="../_images/02_logistic_regression_25_0.png" />
 </div>
 </div>
 <p>Also shown is the <strong>decision boundary</strong> - all samples with <span class="math notranslate nohighlight">\(x\)</span> to the left of the boundary are predicted to have <span class="math notranslate nohighlight">\(y = 0\)</span>, and all values to the right <span class="math notranslate nohighlight">\(y = 1\)</span> (assuming we predict <span class="math notranslate nohighlight">\(y = 1\)</span> when <span class="math notranslate nohighlight">\(\hat{y} \geq 0.5\)</span>).</p>
@@ -952,7 +976,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8187], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/02_logistic_regression_27_0.png" src="../_images/02_logistic_regression_27_0.png" />
+<img alt="../_images/02_logistic_regression_28_0.png" src="../_images/02_logistic_regression_28_0.png" />
 </div>
 </div>
 </section>
@@ -1095,12 +1119,12 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8187], grad_fn=&lt;Sl
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.4880, -2.6871]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.5067, -3.1888]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.0385], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0313], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_34_1.png" src="../_images/02_logistic_regression_34_1.png" />
+<img alt="../_images/02_logistic_regression_35_1.png" src="../_images/02_logistic_regression_35_1.png" />
 </div>
 </div>
 <p>Logistic regression, and our neural network that recreates it, can only fit <em>linear</em> decision boundaries. We could fit a non-linear boundary by adding polynomial features. In this case we’d need up cubic terms so we might try to fit something like this:</p>
@@ -1144,17 +1168,17 @@ z = w_1 x_1^3 + w_2 x_1^2 x_2 + w_3 x_1 x_2^2 + w_4 x_2^3 + w_5 x_1 ^2 + w_6 x_1
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[11.0460,  9.4014],
-        [ 1.5066, -0.6164]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[-10.8588,  -9.7011],
+        [ -1.4583,   0.6596]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.0312,  0.0007], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.0055, -0.0179], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[-16.7611,  28.3477]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 16.0919, -27.3540]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.9171], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([5.5434], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_40_1.png" src="../_images/02_logistic_regression_40_1.png" />
+<img alt="../_images/02_logistic_regression_41_1.png" src="../_images/02_logistic_regression_41_1.png" />
 </div>
 </div>
 <p>We get a non-linear decision boundary! But there’s still a region where the network is uncertain/misclassifies  some points (e.g. the white region). What if we add another layer?</p>
@@ -1186,7 +1210,7 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.9171], grad_fn=&lt;S
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_43_1.png" src="../_images/02_logistic_regression_43_1.png" />
+<img alt="../_images/02_logistic_regression_44_1.png" src="../_images/02_logistic_regression_44_1.png" />
 </div>
 </div>
 <p>This network can almost perfectly fit the decision boundary the data was generated with.</p>
@@ -1293,11 +1317,7 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.9171], grad_fn=&lt;S
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1882/854895806.py:2: RuntimeWarning: overflow encountered in exp
-  return 1 / (1 + np.exp(-z))
-</pre></div>
-</div>
-<img alt="../_images/02_logistic_regression_48_1.png" src="../_images/02_logistic_regression_48_1.png" />
+<img alt="../_images/02_logistic_regression_49_0.png" src="../_images/02_logistic_regression_49_0.png" />
 </div>
 </div>
 <p>The colour scale shows the “activation” of the node (i.e. the output after applying the sigmoid function). One node in the hidden layer captures the upward (positive) slope of the decision boundary, and the other the downward (negative) slope. When combined in the output layer (and sigmoid applied), the points from the two classes are linearly separable (you can draw a linear decision boundary between them) with respect to the activation of the hidden nodes.</p>
@@ -1305,6 +1325,13 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.9171], grad_fn=&lt;S
 <section id="takeaway-message">
 <h2>Takeaway message<a class="headerlink" href="#takeaway-message" title="Permalink to this headline">#</a></h2>
 <p>Adding non-linear activation functions (e.g. sigmoid) to the output of every node allows us to fit non-linear functions with neural networks.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://allenkunle.me/deriving-ml-cost-functions-part2"><em>“Deriving Machine Learning Cost Functions using Maximum Likelihood Estimation (MLE) - Part II”</em></a>, Allen Akinkunle</p></li>
+<li><p><a class="reference external" href="https://www.coursera.org/learn/machine-learning?specialization=machine-learning-introduction#syllabus"><em>“Supervised Machine Learning: Regression and Classification”</em></a> (Coursera), Andrew Ng</p></li>
+</ul>
 </section>
 </section>
 

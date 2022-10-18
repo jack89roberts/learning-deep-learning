@@ -434,6 +434,11 @@ title="Print to PDF"
    What’s missing?
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -517,6 +522,11 @@ title="Print to PDF"
    What’s missing?
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -529,6 +539,15 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="linear-regression">
 <h1>01: Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this headline">#</a></h1>
+<p>In this notebook we’ll cover:</p>
+<ul class="simple">
+<li><p>Linear regression</p></li>
+<li><p>Loss functions</p></li>
+<li><p>Gradient descent</p></li>
+<li><p>Linear regression as a neural network</p></li>
+<li><p>Pytorch</p></li>
+<li><p>Start to consider how neural networks fit non-linear functions</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
@@ -688,7 +707,7 @@ title="Print to PDF"
 <li><p><span class="math notranslate nohighlight">\(w_2\)</span> : Happiness increase per cup of coffee</p></li>
 </ul>
 </li>
-<li><p><span class="math notranslate nohighlight">\(b\)</span> : Intercept (happiness if no oranges or coffee 😱)</p></li>
+<li><p><span class="math notranslate nohighlight">\(b\)</span> : Intercept or <strong>“bias”</strong> (happiness if no oranges or coffee 😱)</p></li>
 </ul>
 <p>Learn “best” values of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, and <span class="math notranslate nohighlight">\(b\)</span></p>
 <ul class="simple">
@@ -697,7 +716,7 @@ title="Print to PDF"
 </section>
 <section id="from-maximum-likelihood-to-loss-functions">
 <h2>From Maximum Likelihood to Loss Functions<a class="headerlink" href="#from-maximum-likelihood-to-loss-functions" title="Permalink to this headline">#</a></h2>
-<p><em>Note: This section assumes some knowledge of probability and Bayesian statistics. It’s not necessary to understandd the rest of the notebook, but <a class="reference external" href="https://gregorygundersen.com/blog/2020/02/04/bayesian-linear-regression/">you might find this longer description helpful</a> if you’d like to learn more.</em></p>
+<p><em>*<em>Note:</em> This section assumes some knowledge of probability and Bayesian statistics. It’s not necessary to understand the rest of the notebook, but <a class="reference external" href="https://gregorygundersen.com/blog/2020/02/04/bayesian-linear-regression/">you might find this longer description helpful</a> if you’d like to learn more.</em></p>
 <p>In Bayesian linear regression we |model the true value (actual happiness), <span class="math notranslate nohighlight">\(y\)</span>, as being drawn from a normal distribution with mean equal to the predicted value (predicted happiness), <span class="math notranslate nohighlight">\(\hat{y_i}\)</span>, that we’re trying to derive (for a single data point <span class="math notranslate nohighlight">\(i\)</span>):</p>
 <div class="math notranslate nohighlight">
 \[
@@ -740,6 +759,7 @@ P(y \mid \hat{y}, \sigma) = \prod_{i=1}^{N} \mathcal{N}(y_i \mid \hat{y_i}, \sig
 \[
 \mathcal{L} = \frac{1}{N} \sum_{i=1}^{N} (\hat{y_i} - y_i)^2
 \]</div>
+<p>This is the <strong>mean squared error (MSE)</strong> loss function.</p>
 <p>Here’s an example for one choice of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. The loss is the sum of the lengths of the vertical black lines (squared) - the difference between the predicted and actual value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -851,8 +871,11 @@ P(y \mid \hat{y}, \sigma) = \prod_{i=1}^{N} \mathcal{N}(y_i \mid \hat{y_i}, \sig
 \frac{\partial \mathcal{L}}{\partial b} = \frac{2}{m} \sum_{i=1}^{m} (\hat{y_i} - y_i)
 \end{split}\]</div>
 <p>(sometimes you will see <span class="math notranslate nohighlight">\(\mathcal{L}/2\)</span> used as a loss function instead, to avoid the factors 2 above)</p>
+<p>The process by which we find the parameter values that zero the gradients above is called <strong>gradient descent</strong>.</p>
 <p>I’ve replaced <span class="math notranslate nohighlight">\(N\)</span>, the number of samples in the dataset, with <span class="math notranslate nohighlight">\(m \leq N\)</span>, to indicate that we could choose to update the parameters based on the loss of a subset of the data.</p>
-<p><span class="math notranslate nohighlight">\(m\)</span> is known as the <strong>batch size</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(m\)</span> is known as the <strong>batch size</strong></p></li>
+</ul>
 <p>Different values of <span class="math notranslate nohighlight">\(m\)</span> correspond to different forms of gradient descent:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(m = N\)</span> : Batch Gradient Descent (or, more commonly, <strong>Gradient Descent</strong>)</p></li>
@@ -1011,8 +1034,18 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 </section>
 <section id="neural-network-for-linear-regression">
 <h2>Neural Network for Linear Regression<a class="headerlink" href="#neural-network-for-linear-regression" title="Permalink to this headline">#</a></h2>
+<p>Here is linear regression represented as a small neural network:</p>
 <p><img alt="" src="../_images/01_linear_regression_net.png" /></p>
-<p><strong>Dense</strong> layer: All nodes in the previous layer are connected to all the nodes in the next layer</p>
+<p>You’ll see this type of network (and the networks we’ll use throughout the next few notebooks) referred to as:</p>
+<ul class="simple">
+<li><p>Feedforward neural network</p></li>
+<li><p>Single- or Multi-layer Perceptron (MLP)</p></li>
+<li><p>Fully-connected neural network</p></li>
+</ul>
+<p>All the layers in this network are <em>“dense”</em> or <em>“fully-connected”</em> layers:</p>
+<ul class="simple">
+<li><p><strong>Dense</strong> layer: All nodes in the previous layer are connected to all the nodes in the next layer (a node is one of the circles above)</p></li>
+</ul>
 </section>
 <section id="pytorch">
 <h2>Pytorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">#</a></h2>
@@ -1045,9 +1078,9 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[-0.5174, -0.1721]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2116, 0.3417]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.5041], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.4405], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -1072,16 +1105,16 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.5041], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 1.0705],
-        [ 0.8525],
-        [ 0.4079],
-        [ 0.7152],
-        [ 0.9699],
-        [ 1.3323],
-        [ 0.2762],
-        [ 0.2067],
-        [-0.4016],
-        [ 0.7719]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.1870],
+        [ 0.2522],
+        [ 0.5839],
+        [ 0.1573],
+        [-0.1646],
+        [-0.1492],
+        [ 0.6617],
+        [ 0.6158],
+        [ 0.7211],
+        [ 0.2285]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -1169,7 +1202,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.5041], grad_fn=&lt;Sl
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7050]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-1.9420e-09], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-1.9447e-09], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/01_linear_regression_42_1.png" src="../_images/01_linear_regression_42_1.png" />
@@ -1181,7 +1214,8 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-1.9420e-09], grad_fn=&
 <p>Here’s a slightly bigger network (but with only one input feature, <span class="math notranslate nohighlight">\(x\)</span>):</p>
 <p><img alt="" src="../_images/01_two_hidden_layers.png" /></p>
 <ul class="simple">
-<li><p>Additional layers between the input and output layer are known as <strong>hidden layers</strong>.</p></li>
+<li><p>Additional layers between the input and output layer are known as <strong>hidden layers</strong></p></li>
+<li><p>Each edge (arrow) in the diagram has an associated <em>weight</em></p></li>
 <li><p>All of the nodes have an implicit <em>bias</em> / intercept term as before, they’re just not shown.</p></li>
 <li><p>All the layers are still <em>dense</em> layers (each node connected to all the nodes in the next layer)</p></li>
 </ul>
@@ -1317,6 +1351,13 @@ h = w_x x + b_h \\
 <h2>What’s missing?<a class="headerlink" href="#what-s-missing" title="Permalink to this headline">#</a></h2>
 <p>We need the output from each node to be a non-linear function of its inputs.</p>
 <p>Activation functions - Part 2.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://allenkunle.me/deriving-ml-cost-functions-part1"><em>“Deriving Machine Learning Cost Functions using Maximum Likelihood Estimation (MLE) - Part I”</em></a>, Allen Akinkunle</p></li>
+<li><p><a class="reference external" href="https://www.coursera.org/learn/machine-learning?specialization=machine-learning-introduction#syllabus"><em>“Supervised Machine Learning: Regression and Classification”</em></a> (Coursera), Andrew Ng</p></li>
+</ul>
 </section>
 </section>
 
