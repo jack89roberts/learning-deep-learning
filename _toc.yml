@@ -1,4 +1,3 @@
-# In _toc.yml
 format: jb-book
 root: index
 chapters:
@@ -6,5 +5,8 @@ chapters:
 - file: notebooks/02_logistic_regression
 - file: notebooks/03_backprop
 - file: notebooks/04_matrix_notation
-- file: notebooks/05_relu
-- file: notebooks/06_multiclass
+- file: notebooks/05_activation
+- file: notebooks/06_nonlinear_regression
+- file: notebooks/07_multiclass
+- file: notebooks/08_regularisation
+- file: notebooks/09_optimisers
