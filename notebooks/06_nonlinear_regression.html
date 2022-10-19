@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>05: ReLU and Other Activation Functions &#8212; Learning Deep Learning</title>
+    <title>06: Non-linear Regression &#8212; Learning Deep Learning</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,6 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="06:" href="06_multiclass.html" />
-    <link rel="prev" title="04: Matrix Notation" href="04_matrix_notation.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -114,7 +112,7 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_linear_regression.html">
    01: Linear Regression
@@ -133,16 +131,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="04_matrix_notation.html">
    04: Matrix Notation
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   05: ReLU and Other Activation Functions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="06_multiclass.html">
-   06:
   </a>
  </li>
 </ul>
@@ -204,7 +192,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/jack89roberts/learning-deep-learning/main?urlpath=tree/notebooks/05_relu.ipynb"
+        <a href="https://mybinder.org/v2/gh/jack89roberts/learning-deep-learning/main?urlpath=tree/notebooks/06_nonlinear_regression.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -264,7 +252,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/jack89roberts/learning-deep-learning/issues/new?title=Issue%20on%20page%20%2Fnotebooks/05_relu.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/jack89roberts/learning-deep-learning/issues/new?title=Issue%20on%20page%20%2Fnotebooks/06_nonlinear_regression.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -281,7 +269,7 @@ title="Open an issue"
       </li>
       
       <li>
-        <a href="https://github.com/jack89roberts/learning-deep-learning/edit/main/notebooks/05_relu.ipynb"
+        <a href="https://github.com/jack89roberts/learning-deep-learning/edit/main/notebooks/06_nonlinear_regression.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -309,7 +297,7 @@ title="Edit this page"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/notebooks/05_relu.ipynb"
+        <a href="../_sources/notebooks/06_nonlinear_regression.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -369,13 +357,8 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#vanishing-gradients">
-   Vanishing Gradients
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#relu">
-   ReLU
+  <a class="reference internal nav-link" href="#stability-of-the-fit-overfitting">
+   Stability of the fit (overfitting)
   </a>
  </li>
 </ul>
@@ -387,7 +370,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>05: ReLU and Other Activation Functions</h1>
+                <h1>06: Non-linear Regression</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -398,13 +381,8 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#vanishing-gradients">
-   Vanishing Gradients
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#relu">
-   ReLU
+  <a class="reference internal nav-link" href="#stability-of-the-fit-overfitting">
+   Stability of the fit (overfitting)
   </a>
  </li>
 </ul>
@@ -417,80 +395,48 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="relu-and-other-activation-functions">
-<h1>05: ReLU and Other Activation Functions<a class="headerlink" href="#relu-and-other-activation-functions" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="non-linear-regression">
+<h1>06: Non-linear Regression<a class="headerlink" href="#non-linear-regression" title="Permalink to this headline">#</a></h1>
+<p>Non-linear regression</p>
 <ul class="simple">
-<li><p>using relu activation</p></li>
+<li><p>intuition fitting arbitrary functions</p></li>
+<li><p>train/test</p></li>
 </ul>
-<section id="vanishing-gradients">
-<h2>Vanishing Gradients<a class="headerlink" href="#vanishing-gradients" title="Permalink to this headline">#</a></h2>
+<section id="stability-of-the-fit-overfitting">
+<h2>Stability of the fit (overfitting)<a class="headerlink" href="#stability-of-the-fit-overfitting" title="Permalink to this headline">#</a></h2>
+<p>With more flexibility comes more potential for overfitting (poor performance on new data). Here’s an example of fitting the two hidden layer network on an increasing number of data points:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># previously was at the end of 02 logistic regression</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">for n in [5, 10, 20, 30, 40, 50, 100, 250]:</span>
+<span class="sd">    X, y = get_cubic_data(n)</span>
+<span class="sd">    X = torch.tensor(X, dtype=torch.float)</span>
+<span class="sd">    y = torch.tensor(y, dtype=torch.float)</span>
+<span class="sd">    y = y[:, None]</span>
 
+<span class="sd">    model = nn.Sequential(</span>
+<span class="sd">        nn.Linear(in_features=2, out_features=3),</span>
+<span class="sd">        nn.Sigmoid(),</span>
+<span class="sd">        nn.Linear(in_features=3, out_features=3),</span>
+<span class="sd">        nn.Sigmoid(),</span>
+<span class="sd">        nn.Linear(in_features=3, out_features=1),</span>
+<span class="sd">        #  Sigmoid (applied in loss_fn)</span>
+<span class="sd">    )</span>
 
-<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+<span class="sd">    learning_rate = 0.1</span>
+<span class="sd">    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)</span>
+<span class="sd">    model, loss_history = train(X, y, model, loss_fn, optimizer, 30000)</span>
 
-
-<span class="k">def</span> <span class="nf">dsigmoid_dx</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
-
-
-<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma(z)$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dsigmoid_dx</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39;(z)$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+<span class="sd">    show_result(X, y, model, loss_history, print_weights=False, suptitle=f&quot;n = {n}&quot;)</span>
+<span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;z&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;\nfor n in [5, 10, 20, 30, 40, 50, 100, 250]:\n    X, y = get_cubic_data(n)\n    X = torch.tensor(X, dtype=torch.float)\n    y = torch.tensor(y, dtype=torch.float)\n    y = y[:, None]\n\n    model = nn.Sequential(\n        nn.Linear(in_features=2, out_features=3),\n        nn.Sigmoid(),\n        nn.Linear(in_features=3, out_features=3),\n        nn.Sigmoid(),\n        nn.Linear(in_features=3, out_features=1),\n        #  Sigmoid (applied in loss_fn)\n    )\n\n    learning_rate = 0.1\n    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)\n    model, loss_history = train(X, y, model, loss_fn, optimizer, 30000)\n\n    show_result(X, y, model, loss_history, print_weights=False, suptitle=f&quot;n = {n}&quot;)\n&#39;
 </pre></div>
 </div>
-<img alt="../_images/05_relu_2_1.png" src="../_images/05_relu_2_1.png" />
-</div>
-</div>
-</section>
-<section id="relu">
-<h2>ReLU<a class="headerlink" href="#relu" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">relu</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">r</span><span class="p">[</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">return</span> <span class="n">r</span>
-
-
-<span class="k">def</span> <span class="nf">drelu_dz</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
-    <span class="n">dr</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">dr</span><span class="p">[</span><span class="n">z</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">dr</span><span class="p">[</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">dr</span>
-
-
-<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">relu</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma(z)$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">drelu_dz</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39;(z)$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;z&#39;)
-</pre></div>
-</div>
-<img alt="../_images/05_relu_4_1.png" src="../_images/05_relu_4_1.png" />
 </div>
 </div>
 </section>
@@ -523,20 +469,6 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="04_matrix_notation.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">04: Matrix Notation</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="06_multiclass.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">06:</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
 </div>
             </footer>
         </div>

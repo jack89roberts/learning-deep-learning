@@ -137,16 +137,6 @@ const thebe_selector_output = ".output, .cell_output"
    04: Matrix Notation
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="05_relu.html">
-   05: ReLU and Other Activation Functions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="06_multiclass.html">
-   06:
-  </a>
- </li>
 </ul>
 
     </div>
@@ -906,9 +896,9 @@ g(z) = \textrm{sigmoid}(z) = \frac{1}{1 + \exp(-z)}
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4543]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4298]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8187], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8138], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -1119,9 +1109,9 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8187], grad_fn=&lt;Sl
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.5067, -3.1888]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.4957, -2.9550]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0313], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0437], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/02_logistic_regression_35_1.png" src="../_images/02_logistic_regression_35_1.png" />
@@ -1168,14 +1158,14 @@ z = w_1 x_1^3 + w_2 x_1^2 x_2 + w_3 x_1 x_2^2 + w_4 x_2^3 + w_5 x_1 ^2 + w_6 x_1
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[-10.8588,  -9.7011],
-        [ -1.4583,   0.6596]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[-10.9431,  -9.8741],
+        [  1.3983,  -0.6108]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.0055, -0.0179], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.2728, -0.1141], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 16.0919, -27.3540]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[13.6922, 24.5043]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([5.5434], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-18.5319], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/02_logistic_regression_41_1.png" src="../_images/02_logistic_regression_41_1.png" />
