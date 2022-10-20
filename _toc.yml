@@ -1,12 +1,17 @@
 format: jb-book
 root: index
-chapters:
-- file: notebooks/01_linear_regression
-- file: notebooks/02_logistic_regression
-- file: notebooks/03_backprop
-- file: notebooks/04_matrix_notation
-- file: notebooks/05_activation
-- file: notebooks/06_nonlinear_regression
-- file: notebooks/07_multiclass
-- file: notebooks/08_regularisation
-- file: notebooks/09_optimisers
+parts:
+  - caption: "Neural Networks"
+    chapters:
+    - file: notebooks/01_linear_regression
+    - file: notebooks/02_logistic_regression
+    - file: notebooks/03_backprop
+    - file: notebooks/04_matrix_notation
+    - file: notebooks/05_activation
+    - file: notebooks/06_nonlinear_regression
+    - file: notebooks/07_multiclass
+    - file: notebooks/08_regularisation
+    - file: notebooks/09_optimisers
+    - file: notebooks/10_experiments
+
+  - caption: "Convolutional Neural Networks"
