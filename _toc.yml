@@ -1,7 +1,7 @@
 format: jb-book
 root: index
 parts:
-  - caption: "Neural Networks"
+  - caption: Neural Networks
     chapters:
     - file: notebooks/01_linear_regression
     - file: notebooks/02_logistic_regression
@@ -13,5 +13,3 @@ parts:
     - file: notebooks/08_regularisation
     - file: notebooks/09_optimisers
     - file: notebooks/10_experiments
-
-  - caption: "Convolutional Neural Networks"
