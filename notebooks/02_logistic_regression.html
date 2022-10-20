@@ -396,13 +396,30 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#from-maximum-likelihood-to-log-loss">
-   From Maximum Likelihood to Log Loss
+  <a class="reference internal nav-link" href="#loss-function">
+   Loss Function
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loss-function">
-   Loss Function
+  <a class="reference internal nav-link" href="#why-not-just-use-mean-squared-error">
+   Why not just use mean squared error?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#it-s-the-maximum-likelihood-estimator">
+     1) It’s the Maximum Likelihood Estimator
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#it-s-convex">
+     2) It’s convex
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gradient-descent-for-logistic-regression">
+   Gradient Descent for Logistic Regression
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -520,13 +537,30 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#from-maximum-likelihood-to-log-loss">
-   From Maximum Likelihood to Log Loss
+  <a class="reference internal nav-link" href="#loss-function">
+   Loss Function
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loss-function">
-   Loss Function
+  <a class="reference internal nav-link" href="#why-not-just-use-mean-squared-error">
+   Why not just use mean squared error?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#it-s-the-maximum-likelihood-estimator">
+     1) It’s the Maximum Likelihood Estimator
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#it-s-convex">
+     2) It’s convex
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gradient-descent-for-logistic-regression">
+   Gradient Descent for Logistic Regression
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -720,18 +754,23 @@ title="Print to PDF"
 \[
 \hat{y} = \textrm{sigmoid}(w x + b)
 \]</div>
-<p>So we still have a linear predictor (<span class="math notranslate nohighlight">\(z = wx + b\)</span>) on the input features, but we apply the sigmoid function to create our final output (mapping the continuous value of the linear predictor to be between zero and one).</p>
-</section>
-<section id="from-maximum-likelihood-to-log-loss">
-<h2>From Maximum Likelihood to Log Loss<a class="headerlink" href="#from-maximum-likelihood-to-log-loss" title="Permalink to this headline">#</a></h2>
-<p>TODO - log loss is the maximum likelihood estimator for logistic regression</p>
+<p>Note we still use a <em>linear predictor</em>, <span class="math notranslate nohighlight">\(z\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+z = wx + b
+\]</div>
+<p>on the input features, which we apply the sigmoid function to create our final output (mapping the continuous value of the linear predictor to be between zero and one):</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{y} = \textrm{sigmoid}(z)
+\]</div>
 </section>
 <section id="loss-function">
 <h2>Loss Function<a class="headerlink" href="#loss-function" title="Permalink to this headline">#</a></h2>
 <p>In linear regression we used mean squared error as the metric to optimise the weights of the model. In logistic regression we use the <strong>log loss</strong>, also known as the <strong>(binary) cross-entropy</strong> loss. It’s defined as follows (remember that <span class="math notranslate nohighlight">\(y\)</span>, the true class, is always zero or one):</p>
 <div class="math notranslate nohighlight">
 \[
-L = - \frac{1}{N} \sum_i^N y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i})
+\mathcal{L} = - \frac{1}{N} \sum_i^N y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i})
 \]</div>
 <p>Which looks like this:</p>
 <div class="cell docutils container">
@@ -750,14 +789,54 @@ L = - \frac{1}{N} \sum_i^N y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i})
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;loss&#39;)
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_11_1.png" src="../_images/02_logistic_regression_11_1.png" />
+<img alt="../_images/02_logistic_regression_10_1.png" src="../_images/02_logistic_regression_10_1.png" />
 </div>
 </div>
-<p>Why not just use mean squared error?</p>
-<ul class="simple">
-<li><p>Using log loss gives the maximum likelihood estimator for logistic regression</p></li>
-<li><p>It’s a convex function for logistic regression (but mean squared error is not), see below. So it’s easier to optimise (no local minima).</p></li>
-</ul>
+</section>
+<section id="why-not-just-use-mean-squared-error">
+<h2>Why not just use mean squared error?<a class="headerlink" href="#why-not-just-use-mean-squared-error" title="Permalink to this headline">#</a></h2>
+<section id="it-s-the-maximum-likelihood-estimator">
+<h3>1) It’s the Maximum Likelihood Estimator<a class="headerlink" href="#it-s-the-maximum-likelihood-estimator" title="Permalink to this headline">#</a></h3>
+<p>In logistic regression we model the true class label (<span class="math notranslate nohighlight">\(y_i=1\)</span> or <span class="math notranslate nohighlight">\(y_i=0\)</span>) as being drawn from a <em>Bernoulli distribution</em>, where the probability of <span class="math notranslate nohighlight">\(y_i = 1\)</span> is given by our prediction <span class="math notranslate nohighlight">\(\hat{y_i}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p(y_i \mid \hat{y_i}) = 
+\begin{cases}
+    \hat{y_i} &amp; \text{if } y_i = 1 \\
+    1-\hat{y_i} &amp; \text{if } y_i = 0
+\end{cases}
+\end{split}\]</div>
+<p>We want to maximise the <em>likelihood</em> (the probability of the true class values given our predictions):</p>
+<div class="math notranslate nohighlight">
+\[
+P(y \mid \hat{y}) = \prod_{i=1}^N p(y_i \mid \hat{y_i})
+\]</div>
+<p>Often it’s more convenient to work with the <em>log likelihood</em> instead:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\log \left[ P(y \mid \hat{y}) \right] =
+\sum_{i=1}^N
+\begin{cases}
+    \log(\hat{y_i}) &amp; \text{if } y_i = 1 \\
+    \log(1-\hat{y_i}) &amp; \text{if } y_i = 0
+\end{cases}
+\end{split}\]</div>
+<p>Note the change from a product to a sum follows from log rules (<span class="math notranslate nohighlight">\(\log (ab) = \log(a) + \log(b)\)</span>).</p>
+<p>This can be re-written as:</p>
+<div class="math notranslate nohighlight">
+\[
+\log \left[ P(y \mid \hat{y}) \right] = \sum_{i=1}^N \left[ y_i \log(\hat{y_i}) + (1 - y_i) \log(1-\hat{y_i}) \right]
+\]</div>
+<p>In logistic regression with gradient descent, rather than maximising the log likelihood we minimise its negative and take the mean across the dataset:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L} = - \frac{1}{N} \sum_{i=1}^N  \left[ y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i}) \right]
+\]</div>
+<p>This is exactly the <em>binary cross-entropy loss</em> introduced before.</p>
+</section>
+<section id="it-s-convex">
+<h3>2) It’s convex<a class="headerlink" href="#it-s-convex" title="Permalink to this headline">#</a></h3>
+<p>It’s a convex function for logistic regression (but mean squared error is not), see below. So it’s easier to optimise, as there are no local minima.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ws</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
@@ -805,9 +884,32 @@ L = - \frac{1}{N} \sum_i^N y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i})
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;loss&#39;)
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_13_1.png" src="../_images/02_logistic_regression_13_1.png" />
+<img alt="../_images/02_logistic_regression_14_1.png" src="../_images/02_logistic_regression_14_1.png" />
 </div>
 </div>
+</section>
+</section>
+<section id="gradient-descent-for-logistic-regression">
+<h2>Gradient Descent for Logistic Regression<a class="headerlink" href="#gradient-descent-for-logistic-regression" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathcal{L} = - \frac{1}{N} \sum_{i=1}^N  \left[ y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i}) \right] \\
+\hat{y_i} = \mathrm{sigmoid}(z_i) = \mathrm{sigmoid}(w x_i + b)
+\end{split}\]</div>
+<p>In gradient descent we iteratively update the parameters based on the gradient of the loss with respect to them, with a step size given by a learning rate <span class="math notranslate nohighlight">\(\alpha\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+w = w - \alpha \frac{\partial \mathcal{L}}{\partial w} \\
+b = b - \alpha \frac{\partial \mathcal{L}}{\partial b} \\
+\end{split}\]</div>
+<p>The aim is to reach the minimum value of the loss, where the gradients are zero.</p>
+<p>For logistic regression the gradients are given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \mathcal{L}}{\partial w} = \frac{1}{N} \sum_{i=1}^N  (\hat{y_i} - y_i) x_i \\
+\frac{\partial \mathcal{L}}{\partial b} = \frac{1}{N} \sum_{i=1}^N  (\hat{y_i} - y_i)
+\end{split}\]</div>
+<p>To derive these you need to know the derivative of the sigmoid function and the chain rule from calculus, which we’ll see in the next notebook.</p>
 </section>
 <section id="neural-network-for-logistic-regression">
 <h2>Neural Network for Logistic Regression<a class="headerlink" href="#neural-network-for-logistic-regression" title="Permalink to this headline">#</a></h2>
@@ -921,9 +1023,9 @@ g(z) = \textrm{sigmoid}(z) = \frac{1}{1 + \exp(-z)}
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4398]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4271]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8158], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8133], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -951,7 +1053,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8158], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/02_logistic_regression_25_0.png" src="../_images/02_logistic_regression_25_0.png" />
+<img alt="../_images/02_logistic_regression_27_0.png" src="../_images/02_logistic_regression_27_0.png" />
 </div>
 </div>
 <p>Also shown is the <strong>decision boundary</strong> - all samples with <span class="math notranslate nohighlight">\(x\)</span> to the left of the boundary are predicted to have <span class="math notranslate nohighlight">\(y = 0\)</span>, and all values to the right <span class="math notranslate nohighlight">\(y = 1\)</span> (assuming we predict <span class="math notranslate nohighlight">\(y = 1\)</span> when <span class="math notranslate nohighlight">\(\hat{y} \geq 0.5\)</span>).</p>
@@ -991,7 +1093,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8158], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/02_logistic_regression_28_0.png" src="../_images/02_logistic_regression_28_0.png" />
+<img alt="../_images/02_logistic_regression_30_0.png" src="../_images/02_logistic_regression_30_0.png" />
 </div>
 </div>
 </section>
@@ -1134,12 +1236,12 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8158], grad_fn=&lt;Sl
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.3474, -3.0873]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.4531, -3.3860]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.0059], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.0830], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_35_1.png" src="../_images/02_logistic_regression_35_1.png" />
+<img alt="../_images/02_logistic_regression_37_1.png" src="../_images/02_logistic_regression_37_1.png" />
 </div>
 </div>
 <p>Logistic regression, and our neural network that recreates it, can only fit <em>linear</em> decision boundaries. We could fit a non-linear boundary by adding polynomial features. In this case we’d need up cubic terms so we might try to fit something like this:</p>
@@ -1183,17 +1285,17 @@ z = w_1 x_1^3 + w_2 x_1^2 x_2 + w_3 x_1 x_2^2 + w_4 x_2^3 + w_5 x_1 ^2 + w_6 x_1
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[11.1054,  9.8014],
-        [ 1.4766, -0.6560]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[ -1.5166,   0.7692],
+        [-11.0532, -10.0385]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.0433, -0.1698], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.0741,  0.0494], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[-16.1206,  27.5184]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[-27.4123,  16.0849]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-4.9595], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([5.3187], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_41_1.png" src="../_images/02_logistic_regression_41_1.png" />
+<img alt="../_images/02_logistic_regression_43_1.png" src="../_images/02_logistic_regression_43_1.png" />
 </div>
 </div>
 <p>We get a non-linear decision boundary! But there’s still a region where the network is uncertain/misclassifies  some points (e.g. the white region). What if we add another layer?</p>
@@ -1225,7 +1327,7 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-4.9595], grad_fn=&lt;S
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_44_1.png" src="../_images/02_logistic_regression_44_1.png" />
+<img alt="../_images/02_logistic_regression_46_1.png" src="../_images/02_logistic_regression_46_1.png" />
 </div>
 </div>
 <p>This network can almost perfectly fit the decision boundary the data was generated with.</p>
@@ -1332,11 +1434,11 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-4.9595], grad_fn=&lt;S
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1810/854895806.py:2: RuntimeWarning: overflow encountered in exp
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2005/854895806.py:2: RuntimeWarning: overflow encountered in exp
   return 1 / (1 + np.exp(-z))
 </pre></div>
 </div>
-<img alt="../_images/02_logistic_regression_49_1.png" src="../_images/02_logistic_regression_49_1.png" />
+<img alt="../_images/02_logistic_regression_51_1.png" src="../_images/02_logistic_regression_51_1.png" />
 </div>
 </div>
 <p>The colour scale shows the “activation” of the node (i.e. the output after applying the sigmoid function). One node in the hidden layer captures the upward (positive) slope of the decision boundary, and the other the downward (negative) slope. When combined in the output layer (and sigmoid applied), the points from the two classes are linearly separable (you can draw a linear decision boundary between them) with respect to the activation of the hidden nodes.</p>

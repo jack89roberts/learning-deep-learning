@@ -361,36 +361,12 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stability-of-the-fit-overfitting">
-   Stability of the fit (overfitting)
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
     </div>
     <div class="article row">
@@ -402,19 +378,6 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stability-of-the-fit-overfitting">
-   Stability of the fit (overfitting)
-  </a>
- </li>
-</ul>
-
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -424,49 +387,9 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="non-linear-regression">
 <h1>06: Non-linear Regression<a class="headerlink" href="#non-linear-regression" title="Permalink to this headline">#</a></h1>
-<p>Non-linear regression</p>
 <ul class="simple">
 <li><p>intuition fitting arbitrary functions</p></li>
-<li><p>train/test</p></li>
 </ul>
-<section id="stability-of-the-fit-overfitting">
-<h2>Stability of the fit (overfitting)<a class="headerlink" href="#stability-of-the-fit-overfitting" title="Permalink to this headline">#</a></h2>
-<p>With more flexibility comes more potential for overfitting (poor performance on new data). Here’s an example of fitting the two hidden layer network on an increasing number of data points:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># previously was at the end of 02 logistic regression</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">for n in [5, 10, 20, 30, 40, 50, 100, 250]:</span>
-<span class="sd">    X, y = get_cubic_data(n)</span>
-<span class="sd">    X = torch.tensor(X, dtype=torch.float)</span>
-<span class="sd">    y = torch.tensor(y, dtype=torch.float)</span>
-<span class="sd">    y = y[:, None]</span>
-
-<span class="sd">    model = nn.Sequential(</span>
-<span class="sd">        nn.Linear(in_features=2, out_features=3),</span>
-<span class="sd">        nn.Sigmoid(),</span>
-<span class="sd">        nn.Linear(in_features=3, out_features=3),</span>
-<span class="sd">        nn.Sigmoid(),</span>
-<span class="sd">        nn.Linear(in_features=3, out_features=1),</span>
-<span class="sd">        #  Sigmoid (applied in loss_fn)</span>
-<span class="sd">    )</span>
-
-<span class="sd">    learning_rate = 0.1</span>
-<span class="sd">    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)</span>
-<span class="sd">    model, loss_history = train(X, y, model, loss_fn, optimizer, 30000)</span>
-
-<span class="sd">    show_result(X, y, model, loss_history, print_weights=False, suptitle=f&quot;n = {n}&quot;)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;\nfor n in [5, 10, 20, 30, 40, 50, 100, 250]:\n    X, y = get_cubic_data(n)\n    X = torch.tensor(X, dtype=torch.float)\n    y = torch.tensor(y, dtype=torch.float)\n    y = y[:, None]\n\n    model = nn.Sequential(\n        nn.Linear(in_features=2, out_features=3),\n        nn.Sigmoid(),\n        nn.Linear(in_features=3, out_features=3),\n        nn.Sigmoid(),\n        nn.Linear(in_features=3, out_features=1),\n        #  Sigmoid (applied in loss_fn)\n    )\n\n    learning_rate = 0.1\n    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)\n    model, loss_history = train(X, y, model, loss_fn, optimizer, 30000)\n\n    show_result(X, y, model, loss_history, print_weights=False, suptitle=f&quot;n = {n}&quot;)\n&#39;
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
