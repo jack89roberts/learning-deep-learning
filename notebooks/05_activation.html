@@ -426,8 +426,18 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#layer-network-example-with-relu">
+   4-Layer Network Example with ReLU
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exploding-gradients">
    Exploding Gradients
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#other-activation-functions">
+   Other Activation Functions
   </a>
  </li>
 </ul>
@@ -480,8 +490,18 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#layer-network-example-with-relu">
+   4-Layer Network Example with ReLU
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exploding-gradients">
    Exploding Gradients
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#other-activation-functions">
+   Other Activation Functions
   </a>
  </li>
 </ul>
@@ -647,7 +667,7 @@ title="Print to PDF"
 </section>
 <section id="vanishing-gradients">
 <h2>Vanishing Gradients<a class="headerlink" href="#vanishing-gradients" title="Permalink to this headline">#</a></h2>
-<p>To help gain intuition, let’s consider the case where:</p>
+<p>To help gain intuition about why the form of the sigmoid’s gradient can be problematic, let’s consider the case where:</p>
 <ul class="simple">
 <li><p>our four-layer example network really does only have one node per layer</p></li>
 <li><p>all the weights are one (<span class="math notranslate nohighlight">\(\mathbf{W}^{[1]} = \mathbf{W}^{[2]} = \mathbf{W}^{[3]} = \mathbf{W}^{[4]} = 1\)</span>)</p></li>
@@ -670,6 +690,7 @@ title="Print to PDF"
 \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
 \color{blue}{\frac{\partial \mathbf{A}^{[4]}}{\partial \mathbf{Z}^{[4]}}}
 \mathbf{A}^{[3]}
+\leq \frac{1}{4} \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
 \]</div>
 <div class="math notranslate nohighlight">
 \[
@@ -678,6 +699,7 @@ title="Print to PDF"
 \color{blue}{\frac{\partial \mathbf{A}^{[4]}}{\partial \mathbf{Z}^{[4]}}}
 \color{blue}{\frac{\partial \mathbf{A}^{[3]}}{\partial \mathbf{Z}^{[3]}}}
 \mathbf{A}^{[2]}
+\leq \frac{1}{16} \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
 \]</div>
 <div class="math notranslate nohighlight">
 \[
@@ -687,6 +709,7 @@ title="Print to PDF"
 \color{blue}{\frac{\partial \mathbf{A}^{[3]}}{\partial \mathbf{Z}^{[3]}}}
 \color{blue}{\frac{\partial \mathbf{A}^{[2]}}{\partial \mathbf{Z}^{[2]}}}
 \mathbf{A}^{[1]}
+\leq \frac{1}{64} \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
 \]</div>
 <div class="math notranslate nohighlight">
 \[
@@ -697,29 +720,22 @@ title="Print to PDF"
 \color{blue}{\frac{\partial \mathbf{A}^{[2]}}{\partial \mathbf{Z}^{[2]}}}
 \color{blue}{\frac{\partial \mathbf{A}^{[1]}}{\partial \mathbf{Z}^{[1]}}}
 x
+\leq \frac{1}{256} \frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}} x
 \]</div>
-<p>Assuming log loss:</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
-\color{blue}{\frac{\partial \mathbf{A}^{[4]}}{\partial \mathbf{Z}^{[4]}}} = \mathbf{A}^{[4]} - y
-\]</div>
+<p>Where the inequalities follow from <span class="math notranslate nohighlight">\(\mathbf{A}^{[l]} = \sigma(\mathbf{Z}^{[l]}) \leq 1\)</span> and <span class="math notranslate nohighlight">\(\color{blue}{\partial \mathbf{A}^{[l]} / \partial \mathbf{Z}^{[l]}} = \partial \sigma(\mathbf{Z}^{[l]}) / \partial \mathbf{Z}^{[l]} \leq 0.25\)</span>.</p>
+<p>Or visually, here are the activations and gradients in each layer plotted, assuming log loss is used and the true class is <span class="math notranslate nohighlight">\(y = 0\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
-
-<span class="k">def</span> <span class="nf">activations_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">dg_dz</span><span class="p">,</span> <span class="n">dL_dyhat</span><span class="p">):</span>
-
-    <span class="n">activations</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">layers</span><span class="p">):</span>
-        <span class="n">activations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">activations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="o">...</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
 <span class="n">a1</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">a2</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
 <span class="n">a3</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
 <span class="n">a4</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
 
 <span class="n">dL_dZ4</span> <span class="o">=</span> <span class="n">a4</span> <span class="o">-</span> <span class="n">y</span>
 <span class="n">dL_dW4</span> <span class="o">=</span> <span class="n">dL_dZ4</span> <span class="o">*</span> <span class="n">a3</span>
@@ -730,10 +746,6 @@ x
 <span class="n">dL_dZ1</span> <span class="o">=</span> <span class="n">dL_dZ2</span> <span class="o">*</span> <span class="n">dsigmoid_dz</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">dL_dW1</span> <span class="o">=</span> <span class="n">dL_dZ1</span> <span class="o">*</span> <span class="n">x</span>
 
-
-    
-
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 1&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 2&quot;</span><span class="p">)</span>
@@ -756,21 +768,13 @@ x
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">11</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>         <span class="n">activations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">activations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="o">...</span>
-<span class="ne">---&gt; </span><span class="mi">11</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;x&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Layer Loss-Gradients ($\\partial \\mathcal{L} / \\partial W^{[l]}$) if $y = 0$&#39;)
 </pre></div>
 </div>
 <img alt="../_images/05_activation_7_1.png" src="../_images/05_activation_7_1.png" />
 </div>
 </div>
+<p>In both the equations and the plot we can see the gradients are getting closer and closer to zero as we move to earlier layers in the network - they are <em><strong>vanishing</strong></em>.</p>
 </section>
 <section id="why-are-vanishing-gradients-a-problem">
 <h2>Why are Vanishing Gradients a Problem?<a class="headerlink" href="#why-are-vanishing-gradients-a-problem" title="Permalink to this headline">#</a></h2>
@@ -827,12 +831,26 @@ x
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;z&#39;)
 </pre></div>
 </div>
-<img alt="../_images/05_activation_10_1.png" src="../_images/05_activation_10_1.png" />
+<img alt="../_images/05_activation_11_1.png" src="../_images/05_activation_11_1.png" />
 </div>
 </div>
 </section>
+<section id="layer-network-example-with-relu">
+<h2>4-Layer Network Example with ReLU<a class="headerlink" href="#layer-network-example-with-relu" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>but still sigmoid on output</p></li>
+</ul>
+</section>
 <section id="exploding-gradients">
 <h2>Exploding Gradients<a class="headerlink" href="#exploding-gradients" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="other-activation-functions">
+<h2>Other Activation Functions<a class="headerlink" href="#other-activation-functions" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>tanh, normalisation</p></li>
+<li><p>leaky relu</p></li>
+<li><p>others</p></li>
+</ul>
 </section>
 </section>
 
