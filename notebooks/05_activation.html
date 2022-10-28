@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>05: Activation Functions &#8212; Learning Deep Learning</title>
+    <title>05: Gradients and Activation Functions &#8212; Learning Deep Learning</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -50,6 +50,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -142,7 +144,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   05: Activation Functions
+   05: Gradients and Activation Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -394,13 +396,38 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#activation-functions-recap">
+   Activation Functions: Recap
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#repeating-terms-in-back-propagation">
+   Repeating Terms in Back Propagation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-gradient-of-the-sigmoid-function">
+   The Gradient of the Sigmoid Function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#vanishing-gradients">
    Vanishing Gradients
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-are-vanishing-gradients-a-problem">
+   Why are Vanishing Gradients a Problem?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#relu">
    ReLU
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exploding-gradients">
+   Exploding Gradients
   </a>
  </li>
 </ul>
@@ -412,7 +439,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>05: Activation Functions</h1>
+                <h1>05: Gradients and Activation Functions</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -423,13 +450,38 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#activation-functions-recap">
+   Activation Functions: Recap
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#repeating-terms-in-back-propagation">
+   Repeating Terms in Back Propagation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-gradient-of-the-sigmoid-function">
+   The Gradient of the Sigmoid Function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#vanishing-gradients">
    Vanishing Gradients
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-are-vanishing-gradients-a-problem">
+   Why are Vanishing Gradients a Problem?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#relu">
    ReLU
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exploding-gradients">
+   Exploding Gradients
   </a>
  </li>
 </ul>
@@ -442,14 +494,117 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="activation-functions">
-<h1>05: Activation Functions<a class="headerlink" href="#activation-functions" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="gradients-and-activation-functions">
+<h1>05: Gradients and Activation Functions<a class="headerlink" href="#gradients-and-activation-functions" title="Permalink to this headline">#</a></h1>
+<p>Possible structure:</p>
 <ul class="simple">
-<li><p>using relu activation</p></li>
-<li><p>vanishing, exploding gradients</p></li>
+<li><p>Vanishing gradients</p>
+<ul>
+<li><p>Sigmoid</p></li>
+<li><p>through backprop</p></li>
 </ul>
-<section id="vanishing-gradients">
-<h2>Vanishing Gradients<a class="headerlink" href="#vanishing-gradients" title="Permalink to this headline">#</a></h2>
+</li>
+<li><p>ReLu</p>
+<ul>
+<li><p>(leaky ReLu) - maybe</p></li>
+</ul>
+</li>
+<li><p>Exploding gradients</p>
+<ul>
+<li><p>weight initialisation</p></li>
+<li><p>gradient clipping</p></li>
+</ul>
+</li>
+<li><p>(Normalisation?) - maybe</p>
+<ul>
+<li><p>(Tanh)</p></li>
+<li><p>(Batch norm)</p></li>
+</ul>
+</li>
+<li><p>What activation function to use</p>
+<ul>
+<li><p>output layer</p></li>
+<li><p>hidden layers</p></li>
+</ul>
+</li>
+</ul>
+<section id="activation-functions-recap">
+<h2>Activation Functions: Recap<a class="headerlink" href="#activation-functions-recap" title="Permalink to this headline">#</a></h2>
+<p>Remember that the activation function, <span class="math notranslate nohighlight">\(g(z)\)</span>, is applied to the linear combination of a node’s inputs, <span class="math notranslate nohighlight">\(z\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A}^{[l]} = g(\mathbf{Z}^{[l]})
+\]</div>
+<p>And so far we have seen two different activation functions:</p>
+<ul class="simple">
+<li><p><strong>Linear activation:</strong> <span class="math notranslate nohighlight">\(g(\mathbf{Z}^{[l]}) = \mathbf{Z}^{[l]}\)</span></p>
+<ul>
+<li><p>Output layer: Used for regression problems</p></li>
+<li><p>Hidden layers: Usually not used (as then only linear functions can be fitted)</p></li>
+</ul>
+</li>
+<li><p><strong>Sigmoid activation:</strong> <span class="math notranslate nohighlight">\(g(\mathbf{Z}^{[l]}) = \mathrm{sigmoid}\left(\mathbf{Z}^{[l]}\right) = \sigma\left(\mathbf{Z}^{[l]}\right)\)</span></p>
+<ul>
+<li><p>Output layer: Used for (binary) classification problems</p></li>
+<li><p>Hidden layers: <em>Can</em> be used to fit non-linear functions, but generally not used (we’ll see why later)</p></li>
+</ul>
+</li>
+</ul>
+<p>To compute the <span class="math notranslate nohighlight">\(\color{blue}{\partial \mathbf{A}^{[l]} / \partial \mathbf{Z}^{[l]}}\)</span> terms we need to know the derivative of the activation function.</p>
+</section>
+<section id="repeating-terms-in-back-propagation">
+<h2>Repeating Terms in Back Propagation<a class="headerlink" href="#repeating-terms-in-back-propagation" title="Permalink to this headline">#</a></h2>
+<p>As an example, let’s consider a four-layer network:</p>
+<p><img alt="" src="../_images/05_4layers.png" /></p>
+<p>Each layer is represented by only one node in the diagram (but can actually contain many nodes without changing the equation below).</p>
+<p>Here is the loss-gradient for the weights in the <strong>first</strong> layer of the <strong>four</strong>-layer network, in matrix notation:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} =
+\frac{1}{m}
+\left\{
+\color{red}{\mathbf{W}^{[2]^T}}
+\left(
+\color{red}{\mathbf{W}^{[3]^T}}
+\left[
+\color{red}{\mathbf{W}^{[4]^T}}
+\left\{
+\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}} * \color{blue}{\frac{\partial \mathbf{A}^{[4]}}{\partial \mathbf{Z}^{[4]}}}
+\right\}
+* \color{blue}{\frac{\partial \mathbf{A}^{[3]}}{\partial \mathbf{Z}^{[3]}}}
+\right]
+* \color{blue}{\frac{\partial \mathbf{A}^{[2]}}{\partial \mathbf{Z}^{[2]}}}
+\right) * \color{blue}{\frac{\partial \mathbf{A}^{[1]}}{\partial \mathbf{Z}^{[1]}}}
+\right\}
+\mathbf{A}^{[0]^T}
+\]</div>
+<p>where two groups of similar terms are highlighted:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\color{blue}{\partial \mathbf{A}^{[l]} / \partial \mathbf{Z}^{[l]}}\)</span>: <span style="color:blue">The gradient of the node activations in a layer (with respect to the node’s inputs)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\color{red}{\mathbf{W}^{[l]^T}}\)</span>: <span style="color:red">The weights in a layer</span>.</p></li>
+</ul>
+<p>and the other terms are:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\partial \mathcal{L} / \partial \mathbf{A}^{[4]} = \partial \mathcal{L} / \partial \mathbf{\hat{y}}\)</span>: The gradient of the loss with respect to our predictions (aka the activations of the last, in this case the fourth, layer)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}^{[0]^T} = \mathbf{X}^T\)</span>: The input data (aka the activations of the zeroth layer).</p></li>
+<li><p><span class="math notranslate nohighlight">\(1/m\)</span>: To take the mean gradient across the data batch (which has <span class="math notranslate nohighlight">\(m\)</span> samples)</p></li>
+</ul>
+<p>In this notebook, we’re going to focus on how, in certain situations, the form of this equation can make it difficult to learn (optimise) the weights of the network, and in particular the weights in the early layers of a deep network.</p>
+</section>
+<section id="the-gradient-of-the-sigmoid-function">
+<h2>The Gradient of the Sigmoid Function<a class="headerlink" href="#the-gradient-of-the-sigmoid-function" title="Permalink to this headline">#</a></h2>
+<p>We’re going to start by considering the activation gradient terms (<span class="math notranslate nohighlight">\(\color{blue}{\partial \mathbf{A}^{[l]} / \partial \mathbf{Z}^{[l]}}\)</span>) above.</p>
+<p>The sigmoid function, <span class="math notranslate nohighlight">\(\sigma(z)\)</span>, is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma(z) = \frac{1}{1 + \exp(-z)}
+\]</div>
+<p>and its derivative is:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\mathrm{d}\sigma}{\mathrm{d}z} = \sigma(z) \left[1 - \sigma(z) \right]
+\]</div>
+<p>They look like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -460,28 +615,184 @@ title="Print to PDF"
     <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
 
 
-<span class="k">def</span> <span class="nf">dsigmoid_dx</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">dsigmoid_dz</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
 
 
-<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma(z)$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dsigmoid_dx</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39;(z)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sigmoid&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dsigmoid_dz</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39;(z)$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Gradient&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;z&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Gradient&#39;)
 </pre></div>
 </div>
-<img alt="../_images/05_activation_2_1.png" src="../_images/05_activation_2_1.png" />
+<img alt="../_images/05_activation_4_1.png" src="../_images/05_activation_4_1.png" />
 </div>
 </div>
+<p>Note that:</p>
+<ul class="simple">
+<li><p>The maximum gradient of the sigmoid function is 0.25 (<span class="math notranslate nohighlight">\(0 \leq \mathrm{d}\sigma / \mathrm{d}z \leq 0.25\)</span>)</p></li>
+<li><p>The gradient is close to zero for most values of <span class="math notranslate nohighlight">\(z\)</span> (especially for <span class="math notranslate nohighlight">\(z &lt; -5\)</span> and <span class="math notranslate nohighlight">\(z &gt; 5\)</span>)</p></li>
+</ul>
+</section>
+<section id="vanishing-gradients">
+<h2>Vanishing Gradients<a class="headerlink" href="#vanishing-gradients" title="Permalink to this headline">#</a></h2>
+<p>To help gain intuition, let’s consider the case where:</p>
+<ul class="simple">
+<li><p>our four-layer example network really does only have one node per layer</p></li>
+<li><p>all the weights are one (<span class="math notranslate nohighlight">\(\mathbf{W}^{[1]} = \mathbf{W}^{[2]} = \mathbf{W}^{[3]} = \mathbf{W}^{[4]} = 1\)</span>)</p></li>
+<li><p>all the biases are zero (<span class="math notranslate nohighlight">\(\mathbf{b}^{[1]} = \mathbf{b}^{[2]} = \mathbf{b}^{[3]} = \mathbf{b}^{[4]} = 0\)</span>)</p></li>
+<li><p>there’s only one input (<span class="math notranslate nohighlight">\(x\)</span>).</p></li>
+</ul>
+<p>In this case the network computes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A^{[0]}} = \mathbf{Z}^{[1]} = x \\
+\mathbf{A^{[1]}} = \mathbf{Z}^{[2]} = \sigma(x) \\
+\mathbf{A^{[2]}} = \mathbf{Z}^{[3]} = \sigma(\sigma(x)) \\
+\mathbf{A^{[3]}} = \mathbf{Z}^{[4]} = \sigma(\sigma(\sigma(x))) \\
+\mathbf{A^{[4]}} = \hat{y} = \sigma(\sigma(\sigma((x)))) \\
+\end{split}\]</div>
+<p>And the loss gradient for the weights in each layer (for one data sample <span class="math notranslate nohighlight">\(x\)</span>) are:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[4]}} =
+\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
+\color{blue}{\frac{\partial \mathbf{A}^{[4]}}{\partial \mathbf{Z}^{[4]}}}
+\mathbf{A}^{[3]}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[3]}} =
+\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
+\color{blue}{\frac{\partial \mathbf{A}^{[4]}}{\partial \mathbf{Z}^{[4]}}}
+\color{blue}{\frac{\partial \mathbf{A}^{[3]}}{\partial \mathbf{Z}^{[3]}}}
+\mathbf{A}^{[2]}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[2]}} =
+\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
+\color{blue}{\frac{\partial \mathbf{A}^{[4]}}{\partial \mathbf{Z}^{[4]}}}
+\color{blue}{\frac{\partial \mathbf{A}^{[3]}}{\partial \mathbf{Z}^{[3]}}}
+\color{blue}{\frac{\partial \mathbf{A}^{[2]}}{\partial \mathbf{Z}^{[2]}}}
+\mathbf{A}^{[1]}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[1]}} =
+\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
+\color{blue}{\frac{\partial \mathbf{A}^{[4]}}{\partial \mathbf{Z}^{[4]}}}
+\color{blue}{\frac{\partial \mathbf{A}^{[3]}}{\partial \mathbf{Z}^{[3]}}}
+\color{blue}{\frac{\partial \mathbf{A}^{[2]}}{\partial \mathbf{Z}^{[2]}}}
+\color{blue}{\frac{\partial \mathbf{A}^{[1]}}{\partial \mathbf{Z}^{[1]}}}
+x
+\]</div>
+<p>Assuming log loss:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{A}^{[4]}}
+\color{blue}{\frac{\partial \mathbf{A}^{[4]}}{\partial \mathbf{Z}^{[4]}}} = \mathbf{A}^{[4]} - y
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">activations_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">dg_dz</span><span class="p">,</span> <span class="n">dL_dyhat</span><span class="p">):</span>
+
+    <span class="n">activations</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">layers</span><span class="p">):</span>
+        <span class="n">activations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">activations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="o">...</span>
+
+<span class="n">a1</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="n">a3</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+<span class="n">a4</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
+
+<span class="n">dL_dZ4</span> <span class="o">=</span> <span class="n">a4</span> <span class="o">-</span> <span class="n">y</span>
+<span class="n">dL_dW4</span> <span class="o">=</span> <span class="n">dL_dZ4</span> <span class="o">*</span> <span class="n">a3</span>
+<span class="n">dL_dZ3</span> <span class="o">=</span> <span class="n">dL_dZ4</span> <span class="o">*</span> <span class="n">dsigmoid_dz</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+<span class="n">dL_dW3</span> <span class="o">=</span> <span class="n">dL_dZ3</span> <span class="o">*</span> <span class="n">a2</span>
+<span class="n">dL_dZ2</span> <span class="o">=</span> <span class="n">dL_dZ3</span> <span class="o">*</span> <span class="n">dsigmoid_dz</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="n">dL_dW2</span> <span class="o">=</span> <span class="n">dL_dZ2</span> <span class="o">*</span> <span class="n">a1</span>
+<span class="n">dL_dZ1</span> <span class="o">=</span> <span class="n">dL_dZ2</span> <span class="o">*</span> <span class="n">dsigmoid_dz</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">dL_dW1</span> <span class="o">=</span> <span class="n">dL_dZ1</span> <span class="o">*</span> <span class="n">x</span>
+
+
+    
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 2&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 3&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 4&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Layer Activations&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dL_dW1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dL_dW2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 2&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dL_dW3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 3&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dL_dW4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Layer 4&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;Layer Loss-Gradients ($\partial \mathcal</span><span class="si">{L}</span><span class="s2"> / \partial W^{[l]}$) if $y = 0$&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">11</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>         <span class="n">activations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">activations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="o">...</span>
+<span class="ne">---&gt; </span><span class="mi">11</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;x&#39; is not defined
+</pre></div>
+</div>
+<img alt="../_images/05_activation_7_1.png" src="../_images/05_activation_7_1.png" />
+</div>
+</div>
+</section>
+<section id="why-are-vanishing-gradients-a-problem">
+<h2>Why are Vanishing Gradients a Problem?<a class="headerlink" href="#why-are-vanishing-gradients-a-problem" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>We want to train bigger, deeper networks to learn more complex functions</p>
+<ul>
+<li><p>We update the weights of the network with gradient descent, computing the derivative of the loss with respect to the weights</p>
+<ul>
+<li><p>If the gradients are close to zero in a layer we won’t change the weights in those layers</p>
+<ul>
+<li><p>With sigmoid activation the gradients get closer and closer to zero as we move back through the layers</p>
+<ul>
+<li><p>We stop learning (don’t update the weights) in earlier layers!</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </section>
 <section id="relu">
 <h2>ReLU<a class="headerlink" href="#relu" title="Permalink to this headline">#</a></h2>
@@ -516,9 +827,12 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;z&#39;)
 </pre></div>
 </div>
-<img alt="../_images/05_activation_4_1.png" src="../_images/05_activation_4_1.png" />
+<img alt="../_images/05_activation_10_1.png" src="../_images/05_activation_10_1.png" />
 </div>
 </div>
+</section>
+<section id="exploding-gradients">
+<h2>Exploding Gradients<a class="headerlink" href="#exploding-gradients" title="Permalink to this headline">#</a></h2>
 </section>
 </section>
 

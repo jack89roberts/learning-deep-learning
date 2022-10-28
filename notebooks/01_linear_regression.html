@@ -144,7 +144,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="05_activation.html">
-   05: Activation Functions
+   05: Gradients and Activation Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -1103,9 +1103,9 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[-0.0137,  0.0903]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 0.1238, -0.4185]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0884], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.2907], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -1130,16 +1130,16 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0884], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.0957],
-        [ 0.0816],
-        [ 0.1223],
-        [ 0.0252],
-        [-0.0442],
-        [ 0.0226],
-        [ 0.1271],
-        [ 0.0993],
-        [ 0.0331],
-        [ 0.0597]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.3892],
+        [-0.2965],
+        [-0.4439],
+        [-0.0077],
+        [ 0.3004],
+        [-0.0637],
+        [-0.4529],
+        [-0.3104],
+        [ 0.0783],
+        [-0.1812]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -1227,7 +1227,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0884], grad_fn=&lt;Sl
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7050]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-1.9440e-09], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-2.5244e-09], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/01_linear_regression_42_1.png" src="../_images/01_linear_regression_42_1.png" />
