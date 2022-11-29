@@ -575,14 +575,14 @@ title="Print to PDF"
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import itertools
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+import torch
+from torch import nn
 </pre></div>
 </div>
 </div>
@@ -592,8 +592,8 @@ title="Print to PDF"
 <p>I have painstakingly collected 100 days of data on the average happiness (out of 10) of Turing staff in the office based on the number of oranges 🍊 and cups of coffee ☕️ available at the start of the day:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/01_happiness.csv&quot;</span><span class="p">)</span>
-<span class="n">df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(&quot;../data/01_happiness.csv&quot;)
+df
 </pre></div>
 </div>
 </div>
@@ -695,12 +695,12 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;oranges&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Mean Happiness&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of Oranges&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;coffee&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Cups of Coffee&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 2, figsize=(7, 3), sharey=True)
+ax[0].scatter(df[&quot;oranges&quot;], df[&quot;happy&quot;])
+ax[0].set_ylabel(&quot;Mean Happiness&quot;)
+ax[0].set_xlabel(&quot;Number of Oranges&quot;)
+ax[1].scatter(df[&quot;coffee&quot;], df[&quot;happy&quot;])
+ax[1].set_xlabel(&quot;Cups of Coffee&quot;)
 </pre></div>
 </div>
 </div>
@@ -788,32 +788,32 @@ P(y \mid \hat{y}, \sigma) = \prod_{i=1}^{N} \mathcal{N}(y_i \mid \hat{y_i}, \sig
 <p>Here’s an example for one choice of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. The loss is the sum of the lengths of the vertical black lines (squared) - the difference between the predicted and actual value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">w_1</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;oranges&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">w_2</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;coffee&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def predict(X, w_1, w_2, b):
+    return w_1 * X[&quot;oranges&quot;] + w_2 * X[&quot;coffee&quot;] + b
 
 
-<span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">((</span><span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+def loss(y_hat, y):
+    return ((y_hat - y) ** 2).sum() / len(y)
 
 
-<span class="k">def</span> <span class="nf">plot_predictions</span><span class="p">(</span><span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">y_hat</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;oranges&quot;</span><span class="p">,</span> <span class="s2">&quot;coffee&quot;</span><span class="p">]],</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+def plot_predictions(w_1, w_2, b, ax=None):
+    y_hat = predict(df[[&quot;oranges&quot;, &quot;coffee&quot;]], w_1, w_2, b)
 
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">y_hat</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="p">[</span><span class="n">y_hat</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="s2">&quot;r--&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\hat</span><span class="si">{y}</span><span class="s2">$ (predicted happiness)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$y$ (actual happiness)&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;$w_1$ = </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">w_1</span><span class="p">)</span><span class="si">}</span><span class="s2">, $w_2$ = </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">w_2</span><span class="p">)</span><span class="si">}</span><span class="s2">, $b$ = </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;loss = </span><span class="si">{</span><span class="n">loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;happy&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="p">)</span>
-    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">],</span> <span class="p">[</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    if ax is None:
+        fig, ax = plt.subplots(1, 1, figsize=(5, 3))
+    ax.plot(y_hat, df[&quot;happy&quot;], &quot;o&quot;)
+    ax.plot([y_hat.min(), y_hat.max()], [y_hat.min(), y_hat.max()], &quot;r--&quot;)
+    ax.set_xlabel(r&quot;$\hat{y}$ (predicted happiness)&quot;)
+    ax.set_ylabel(r&quot;$y$ (actual happiness)&quot;)
+    ax.set_title(
+        f&quot;$w_1$ = {str(w_1)}, $w_2$ = {str(w_2)}, $b$ = {str(b)}\n&quot;
+        f&quot;loss = {loss(y_hat, df[&#39;happy&#39;]):.3f}&quot;
+    )
+    for _, row in df.iterrows():
+        ax.plot([y_hat, y_hat], [y_hat, df[&quot;happy&quot;]], color=&quot;k&quot;, linewidth=0.5, zorder=0)
 
 
-<span class="n">plot_predictions</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">)</span>
+plot_predictions(0.1, 0.01, -0.5)
 </pre></div>
 </div>
 </div>
@@ -824,54 +824,54 @@ P(y \mid \hat{y}, \sigma) = \prod_{i=1}^{N} \mathcal{N}(y_i \mid \hat{y_i}, \sig
 <p>We can compute the loss for many different values of <span class="math notranslate nohighlight">\(w_1\)</span>, <span class="math notranslate nohighlight">\(w_2\)</span>, and <span class="math notranslate nohighlight">\(b\)</span> (here varying only one or two of the parameters due to be able to plot nicely):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_loss_grid_2d</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
-    <span class="n">samples</span> <span class="o">=</span> <span class="mi">20</span>
-    <span class="n">W_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
-    <span class="n">W_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="mf">0.885135748052889</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_loss_grid_2d(ax, title=&quot;&quot;):
+    samples = 20
+    W_1 = np.linspace(-0.025, 0.25, samples)
+    W_2 = np.linspace(-0.005, 0.02, samples)
+    b = 0.885135748052889
 
-    <span class="n">w1_plot</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">w2_plot</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">W_1</span><span class="p">,</span> <span class="n">W_2</span><span class="p">):</span>
-        <span class="n">w1_plot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w_1</span><span class="p">)</span>
-        <span class="n">w2_plot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w_2</span><span class="p">)</span>
-        <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">]))</span>
+    w1_plot = []
+    w2_plot = []
+    losses = []
+    for w_1, w_2 in itertools.product(W_1, W_2):
+        w1_plot.append(w_1)
+        w2_plot.append(w_2)
+        losses.append(loss(predict(df, w_1, w_2, b), df[&quot;happy&quot;]))
 
-    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">losses</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">samples</span><span class="p">),</span>
-        <span class="n">xticklabels</span><span class="o">=</span><span class="n">W_1</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
-        <span class="n">yticklabels</span><span class="o">=</span><span class="n">W_2</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
-        <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Loss&quot;</span><span class="p">},</span>
-        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$w_1$&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$w_2$&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    sns.heatmap(
+        np.array(losses).reshape(samples, samples),
+        xticklabels=W_1.round(2),
+        yticklabels=W_2.round(2),
+        cbar_kws={&quot;label&quot;: &quot;Loss&quot;},
+        ax=ax,
+    )
+    ax.set_xlabel(&quot;$w_1$&quot;)
+    ax.set_ylabel(&quot;$w_2$&quot;)
+    ax.set_title(title)
 
 
-<span class="k">def</span> <span class="nf">plot_loss_grid_1d</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
-    <span class="n">samples</span> <span class="o">=</span> <span class="mi">50</span>
-    <span class="n">W_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
-    <span class="n">w_2</span> <span class="o">=</span> <span class="mf">0.0059909</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="mf">0.885135748052889</span>
+def plot_loss_grid_1d(ax, title=&quot;&quot;):
+    samples = 50
+    W_1 = np.linspace(0, 0.24, samples)
+    w_2 = 0.0059909
+    b = 0.885135748052889
 
-    <span class="n">w1_plot</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">w_1</span> <span class="ow">in</span> <span class="n">W_1</span><span class="p">:</span>
-        <span class="n">w1_plot</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w_1</span><span class="p">)</span>
-        <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">]))</span>
+    w1_plot = []
+    losses = []
+    for w_1 in W_1:
+        w1_plot.append(w_1)
+        losses.append(loss(predict(df, w_1, w_2, b), df[&quot;happy&quot;]))
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">w1_plot</span><span class="p">,</span> <span class="n">losses</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$w_1$&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    ax.plot(w1_plot, losses)
+    ax.set_xlabel(&quot;$w_1$&quot;)
+    ax.set_ylabel(&quot;loss&quot;)
+    ax.set_title(title)
 
     
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">plot_loss_grid_1d</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Loss when varying $w_1$ only&quot;</span><span class="p">)</span>
-<span class="n">plot_loss_grid_2d</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Loss when varying $w_1$ and $w_2$&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+plot_loss_grid_1d(ax[0], title=&quot;Loss when varying $w_1$ only&quot;)
+plot_loss_grid_2d(ax[1], title=&quot;Loss when varying $w_1$ and $w_2$&quot;)
+fig.tight_layout()
 </pre></div>
 </div>
 </div>
@@ -929,10 +929,10 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 <p>Gradient descent will converge faster if all the features are on the same scale, so we can standardise them (to have mean zero and standard deviation of one):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for column in df.columns:
+    df[column] = (df[column] - df[column].mean()) / df[column].std()
 
-<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+df.describe()
 </pre></div>
 </div>
 </div>
@@ -1016,24 +1016,24 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 <p>Here’s a basic implementation of batch gradient descent:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gradient_descent</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
-    <span class="n">w_1</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">w_2</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;oranges&quot;</span><span class="p">,</span> <span class="s2">&quot;coffee&quot;</span><span class="p">]]</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">]</span>
-    <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
-        <span class="n">l</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
-        <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def gradient_descent(df, learning_rate=0.001, epochs=1000):
+    w_1 = 0
+    w_2 = 0
+    b = 0
+    X = df[[&quot;oranges&quot;, &quot;coffee&quot;]]
+    y = df[&quot;happy&quot;]
+    losses = []
+    for e in range(epochs):
+        l = loss(predict(X, w_1, w_2, b), y)
+        losses.append(l)
 
-        <span class="n">y_hat</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-        <span class="n">delta</span> <span class="o">=</span> <span class="n">y_hat</span> <span class="o">-</span> <span class="n">y</span>
-        <span class="n">w_1</span> <span class="o">=</span> <span class="n">w_1</span> <span class="o">-</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;oranges&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="n">w_2</span> <span class="o">=</span> <span class="n">w_2</span> <span class="o">-</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s2">&quot;coffee&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="p">(</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">*</span> <span class="n">delta</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        y_hat = predict(X, w_1, w_2, b)
+        delta = y_hat - y
+        w_1 = w_1 - (learning_rate * 2 / len(y)) * (delta * X[&quot;oranges&quot;]).sum()
+        w_2 = w_2 - (learning_rate * 2 / len(y)) * (delta * X[&quot;coffee&quot;]).sum()
+        b = b - (learning_rate * 2 / len(y)) * delta.sum()
 
-    <span class="k">return</span> <span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">losses</span>
+    return w_1, w_2, b, losses
 </pre></div>
 </div>
 </div>
@@ -1041,14 +1041,14 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 <p>The number of <strong>epochs</strong> is how many times we’ll loop through the entire dataset before stopping (updating the parameters after each <em>batch</em>, though in this case we only have one batch per epoch - the entire dataset).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">gradient_descent</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>w_1, w_2, b, l = gradient_descent(df, learning_rate=0.001, epochs=5000)
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;epochs&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
-<span class="n">plot_predictions</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">w_1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">w_2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+ax[0].plot(l)
+ax[0].set_xlabel(&quot;epochs&quot;)
+ax[0].set_ylabel(&quot;loss&quot;)
+plot_predictions(round(w_1, 3), round(w_2, 3), round(b, 3), ax[1])
+fig.tight_layout()
 </pre></div>
 </div>
 </div>
@@ -1078,10 +1078,10 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 <p>Here is our linear regression model expressed as a pytorch neural network:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model = nn.Sequential(
+    nn.Linear(in_features=2, out_features=1),
+)
+print(model)
 </pre></div>
 </div>
 </div>
@@ -1097,15 +1097,15 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 <p>The layer specification is enough for pytorch to know the parameters we have to learn, and these are given random initial values (see <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Linear.html#torch.nn.Linear">here</a>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Layer: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> | Size: </span><span class="si">{</span><span class="n">param</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2"> | Values : </span><span class="si">{</span><span class="n">param</span><span class="p">[:]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for name, param in model.named_parameters():
+    print(f&quot;Layer: {name} | Size: {param.size()} | Values : {param[:]} \n&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 0.2983, -0.7018]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.0717, 0.6134]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.6158], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.1604], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -1114,10 +1114,10 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.6158], grad_fn=&lt;Sl
 <p>pytorch works with its own “tensor” data structure (like a numpy array optimised for working with GPUs and automatic differentiation), so we need to convert our data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;oranges&quot;</span><span class="p">,</span> <span class="s2">&quot;coffee&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X = torch.tensor(df[[&quot;oranges&quot;, &quot;coffee&quot;]].values, dtype=torch.float)
 
-<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;happy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>  <span class="c1"># output needs to be 2D, [:, None] adds a second (length 1) axis</span>
+y = torch.tensor(df[&quot;happy&quot;].values, dtype=torch.float)
+y = y[:, None]  # output needs to be 2D, [:, None] adds a second (length 1) axis
 </pre></div>
 </div>
 </div>
@@ -1125,21 +1125,21 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.6158], grad_fn=&lt;Sl
 <p>To get predictions from the model (using the randomly initialised weights at this stage), just pass it the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model(X[:10])
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0.3539],
-        [0.5502],
-        [0.3642],
-        [1.0753],
-        [1.5715],
-        [0.8794],
-        [0.3696],
-        [0.6289],
-        [1.4033],
-        [0.7639]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[ 0.0344],
+        [ 0.0126],
+        [ 0.3997],
+        [-0.2966],
+        [-0.8051],
+        [-0.4997],
+        [ 0.4699],
+        [ 0.3182],
+        [ 0.0906],
+        [-0.0993]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -1148,7 +1148,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.6158], grad_fn=&lt;Sl
 <p>Time to optimise the parameters (train the network). We can use pytorch’s built-in mean-squared-error (MSE) loss function class:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loss_fn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>loss_fn = nn.MSELoss()
 </pre></div>
 </div>
 </div>
@@ -1156,8 +1156,8 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.6158], grad_fn=&lt;Sl
 <p>And its own implementation of stochastic gradient descent (SGD):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>learning_rate = 0.001
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 </pre></div>
 </div>
 </div>
@@ -1166,21 +1166,21 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.6158], grad_fn=&lt;Sl
 <p>(NB: usually this would include a 2nd inner loop over <em>batches</em>, but here we’re updating the parameters on the entire dataset at each iteration)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">loss_fn</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">epochs</span><span class="p">):</span>
-    <span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
-        <span class="c1"># Compute prediction and loss</span>
-        <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">loss_value</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-        <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">loss_value</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def train(X, y, model, loss_fn, optimizer, epochs):
+    loss_history = []
+    for e in range(epochs):
+        # Compute prediction and loss
+        pred = model(X)
+        loss_value = loss_fn(pred, y)
+        loss_history.append(float(loss_value))
 
-        <span class="c1"># Backpropagation</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>  <span class="c1"># without this the optimiser would accumulate the gradients between epochs</span>
-        <span class="n">loss_value</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        # Backpropagation
+        optimizer.zero_grad()  # without this the optimiser would accumulate the gradients between epochs
+        loss_value.backward()
+        optimizer.step()
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">loss_history</span>
+    print(&quot;Done!&quot;)
+    return model, loss_history
 </pre></div>
 </div>
 </div>
@@ -1193,7 +1193,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.6158], grad_fn=&lt;Sl
 <p>Let’s go!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="p">,</span> <span class="n">loss_history</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">loss_fn</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="mi">15000</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model, loss_history = train(X, y, model, loss_fn, optimizer, 15000)
 </pre></div>
 </div>
 </div>
@@ -1206,28 +1206,28 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.6158], grad_fn=&lt;Sl
 <p>We get a similar fit (and loss) to our “more conventional” linear regression implementation from before:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Layer: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> | Size: </span><span class="si">{</span><span class="n">param</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2"> | Values : </span><span class="si">{</span><span class="n">param</span><span class="p">[:]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>params = []
+for name, param in model.named_parameters():
+    print(f&quot;Layer: {name} | Size: {param.size()} | Values : {param[:]} \n&quot;)
+    params.append(param.detach().numpy())
 
-<span class="n">w_1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">w_2</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+w_1 = params[0][0][0]
+w_2 = params[0][0][1]
+b = params[1][0]
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_history</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;epochs&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
-<span class="n">plot_predictions</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">w_1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">w_2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+ax[0].plot(loss_history)
+ax[0].set_xlabel(&quot;epochs&quot;)
+ax[0].set_ylabel(&quot;loss&quot;)
+plot_predictions(round(w_1, 3), round(w_2, 3), round(b, 3), ax[1])
+fig.tight_layout()
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7050]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-7.9761e-10], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-7.9596e-10], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 <img alt="../_images/01_linear_regression_42_1.png" src="../_images/01_linear_regression_42_1.png" />
@@ -1263,16 +1263,16 @@ h_{(2,1)} = w_{(1,1)\rightarrow(2,1)} h_{(1,1)} + w_{(1,2)\rightarrow(2,1)} h_{(
 <p>Here’s the network implemented in pytorch:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model = nn.Sequential(
+    nn.Linear(in_features=1, out_features=3),
+    nn.Linear(in_features=3, out_features=2),
+    nn.Linear(in_features=2, out_features=1),
+)
+print(model)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------ Parameters ------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Layer: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> | Size: </span><span class="si">{</span><span class="n">param</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+print(&quot;\n------ Parameters ------\n&quot;)
+for name, param in model.named_parameters():
+    print(f&quot;Layer: {name} | Size: {param.size()}\n&quot;)
 </pre></div>
 </div>
 </div>
@@ -1318,15 +1318,15 @@ Layer: 2.bias | Size: torch.Size([1])
 <h2>Can the network learn <span class="math notranslate nohighlight">\(y = x^2\)</span> ?<a class="headerlink" href="#can-the-network-learn-y-x-2" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">X</span><span class="o">**</span><span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X = np.linspace(-1, 1, 1000)
+y = X**2
 
-<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+X = torch.tensor(X, dtype=torch.float)[:, None]
+y = torch.tensor(y, dtype=torch.float)
+y = y[:, None]
 
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
-<span class="n">model</span><span class="p">,</span> <span class="n">loss_history</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">loss_fn</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
+model, loss_history = train(X, y, model, loss_fn, optimizer, 10000)
 </pre></div>
 </div>
 </div>
@@ -1338,16 +1338,16 @@ Layer: 2.bias | Size: torch.Size([1])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_history</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;epochs&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;y = $x^2$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="s2">&quot;k--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;fit&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 2, figsize=(7, 3))
+ax[0].plot(loss_history)
+ax[0].set_xlabel(&quot;epochs&quot;)
+ax[0].set_ylabel(&quot;loss&quot;)
+ax[1].plot(X.numpy(), y.numpy(), &quot;b&quot;, label=&quot;y = $x^2$&quot;)
+ax[1].plot(X.numpy(), model(X).detach().numpy(), &quot;k--&quot;, label=&quot;fit&quot;)
+ax[1].set_xlabel(&quot;x&quot;)
+ax[1].set_ylabel(&quot;y&quot;)
+ax[1].legend()
+fig.tight_layout()
 </pre></div>
 </div>
 </div>

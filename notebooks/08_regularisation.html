@@ -447,29 +447,29 @@ title="Print to PDF"
 <p>With more flexibility comes more potential for overfitting (poor performance on new data). Here’s an example of fitting the two hidden layer network on an increasing number of data points:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># previously was at the end of 02 logistic regression</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">for n in [5, 10, 20, 30, 40, 50, 100, 250]:</span>
-<span class="sd">    X, y = get_cubic_data(n)</span>
-<span class="sd">    X = torch.tensor(X, dtype=torch.float)</span>
-<span class="sd">    y = torch.tensor(y, dtype=torch.float)</span>
-<span class="sd">    y = y[:, None]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># previously was at the end of 02 logistic regression
+&quot;&quot;&quot;
+for n in [5, 10, 20, 30, 40, 50, 100, 250]:
+    X, y = get_cubic_data(n)
+    X = torch.tensor(X, dtype=torch.float)
+    y = torch.tensor(y, dtype=torch.float)
+    y = y[:, None]
 
-<span class="sd">    model = nn.Sequential(</span>
-<span class="sd">        nn.Linear(in_features=2, out_features=3),</span>
-<span class="sd">        nn.Sigmoid(),</span>
-<span class="sd">        nn.Linear(in_features=3, out_features=3),</span>
-<span class="sd">        nn.Sigmoid(),</span>
-<span class="sd">        nn.Linear(in_features=3, out_features=1),</span>
-<span class="sd">        #  Sigmoid (applied in loss_fn)</span>
-<span class="sd">    )</span>
+    model = nn.Sequential(
+        nn.Linear(in_features=2, out_features=3),
+        nn.Sigmoid(),
+        nn.Linear(in_features=3, out_features=3),
+        nn.Sigmoid(),
+        nn.Linear(in_features=3, out_features=1),
+        #  Sigmoid (applied in loss_fn)
+    )
 
-<span class="sd">    learning_rate = 0.1</span>
-<span class="sd">    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)</span>
-<span class="sd">    model, loss_history = train(X, y, model, loss_fn, optimizer, 30000)</span>
+    learning_rate = 0.1
+    optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
+    model, loss_history = train(X, y, model, loss_fn, optimizer, 30000)
 
-<span class="sd">    show_result(X, y, model, loss_history, print_weights=False, suptitle=f&quot;n = {n}&quot;)</span>
-<span class="sd">&quot;&quot;&quot;</span>
+    show_result(X, y, model, loss_history, print_weights=False, suptitle=f&quot;n = {n}&quot;)
+&quot;&quot;&quot;
 </pre></div>
 </div>
 </div>
