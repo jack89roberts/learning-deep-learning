@@ -627,28 +627,28 @@ title="Print to PDF"
 <p>They look like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 
-def sigmoid(z):
-    return 1 / (1 + np.exp(-z))
+<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
 
 
-def dsigmoid_dz(z):
-    return sigmoid(z) * (1 - sigmoid(z))
+<span class="k">def</span> <span class="nf">dsigmoid_dz</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
 
 
-z = np.linspace(-7, 7, 100)
-fig, ax = plt.subplots(1, 2, sharex=True, sharey=True, figsize=(9, 4))
-ax[0].plot(z, sigmoid(z), color=&quot;b&quot;, label=r&quot;$\sigma(z)$&quot;)
-ax[0].legend()
-ax[0].set_xlabel(&quot;z&quot;)
-ax[0].set_title(&quot;Sigmoid&quot;)
-ax[1].plot(z, dsigmoid_dz(z), color=&quot;orange&quot;, label=r&quot;$\sigma&#39;(z)$&quot;)
-ax[1].legend()
-ax[1].set_xlabel(&quot;z&quot;)
-ax[1].set_title(&quot;Gradient&quot;)
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma(z)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sigmoid&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dsigmoid_dz</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39;(z)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Gradient&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -726,61 +726,61 @@ x
 <p>Or visually, here are the activations and gradients in each layer plotted, assuming log loss is used and the true class is <span class="math notranslate nohighlight">\(y = 0\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def activations_gradients(x, y, layers, g, dg_dz, dL_dyhat):
-    # forward pass
-    A = {0: x}
-    Z = {}
-    for l in range(1, layers + 1):
-        Z[l] = A[l - 1]
-        A[l] = g(Z[l])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">activations_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">dg_dz</span><span class="p">,</span> <span class="n">dL_dyhat</span><span class="p">):</span>
+    <span class="c1"># forward pass</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">layers</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">Z</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
     
-    # always sigmoid output layer
-    Z[layers] = A[layers - 1]
-    A[layers] = sigmoid(Z[layers])
+    <span class="c1"># always sigmoid output layer</span>
+    <span class="n">Z</span><span class="p">[</span><span class="n">layers</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">A</span><span class="p">[</span><span class="n">layers</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">layers</span><span class="p">])</span>
 
-    # backward pass
-    # always sigmoid output layer
-    dL_dZ = {layers: dL_dyhat(y, A[layers]) * dsigmoid_dz(Z[layers])}
-    dL_dW = {layers: dL_dZ[layers] * A[layers - 1]}
-    for l in range(layers - 1, 0, -1):
-        dL_dZ[l] = dL_dZ[l + 1] * dg_dz(Z[l])
-        dL_dW[l] = dL_dZ[l] * A[l - 1]
+    <span class="c1"># backward pass</span>
+    <span class="c1"># always sigmoid output layer</span>
+    <span class="n">dL_dZ</span> <span class="o">=</span> <span class="p">{</span><span class="n">layers</span><span class="p">:</span> <span class="n">dL_dyhat</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="n">layers</span><span class="p">])</span> <span class="o">*</span> <span class="n">dsigmoid_dz</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">layers</span><span class="p">])}</span>
+    <span class="n">dL_dW</span> <span class="o">=</span> <span class="p">{</span><span class="n">layers</span><span class="p">:</span> <span class="n">dL_dZ</span><span class="p">[</span><span class="n">layers</span><span class="p">]</span> <span class="o">*</span> <span class="n">A</span><span class="p">[</span><span class="n">layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]}</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">dL_dZ</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dL_dZ</span><span class="p">[</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dg_dz</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+        <span class="n">dL_dW</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dL_dZ</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
 
-    return A, dL_dW
-
-
-def dL_dyhat(y, yhat):
-    &quot;&quot;&quot;Log loss derivative&quot;&quot;&quot;
-    return - y / yhat + (1 - y) / (1 - yhat)
+    <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">dL_dW</span>
 
 
-def plot_activations_gradients(x, y, A, dL_dW):
-    fig, ax = plt.subplots(1, 2, sharex=True, sharey=False, figsize=(12, 5))
+<span class="k">def</span> <span class="nf">dL_dyhat</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">yhat</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Log loss derivative&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="o">-</span> <span class="n">y</span> <span class="o">/</span> <span class="n">yhat</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">yhat</span><span class="p">)</span>
 
-    for l in range(1, layers + 1):
-        ax[0].plot(x, A[l], label=f&quot;Layer {l}&quot;)
-        ax[1].plot(x, dL_dW[l], label=f&quot;Layer {l}&quot;)
-    ax[0].legend()
-    ax[0].set_xlabel(&quot;x&quot;)
-    ax[0].set_title(&quot;Layer Activations&quot;)
-    ax[1].legend()
-    ax[1].set_xlabel(&quot;x&quot;)
-    ax[1].set_title(
-        r&quot;Layer Loss-Gradients ($\partial \mathcal{L} / \partial W^{[l]}$) if &quot;
-        f&quot;y = {y}&quot;
-    )
+
+<span class="k">def</span> <span class="nf">plot_activations_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">dL_dW</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">layers</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Layer </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dL_dW</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Layer </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Layer Activations&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;Layer Loss-Gradients ($\partial \mathcal</span><span class="si">{L}</span><span class="s2"> / \partial W^{[l]}$) if &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;y = </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>layers = 4
-x = np.linspace(-7, 7, 100)
-y = 1
-A, dL_dW = activations_gradients(x, y, layers, sigmoid, dsigmoid_dz, dL_dyhat)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layers</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">A</span><span class="p">,</span> <span class="n">dL_dW</span> <span class="o">=</span> <span class="n">activations_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">sigmoid</span><span class="p">,</span> <span class="n">dsigmoid_dz</span><span class="p">,</span> <span class="n">dL_dyhat</span><span class="p">)</span>
 
-plot_activations_gradients(x, y, A, dL_dW)
+<span class="n">plot_activations_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">dL_dW</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -816,28 +816,28 @@ plot_activations_gradients(x, y, A, dL_dW)
 <h2>ReLU<a class="headerlink" href="#relu" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def relu(z):
-    r = z.copy()
-    r[r &lt; 0] = 0
-    return r
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">relu</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">r</span>
 
 
-def drelu_dz(z):
-    dr = z.copy()
-    dr[z &lt; 0] = 0
-    dr[z &gt;= 0] = 1
-    return dr
+<span class="k">def</span> <span class="nf">drelu_dz</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">dr</span><span class="p">[</span><span class="n">z</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dr</span><span class="p">[</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">dr</span>
 
 
-z = np.linspace(-5, 5, 200)
-fig, ax = plt.subplots(1, 2, sharex=True, sharey=True, figsize=(9, 4))
-ax[0].plot(z, relu(z), color=&quot;b&quot;, label=r&quot;$\sigma(z)$&quot;)
-ax[0].legend()
-ax[0].set_xlabel(&quot;z&quot;)
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">relu</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma(z)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
 
-ax[1].plot(z, drelu_dz(z), color=&quot;orange&quot;, label=r&quot;$\sigma&#39;(z)$&quot;)
-ax[1].legend()
-ax[1].set_xlabel(&quot;z&quot;)
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">drelu_dz</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39;(z)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -856,12 +856,12 @@ ax[1].set_xlabel(&quot;z&quot;)
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>layers = 4
-x = np.linspace(-7, 7, 100)
-y = 1
-A, dL_dW = activations_gradients(x, y, layers, relu, drelu_dz, dL_dyhat)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layers</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">A</span><span class="p">,</span> <span class="n">dL_dW</span> <span class="o">=</span> <span class="n">activations_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">relu</span><span class="p">,</span> <span class="n">drelu_dz</span><span class="p">,</span> <span class="n">dL_dyhat</span><span class="p">)</span>
 
-plot_activations_gradients(x, y, A, dL_dW)
+<span class="n">plot_activations_gradients</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">dL_dW</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

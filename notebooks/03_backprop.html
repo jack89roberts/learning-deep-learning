@@ -728,9 +728,9 @@ title="Print to PDF"
 <h1>03: Back Propagation<a class="headerlink" href="#back-propagation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import torch
-from torch import nn
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 </pre></div>
 </div>
 </div>
@@ -1039,44 +1039,44 @@ x = b_1^{[1]}
 <p>When doing a forward (top to bottom) pass through the network we store the values computed at all nodes (i.e. including the intermediate values on each row):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Forward pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Forward pass</span>
 
-# =================
-# Row 1 in diagram
-# =================
-x1 = 1.5
-x2 = 2.5
+<span class="c1"># =================</span>
+<span class="c1"># Row 1 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="mf">2.5</span>
 
-w1 = -4
-w2 = 3
+<span class="n">w1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="mi">3</span>
 
-# =================
-# Row 2 in diagram
-# =================
-w1x1 = w1 * x1
-w2x2 = w2 * x2
+<span class="c1"># =================</span>
+<span class="c1"># Row 2 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">w1x1</span> <span class="o">=</span> <span class="n">w1</span> <span class="o">*</span> <span class="n">x1</span>
+<span class="n">w2x2</span> <span class="o">=</span> <span class="n">w2</span> <span class="o">*</span> <span class="n">x2</span>
 
-b = -1
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
-# =================
-# Row 3 in diagram
-# =================
-z = w1x1 + w2x2 + b
+<span class="c1"># =================</span>
+<span class="c1"># Row 3 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">w1x1</span> <span class="o">+</span> <span class="n">w2x2</span> <span class="o">+</span> <span class="n">b</span>
 
-# =================
-# Row 4 in diagram
-# =================
-yhat = 1 / (1 + np.exp(-z))  # sigmoid
+<span class="c1"># =================</span>
+<span class="c1"># Row 4 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>  <span class="c1"># sigmoid</span>
 
-y = 1
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span>
 
-# =================
-# Row 5 in diagram
-# =================
-L = -y * np.log(yhat) - (1 - y) * np.log(1 - yhat)  # log loss
+<span class="c1"># =================</span>
+<span class="c1"># Row 5 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">L</span> <span class="o">=</span> <span class="o">-</span><span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">yhat</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">yhat</span><span class="p">)</span>  <span class="c1"># log loss</span>
 
-print(f&quot;yhat = {yhat:.4f}&quot;)
-print(f&quot;L = {L:.4f}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;yhat = </span><span class="si">{</span><span class="n">yhat</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;L = </span><span class="si">{</span><span class="n">L</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1093,43 +1093,43 @@ L = 0.4741
 <p>Now we can use the node values from the forward pass, our knowledge of the computation graph, and the chain rule to compute the gradients:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Backward pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Backward pass</span>
 
-# =================
-# Row 5 in diagram
-# =================
-dL_dyhat = -y / yhat + (1 - y) / (1 - yhat)  # derivative of log loss
+<span class="c1"># =================</span>
+<span class="c1"># Row 5 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">dL_dyhat</span> <span class="o">=</span> <span class="o">-</span><span class="n">y</span> <span class="o">/</span> <span class="n">yhat</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">yhat</span><span class="p">)</span>  <span class="c1"># derivative of log loss</span>
 
-# =================
-# Row 4 in diagram
-# =================
-dyhat_dz = yhat * (1 - yhat)  # derivative of sigmoid
+<span class="c1"># =================</span>
+<span class="c1"># Row 4 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">dyhat_dz</span> <span class="o">=</span> <span class="n">yhat</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">yhat</span><span class="p">)</span>  <span class="c1"># derivative of sigmoid</span>
 
-dL_dz = dyhat_dz * dL_dyhat
+<span class="n">dL_dz</span> <span class="o">=</span> <span class="n">dyhat_dz</span> <span class="o">*</span> <span class="n">dL_dyhat</span>
 
-# =================
-# Row 3 in diagram
-# =================
-dz_dw1x1 = 1  # summation nodes pass the same gradient backwards
-dz_dw2x2 = 1  # e.g. z = w1x1 + w2x2 + b, dz/d(w2x2) = 1
-dz_db = 1
+<span class="c1"># =================</span>
+<span class="c1"># Row 3 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">dz_dw1x1</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># summation nodes pass the same gradient backwards</span>
+<span class="n">dz_dw2x2</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># e.g. z = w1x1 + w2x2 + b, dz/d(w2x2) = 1</span>
+<span class="n">dz_db</span> <span class="o">=</span> <span class="mi">1</span>
 
-dL_dw1x1 = dz_dw1x1 * dL_dz
-dL_dw2x2 = dz_dw2x2 * dL_dz
-dL_db = dz_db * dL_dz
+<span class="n">dL_dw1x1</span> <span class="o">=</span> <span class="n">dz_dw1x1</span> <span class="o">*</span> <span class="n">dL_dz</span>
+<span class="n">dL_dw2x2</span> <span class="o">=</span> <span class="n">dz_dw2x2</span> <span class="o">*</span> <span class="n">dL_dz</span>
+<span class="n">dL_db</span> <span class="o">=</span> <span class="n">dz_db</span> <span class="o">*</span> <span class="n">dL_dz</span>
 
-# =================
-# Row 2 in diagram
-# =================
-dw1x1_dw1 = x1  # multiplication node gradients take the value of the other input
-dw2x2_dw2 = x2  # e.g. d(w2x2) / d(w2) = x2
+<span class="c1"># =================</span>
+<span class="c1"># Row 2 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">dw1x1_dw1</span> <span class="o">=</span> <span class="n">x1</span>  <span class="c1"># multiplication node gradients take the value of the other input</span>
+<span class="n">dw2x2_dw2</span> <span class="o">=</span> <span class="n">x2</span>  <span class="c1"># e.g. d(w2x2) / d(w2) = x2</span>
 
-dL_dw1 = dw1x1_dw1 * dL_dw1x1
-dL_dw2 = dw2x2_dw2 * dL_dw2x2
+<span class="n">dL_dw1</span> <span class="o">=</span> <span class="n">dw1x1_dw1</span> <span class="o">*</span> <span class="n">dL_dw1x1</span>
+<span class="n">dL_dw2</span> <span class="o">=</span> <span class="n">dw2x2_dw2</span> <span class="o">*</span> <span class="n">dL_dw2x2</span>
 
-print(f&quot;dL_dw1 = {dL_dw1:.4f}&quot;)
-print(f&quot;dL_dw2 = {dL_dw2:.4f}&quot;)
-print(f&quot;dL_db = {dL_db:.4f}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_dw1 = </span><span class="si">{</span><span class="n">dL_dw1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_dw2 = </span><span class="si">{</span><span class="n">dL_dw2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_db = </span><span class="si">{</span><span class="n">dL_db</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1155,44 +1155,44 @@ dL_db = -0.3775
 <h4>Forward Pass<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Forward pass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Forward pass</span>
 
-# =================
-# Row 1 in diagram
-# =================
-x1 = torch.tensor([1.5], requires_grad=False)
-x2 = torch.tensor([2.5], requires_grad=False)
+<span class="c1"># =================</span>
+<span class="c1"># Row 1 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.5</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.5</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-w1 = torch.tensor([-4.0], requires_grad=True)
-w2 = torch.tensor([3.0], requires_grad=True)
+<span class="n">w1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">4.0</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">3.0</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-# =================
-# Row 2 in diagram
-# =================
-w1x1 = w1 * x1
-w2x2 = w2 * x2
+<span class="c1"># =================</span>
+<span class="c1"># Row 2 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">w1x1</span> <span class="o">=</span> <span class="n">w1</span> <span class="o">*</span> <span class="n">x1</span>
+<span class="n">w2x2</span> <span class="o">=</span> <span class="n">w2</span> <span class="o">*</span> <span class="n">x2</span>
 
-b = torch.tensor([-1.0], requires_grad=True)
+<span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-# =================
-# Row 3 in diagram
-# =================
-z = w1x1 + w2x2 + b
+<span class="c1"># =================</span>
+<span class="c1"># Row 3 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">w1x1</span> <span class="o">+</span> <span class="n">w2x2</span> <span class="o">+</span> <span class="n">b</span>
 
-# =================
-# Row 4 in diagram
-# =================
-yhat = torch.sigmoid(z)
+<span class="c1"># =================</span>
+<span class="c1"># Row 4 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
 
-y = torch.tensor([1.0], requires_grad=False)
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-# =================
-# Row 5 in diagram
-# =================
-L = nn.functional.binary_cross_entropy(yhat, y)
+<span class="c1"># =================</span>
+<span class="c1"># Row 5 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">binary_cross_entropy</span><span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-print(f&quot;yhat = {yhat}&quot;)
-print(f&quot;L = {L:.4f}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;yhat = </span><span class="si">{</span><span class="n">yhat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;L = </span><span class="si">{</span><span class="n">L</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1211,11 +1211,11 @@ L = 0.4741
 <p>To do the backward pass and compute the gradients we just need to do:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>L.backward()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 
-print(f&quot;dL_dw1 = {w1.grad}&quot;)
-print(f&quot;dL_dw2 = {w2.grad}&quot;)
-print(f&quot;dL_db = {b.grad}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_dw1 = </span><span class="si">{</span><span class="n">w1</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_dw2 = </span><span class="si">{</span><span class="n">w2</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_db = </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
