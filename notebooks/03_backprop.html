@@ -505,34 +505,51 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     Example
+    <a class="reference internal nav-link" href="#manual-implementation">
+     Manual Implementation
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#forward-pass">
-       Forward pass
+       Forward Pass
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#backward-pass">
-       Backward pass
+       Backward Pass
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pytorch">
-     Pytorch
+    <a class="reference internal nav-link" href="#graph-implementation">
+     Graph Implementation
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id4">
+      <a class="reference internal nav-link" href="#id3">
        Forward Pass
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Backward Pass
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pytorch-implementation">
+     Pytorch Implementation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id5">
+       Forward Pass
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
        Backward Pass
       </a>
      </li>
@@ -674,34 +691,51 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     Example
+    <a class="reference internal nav-link" href="#manual-implementation">
+     Manual Implementation
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#forward-pass">
-       Forward pass
+       Forward Pass
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#backward-pass">
-       Backward pass
+       Backward Pass
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pytorch">
-     Pytorch
+    <a class="reference internal nav-link" href="#graph-implementation">
+     Graph Implementation
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id4">
+      <a class="reference internal nav-link" href="#id3">
        Forward Pass
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Backward Pass
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pytorch-implementation">
+     Pytorch Implementation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id5">
+       Forward Pass
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
        Backward Pass
       </a>
      </li>
@@ -728,7 +762,9 @@ title="Print to PDF"
 <h1>03: Back Propagation<a class="headerlink" href="#back-propagation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">prod</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 </pre></div>
@@ -1019,8 +1055,6 @@ x = b_1^{[1]}
 <section id="computation-graphs-and-auto-differentiation">
 <h2>Computation Graphs and Auto-Differentiation<a class="headerlink" href="#computation-graphs-and-auto-differentiation" title="Permalink to this headline">#</a></h2>
 <p>In the background, large frameworks like pytorch use computation graphs and “auto-differentiation” to be able to compute gradients efficiently.</p>
-<section id="id3">
-<h3>Example<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <p>Here’s an example of a simple logistic regression (one layer) network in the form of a <em>computation graph</em>:</p>
 <a class="reference internal image-reference" href="../_images/03_computation_graph.png"><img alt="Computation graph" src="../_images/03_computation_graph.png" style="width: 500px;" /></a>
 <ul class="simple">
@@ -1033,9 +1067,11 @@ x = b_1^{[1]}
 <li><p>The value of each node for a given input</p></li>
 <li><p>The gradient of each node for a given input, with respect to the final node</p></li>
 </ul>
-<p>Having all the node values and the relationships between the nodes let’s us compute the gradient at each node efficiently:</p>
+<p>Having all the node values and the relationships between the nodes let’s us compute the gradient at each node efficiently.</p>
+<section id="manual-implementation">
+<h3>Manual Implementation<a class="headerlink" href="#manual-implementation" title="Permalink to this headline">#</a></h3>
 <section id="forward-pass">
-<h4>Forward pass<a class="headerlink" href="#forward-pass" title="Permalink to this headline">#</a></h4>
+<h4>Forward Pass<a class="headerlink" href="#forward-pass" title="Permalink to this headline">#</a></h4>
 <p>When doing a forward (top to bottom) pass through the network we store the values computed at all nodes (i.e. including the intermediate values on each row):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1089,7 +1125,7 @@ L = 0.4741
 </div>
 </section>
 <section id="backward-pass">
-<h4>Backward pass<a class="headerlink" href="#backward-pass" title="Permalink to this headline">#</a></h4>
+<h4>Backward Pass<a class="headerlink" href="#backward-pass" title="Permalink to this headline">#</a></h4>
 <p>Now we can use the node values from the forward pass, our knowledge of the computation graph, and the chain rule to compute the gradients:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1142,17 +1178,256 @@ dL_db = -0.3775
 </div>
 </div>
 <p>This is an extremely verbose way of representing this, we’ll see matrix notation in the next notebook that will let us represent networks in a much more concise way.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save some results for later</span>
+<span class="n">yhat_manual</span> <span class="o">=</span> <span class="n">yhat</span>
+<span class="n">L_manual</span> <span class="o">=</span> <span class="n">L</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="pytorch">
-<h3>Pytorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">#</a></h3>
+<section id="graph-implementation">
+<h3>Graph Implementation<a class="headerlink" href="#graph-implementation" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sort_nodes</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visited</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># topological sort</span>
+    <span class="k">if</span> <span class="n">order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">visited</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+        <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+            <span class="n">sort_nodes</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">visited</span><span class="o">=</span><span class="n">visited</span><span class="p">)</span>
+        <span class="n">order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">order</span>
+
+
+<span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">gradient</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">parents</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="o">=</span> <span class="n">gradient</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># set this node&#39;s inputs (parents)</span>
+        <span class="k">if</span> <span class="n">parents</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parents</span> <span class="o">=</span> <span class="n">parents</span>
+
+        <span class="c1"># now the parent nodes should include this node as a child</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rep</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">: &quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;None&quot;</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gradient</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;None&quot;</span>
+        <span class="k">return</span> <span class="n">rep</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(value=</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">, gradient=</span><span class="si">{</span><span class="n">grad</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ordered_nodes</span> <span class="o">=</span> <span class="n">sort_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">ordered_nodes</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;computing value of </span><span class="si">{</span><span class="n">n</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">n</span><span class="o">.</span><span class="n">_forward</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ordered_nodes</span> <span class="o">=</span> <span class="n">sort_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">ordered_nodes</span><span class="p">:</span>
+            <span class="n">n</span><span class="o">.</span><span class="n">gradient</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># reset gradients</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># gradient with respect to self</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">ordered_nodes</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">parents</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;computing gradient for parents of </span><span class="si">{</span><span class="n">n</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">label</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">n</span><span class="o">.</span><span class="n">parents</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="n">n</span><span class="o">.</span><span class="n">_backward</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># modifies self.value using parent(s).value</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value not set for </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_backward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># modifies parent(s).gradient using self.gradient</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Node has parents but no _backward implementation&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Add</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_backward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># add propagates gradient backwards (dx/dx = 1)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">gradient</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span>
+
+
+<span class="k">class</span> <span class="nc">Multiply</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">prod</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_backward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># multiply propagates value of other backwards (d(xy)/dx = y)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">gradient</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span>
+
+
+<span class="k">class</span> <span class="nc">Sigmoid</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># sigmoid(x) = 1 / (1 + exp(-x))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_backward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#  derivative of sigmoid is sigmoid(x) * (1 - sigmoid(x))</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">gradient</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span>
+
+
+<span class="k">class</span> <span class="nc">LogLoss</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># L = -y * log(yhat) - (1 - y) * log(1 - yhat)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">yhat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="o">-</span><span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">yhat</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">yhat</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_backward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># dL_dyhat = -y / yhat + (1 - y) / (1 - yhat)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">yhat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">gradient</span> <span class="o">+=</span> <span class="o">-</span><span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">yhat</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">yhat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id3">
+<h4>Forward Pass<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;x2&quot;</span><span class="p">)</span>
+
+<span class="n">w1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;w1&quot;</span><span class="p">)</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;w2&quot;</span><span class="p">)</span>
+
+<span class="n">w1x1</span> <span class="o">=</span> <span class="n">Multiply</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">x1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;w1x1&quot;</span><span class="p">)</span>
+<span class="n">w2x2</span> <span class="o">=</span> <span class="n">Multiply</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">w2</span><span class="p">,</span> <span class="n">x2</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;w2x2&quot;</span><span class="p">)</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">Add</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">w1x1</span><span class="p">,</span> <span class="n">w2x2</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+
+<span class="n">yhat</span> <span class="o">=</span> <span class="n">Sigmoid</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">z</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;yhat&quot;</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="n">LogLoss</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">yhat</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">x2</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">w1</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+<span class="n">w2</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">b</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+<span class="n">y</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">forward</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot; | manual result was </span><span class="si">{</span><span class="n">yhat_manual</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot; | manual result was </span><span class="si">{</span><span class="n">L_manual</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>computing value of y
+computing value of w1
+computing value of x1
+computing value of w1x1
+computing value of w2
+computing value of x2
+computing value of w2x2
+computing value of b
+computing value of z
+computing value of yhat
+computing value of L
+
+------------
+
+yhat: Sigmoid(value=0.6225, gradient=0.0000)  | manual result was 0.6225
+L: LogLoss(value=0.4741, gradient=0.0000)  | manual result was 0.4741
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h4>Backward Pass<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot; | manual result was </span><span class="si">{</span><span class="n">dL_dw1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w2</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;  | manual result was </span><span class="si">{</span><span class="n">dL_dw2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;  | manual result was </span><span class="si">{</span><span class="n">dL_db</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>computing gradient for parents of L: [&#39;y&#39;, &#39;yhat&#39;]
+computing gradient for parents of yhat: [&#39;z&#39;]
+computing gradient for parents of z: [&#39;w1x1&#39;, &#39;w2x2&#39;, &#39;b&#39;]
+computing gradient for parents of w2x2: [&#39;w2&#39;, &#39;x2&#39;]
+computing gradient for parents of w1x1: [&#39;w1&#39;, &#39;x1&#39;]
+
+------------
+
+w1: Node(value=-4.0000, gradient=-0.5663)  | manual result was -0.5663
+w2: Node(value=3.0000, gradient=-0.9439)   | manual result was -0.9439
+b: Node(value=-1.0000, gradient=-0.3775)   | manual result was -0.3775
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pytorch-implementation">
+<h3>Pytorch Implementation<a class="headerlink" href="#pytorch-implementation" title="Permalink to this headline">#</a></h3>
 <p>We can manually do the same operations in pytorch and with pytorch’s tensor class, being careful to:</p>
 <ul class="simple">
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code> for the parameters we’re interested in the gradients of (<code class="docutils literal notranslate"><span class="pre">w1</span></code>, <code class="docutils literal notranslate"><span class="pre">w2</span></code>, and <code class="docutils literal notranslate"><span class="pre">b</span></code>) - we’ll come back to this later</p></li>
 <li><p>Use torch’s implementations of sigmoid (<code class="docutils literal notranslate"><span class="pre">torch.sigmoid</span></code>) and log loss (<code class="docutils literal notranslate"><span class="pre">torch.nn.functional.binary_cross_entropy</span></code>).</p></li>
 </ul>
-<section id="id4">
-<h4>Forward Pass<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
+<section id="id5">
+<h4>Forward Pass<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Forward pass</span>
@@ -1191,38 +1466,38 @@ dL_db = -0.3775
 <span class="c1"># =================</span>
 <span class="n">L</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">binary_cross_entropy</span><span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;yhat = </span><span class="si">{</span><span class="n">yhat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;L = </span><span class="si">{</span><span class="n">L</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;yhat = </span><span class="si">{</span><span class="n">yhat</span><span class="si">}</span><span class="s2"> | manual result was </span><span class="si">{</span><span class="n">yhat_manual</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;L = </span><span class="si">{</span><span class="n">L</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> | manual result was </span><span class="si">{</span><span class="n">L_manual</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>yhat = tensor([0.6225], grad_fn=&lt;SigmoidBackward0&gt;)
-L = 0.4741
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>yhat = tensor([0.6225], grad_fn=&lt;SigmoidBackward0&gt;) | manual result was 0.6225
+L = 0.4741 | manual result was 0.4741
 </pre></div>
 </div>
 </div>
 </div>
 <p>Note the values are the same as our own version above.</p>
 </section>
-<section id="id5">
-<h4>Backward Pass<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
+<section id="id6">
+<h4>Backward Pass<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h4>
 <p>Now for the magic - in the background pytorch has built a computation graph from the variables we’ve defined and can compute the gradients (do a backward pass) for us automatically (for the parameters where we’ve specified <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code>). You’ll notice that the <code class="docutils literal notranslate"><span class="pre">yhat</span></code> tensor above contains both its value and a function for computing gradients with respect to it (<code class="docutils literal notranslate"><span class="pre">&lt;SigmoidBackward0&gt;</span></code>).</p>
 <p>To do the backward pass and compute the gradients we just need to do:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_dw1 = </span><span class="si">{</span><span class="n">w1</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_dw2 = </span><span class="si">{</span><span class="n">w2</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_db = </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_dw1 = </span><span class="si">{</span><span class="n">w1</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2"> | manual result was </span><span class="si">{</span><span class="n">dL_dw1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_dw2 = </span><span class="si">{</span><span class="n">w2</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2"> | manual result was </span><span class="si">{</span><span class="n">dL_dw2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dL_db = </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2">  | manual result was </span><span class="si">{</span><span class="n">dL_db</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dL_dw1 = tensor([-0.5663])
-dL_dw2 = tensor([-0.9439])
-dL_db = tensor([-0.3775])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dL_dw1 = tensor([-0.5663]) | manual result was -0.5663
+dL_dw2 = tensor([-0.9439]) | manual result was -0.9439
+dL_db = tensor([-0.3775])  | manual result was -0.3775
 </pre></div>
 </div>
 </div>
