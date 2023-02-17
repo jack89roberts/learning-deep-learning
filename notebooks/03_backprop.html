@@ -118,7 +118,7 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Neural Networks
+  Fully Connected Neural Networks
  </span>
 </p>
 <ul class="current nav bd-sidenav">
@@ -1322,23 +1322,38 @@ dL_db = -0.3775
 <h4>Forward Pass<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =================</span>
+<span class="c1"># Row 1 in diagram</span>
+<span class="c1"># =================</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
 <span class="n">x2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;x2&quot;</span><span class="p">)</span>
 
 <span class="n">w1</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;w1&quot;</span><span class="p">)</span>
 <span class="n">w2</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;w2&quot;</span><span class="p">)</span>
 
+<span class="c1"># =================</span>
+<span class="c1"># Row 2 in diagram</span>
+<span class="c1"># =================</span>
 <span class="n">w1x1</span> <span class="o">=</span> <span class="n">Multiply</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">x1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;w1x1&quot;</span><span class="p">)</span>
 <span class="n">w2x2</span> <span class="o">=</span> <span class="n">Multiply</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">w2</span><span class="p">,</span> <span class="n">x2</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;w2x2&quot;</span><span class="p">)</span>
 
 <span class="n">b</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
 
+<span class="c1"># =================</span>
+<span class="c1"># Row 3 in diagram</span>
+<span class="c1"># =================</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">Add</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">w1x1</span><span class="p">,</span> <span class="n">w2x2</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
 
+<span class="c1"># =================</span>
+<span class="c1"># Row 4 in diagram</span>
+<span class="c1"># =================</span>
 <span class="n">yhat</span> <span class="o">=</span> <span class="n">Sigmoid</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">z</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;yhat&quot;</span><span class="p">)</span>
 
 <span class="n">y</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
 
+<span class="c1"># =================</span>
+<span class="c1"># Row 5 in diagram</span>
+<span class="c1"># =================</span>
 <span class="n">L</span> <span class="o">=</span> <span class="n">LogLoss</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">yhat</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1421,7 +1436,7 @@ b: Node(value=-1.0000, gradient=-0.3775)   | manual result was -0.3775
 </section>
 <section id="pytorch-implementation">
 <h3>Pytorch Implementation<a class="headerlink" href="#pytorch-implementation" title="Permalink to this headline">#</a></h3>
-<p>We can manually do the same operations in pytorch and with pytorch’s tensor class, being careful to:</p>
+<p>We can do the same operations with pytorch’s tensor class, being careful to:</p>
 <ul class="simple">
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code> for the parameters we’re interested in the gradients of (<code class="docutils literal notranslate"><span class="pre">w1</span></code>, <code class="docutils literal notranslate"><span class="pre">w2</span></code>, and <code class="docutils literal notranslate"><span class="pre">b</span></code>) - we’ll come back to this later</p></li>
 <li><p>Use torch’s implementations of sigmoid (<code class="docutils literal notranslate"><span class="pre">torch.sigmoid</span></code>) and log loss (<code class="docutils literal notranslate"><span class="pre">torch.nn.functional.binary_cross_entropy</span></code>).</p></li>
