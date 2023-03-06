@@ -865,11 +865,12 @@ b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; b_{3}^{[1]} &amp; \dots &amp; b_{3}^{[1]}
 \frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}}
 \]</div>
 <p>is a matrix with the same dimensions as <span class="math notranslate nohighlight">\(\mathbf{W}^{[l]}\)</span>, namely <span class="math notranslate nohighlight">\((n^{[l]}, n^{[l-1]})\)</span>, where each element is the derivative of the loss with respect to a single weight.</p>
-<p>In the full expression for the weight derivatives in a layer, we can check the dimensions make mathematical sense:
-$<span class="math notranslate nohighlight">\(
+<p>In the full expression for the weight derivatives in a layer, we can check the dimensions make mathematical sense:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \frac{\partial \mathcal{L}}{\partial \mathbf{W}^{[l]}} = \frac{1}{m} \frac{\partial \mathcal{L}}{\partial \mathbf{Z}^{[l]}} \mathbf{A}^{[l-1]^T} \\
 (n^{[l]}, n^{[l-1]}) = (1) * (n^{[l]}, m) \times (m, n^{[l-1]})
-\)</span>$</p>
+\end{split}\]</div>
 <p>These are the correct dimensions for a valid matrix multiplication, which gives some reassurance that it’s sensible at least! We can repeat this for the other key equations:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
