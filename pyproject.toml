@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "learningdl"
+version = "0.1.0"
+description = "Learning Deep Learning"
+authors = ["Jack Roberts <jroberts@turing.ac.uk>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+jupyter = "^1.0.0"
+jupyterlab = "^3.6.3"
+numpy = "^1.24.2"
+pandas = "^2.0.0"
+matplotlib = "^3.7.1"
+seaborn = "^0.12.2"
+torch = "^2.0.0"
+jupyter-book = "^0.15.1"
+scikit-learn = "^1.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
