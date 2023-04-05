@@ -67,6 +67,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="03: Back Propagation" href="03_backprop.html" />
+    <link rel="prev" title="01: Linear Regression" href="01_linear_regression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -157,7 +159,20 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fully Connected Neural Networks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_linear_regression.html">01: Linear Regression</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">02: Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_backprop.html">03: Back Propagation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_matrix_notation.html">04: Matrix Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_activation.html">05: Gradients and Activation Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_nonlinear_regression.html">06: Non-linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_multiclass.html">07: Multiple Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_regularisation.html">08 Regularisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_optimisers.html">09: Optimisation Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_experiments.html">10: Training and Tuning Networks</a></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -768,9 +783,9 @@ g(z) = \textrm{sigmoid}(z) = \frac{1}{1 + \exp(-z)}
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4296]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4478]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8138], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8174], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -798,7 +813,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8138], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/611078447599905193254bce79988ed2eac1cf0d905c7868682977eeb0f5674d.png" src="../_images/611078447599905193254bce79988ed2eac1cf0d905c7868682977eeb0f5674d.png" />
+<img alt="../_images/4a198cacb457557de43084519d108df13413431bacac0778e8de27210b009cc5.png" src="../_images/4a198cacb457557de43084519d108df13413431bacac0778e8de27210b009cc5.png" />
 </div>
 </div>
 <p>Also shown is the <strong>decision boundary</strong> - all samples with <span class="math notranslate nohighlight">\(x\)</span> to the left of the boundary are predicted to have <span class="math notranslate nohighlight">\(y = 0\)</span>, and all values to the right <span class="math notranslate nohighlight">\(y = 1\)</span> (assuming we predict <span class="math notranslate nohighlight">\(y = 1\)</span> when <span class="math notranslate nohighlight">\(\hat{y} \geq 0.5\)</span>).</p>
@@ -838,7 +853,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8138], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/81055cb88dd38637cdc01fe18ecebe937e7efd25e4b4b29540f8ffa57131cff3.png" src="../_images/81055cb88dd38637cdc01fe18ecebe937e7efd25e4b4b29540f8ffa57131cff3.png" />
+<img alt="../_images/87cb7a11d83982a1c6b59afb82f7e0d23b1011ed1b09490fa62b9164e4f3569e.png" src="../_images/87cb7a11d83982a1c6b59afb82f7e0d23b1011ed1b09490fa62b9164e4f3569e.png" />
 </div>
 </div>
 </section>
@@ -981,12 +996,12 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8138], grad_fn=&lt;Sl
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.3927, -2.8199]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.2370, -2.5803]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.0495], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.0788], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
-<img alt="../_images/b884b97093bb6667d6f5934efd2b31d68e5805de458718a013a6eb688d950a84.png" src="../_images/b884b97093bb6667d6f5934efd2b31d68e5805de458718a013a6eb688d950a84.png" />
+<img alt="../_images/de55bdacc9142588978a43ab5c0f82e607b7dfb1e723d82ceeb4696c8ed767e1.png" src="../_images/de55bdacc9142588978a43ab5c0f82e607b7dfb1e723d82ceeb4696c8ed767e1.png" />
 </div>
 </div>
 <p>Logistic regression, and our neural network that recreates it, can only fit <em>linear</em> decision boundaries. We could fit a non-linear boundary by adding polynomial features. In this case we’d need up cubic terms so we might try to fit something like this:</p>
@@ -1030,17 +1045,17 @@ z = w_1 x_1^3 + w_2 x_1^2 x_2 + w_3 x_1 x_2^2 + w_4 x_2^3 + w_5 x_1 ^2 + w_6 x_1
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[10.2098,  9.1074],
-        [ 1.4782, -0.5719]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[  1.4006,  -0.5293],
+        [-11.1249, -10.1773]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.1772, -0.1351], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.1118,  0.0078], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[-16.2943,  27.7364]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[24.7334, 14.3384]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.1975], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-19.1511], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
-<img alt="../_images/8d31e3056e5ac5492b4277dede0f6980fef82bd2539225880440a0cccb81f7f4.png" src="../_images/8d31e3056e5ac5492b4277dede0f6980fef82bd2539225880440a0cccb81f7f4.png" />
+<img alt="../_images/1f7a097568ad7f6d3f87a0505bf61e9ec94e571b0f5d5fb2dc0df01e6fdd6695.png" src="../_images/1f7a097568ad7f6d3f87a0505bf61e9ec94e571b0f5d5fb2dc0df01e6fdd6695.png" />
 </div>
 </div>
 <p>We get a non-linear decision boundary! But there’s still a region where the network is uncertain/misclassifies  some points (e.g. the white region). What if we add another layer?</p>
@@ -1072,7 +1087,7 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.1975], grad_fn=&lt;S
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
 </pre></div>
 </div>
-<img alt="../_images/53a10d448bce3dab802f332293f46ff66106cdd114ac1b489ef7a7392904d770.png" src="../_images/53a10d448bce3dab802f332293f46ff66106cdd114ac1b489ef7a7392904d770.png" />
+<img alt="../_images/91c70497fe5f18b80025e91e7f1274753cd6256119daf0620d9185719f829b01.png" src="../_images/91c70497fe5f18b80025e91e7f1274753cd6256119daf0620d9185719f829b01.png" />
 </div>
 </div>
 <p>This network can almost perfectly fit the decision boundary the data was generated with.</p>
@@ -1179,7 +1194,11 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.1975], grad_fn=&lt;S
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3f22ac225c6c03e972346886a949b927f0b6b731a7d5e19d6bce678f6f07eadd.png" src="../_images/3f22ac225c6c03e972346886a949b927f0b6b731a7d5e19d6bce678f6f07eadd.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1981/854895806.py:2: RuntimeWarning: overflow encountered in exp
+  return 1 / (1 + np.exp(-z))
+</pre></div>
+</div>
+<img alt="../_images/fdb90a60a0301bd808ddd6ec3202c286bdfee680dc0fab0c3dafda10acf875f1.png" src="../_images/fdb90a60a0301bd808ddd6ec3202c286bdfee680dc0fab0c3dafda10acf875f1.png" />
 </div>
 </div>
 <p>The colour scale shows the “activation” of the node (i.e. the output after applying the sigmoid function). One node in the hidden layer captures the upward (positive) slope of the decision boundary, and the other the downward (negative) slope. When combined in the output layer (and sigmoid applied), the points from the two classes are linearly separable (you can draw a linear decision boundary between them) with respect to the activation of the hidden nodes.</p>
@@ -1228,6 +1247,24 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.1975], grad_fn=&lt;S
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="01_linear_regression.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">01: Linear Regression</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03_backprop.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">03: Back Propagation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div></div>
   
 </div>

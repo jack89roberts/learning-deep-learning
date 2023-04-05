@@ -67,6 +67,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="02: Logistic Regression" href="02_logistic_regression.html" />
+    <link rel="prev" title="Learning Deep Learning [WIP!]" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -157,7 +159,20 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fully Connected Neural Networks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">01: Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_logistic_regression.html">02: Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_backprop.html">03: Back Propagation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_matrix_notation.html">04: Matrix Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_activation.html">05: Gradients and Activation Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_nonlinear_regression.html">06: Non-linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_multiclass.html">07: Multiple Outputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_regularisation.html">08 Regularisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_optimisers.html">09: Optimisation Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_experiments.html">10: Training and Tuning Networks</a></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -931,9 +946,9 @@ b = b - \alpha\frac{\partial \mathcal{L}}{\partial b}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.5459, 0.6091]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 0.5298, -0.0322]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0544], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.3592], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -958,16 +973,16 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0544], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.5776],
-        [-0.3854],
-        [ 0.3198],
-        [-0.4786],
-        [-1.0905],
-        [-1.2150],
-        [ 0.4965],
-        [ 0.4527],
-        [ 0.8683],
-        [-0.3896]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.9222],
+        [-0.6807],
+        [-0.3405],
+        [-0.4241],
+        [-0.5175],
+        [-1.0143],
+        [-0.2240],
+        [-0.0958],
+        [ 0.6372],
+        [-0.5546]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -1053,12 +1068,12 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0544], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7051]], grad_fn=&lt;SliceBackward0&gt;) 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[0.2929, 0.7050]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-8.3983e-09], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-2.5282e-09], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
-<img alt="../_images/ced6d888fdfad25be32f46d0c0fa17af7682f35decfa051eb3d1baa5486f434b.png" src="../_images/ced6d888fdfad25be32f46d0c0fa17af7682f35decfa051eb3d1baa5486f434b.png" />
+<img alt="../_images/b805fac980804e35fcd74465e1116675798b4c8cb074d02507db2a70bea0563a.png" src="../_images/b805fac980804e35fcd74465e1116675798b4c8cb074d02507db2a70bea0563a.png" />
 </div>
 </div>
 </section>
@@ -1180,7 +1195,7 @@ Layer: 2.bias | Size: torch.Size([1])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c304c195ff2b0ac874be375a9e67f64c302a06127f1d047b66542dd12197b399.png" src="../_images/c304c195ff2b0ac874be375a9e67f64c302a06127f1d047b66542dd12197b399.png" />
+<img alt="../_images/44ff1db7c67e8745b4fd263fac345292af72b9fcff694cb0d6b479f439c8ecc4.png" src="../_images/44ff1db7c67e8745b4fd263fac345292af72b9fcff694cb0d6b479f439c8ecc4.png" />
 </div>
 </div>
 <p>No! The new neural network is still a linear regression model that could be reduced to <span class="math notranslate nohighlight">\(\hat{y} = wx + b\)</span>.</p>
@@ -1245,6 +1260,24 @@ h = w_x x + b_h \\
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Learning Deep Learning [WIP!]</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="02_logistic_regression.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">02: Logistic Regression</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div></div>
   
 </div>
