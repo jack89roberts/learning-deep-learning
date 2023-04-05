@@ -384,21 +384,21 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-pass-recap">Forward Pass: Recap</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-the-parameters-how-not-to-do-it">Learning the Parameters (how not to do it)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-network-as-a-composed-function">Neural Network as a Composed Function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-for-derivatives">Chain Rule (for derivatives)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">Chain Rule Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">Case 2: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span>, which are both functions of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Back Propagation</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Back Propagation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-computing-the-gradient-for-b-1-2">Example 1: Computing the gradient for <span class="math notranslate nohighlight">\(b_1^{[2]}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-computing-the-gradient-for-w-2-1">Example 2: Computing the gradient for <span class="math notranslate nohighlight">\(w_2^{[1]}\)</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-paths">Multiple Paths</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-paths">Multiple Paths</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">Chain Rule Case 2: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span>, which are both functions of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-the-neural-network">Back to the neural network</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-propagation-and-efficiency">Back Propagation and Efficiency</a></li>
 </ul>
 </li>
@@ -439,6 +439,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">prod</span>
 
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
@@ -534,23 +535,10 @@ a_3^{[2]} = g(z_3^{[2]})
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">40</span>
-<span class="g g-Whitespace">     </span><span class="mi">38</span> <span class="n">biases</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">3.9181</span><span class="p">,</span> <span class="mf">3.8380</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.6347</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
-<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="n">network</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">biases</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">40</span> <span class="n">network</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">42</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original loss: </span><span class="si">{</span><span class="n">network</span><span class="o">.</span><span class="n">loss</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="nn">Cell In[2], line 25,</span> in <span class="ni">Network.plot</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">25</span>     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Class 0&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Class 1&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">network</span><span class="o">.</span><span class="n">forward</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Neural Network&quot;</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;plt&#39; is not defined
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original loss: 12.017
 </pre></div>
 </div>
+<img alt="../_images/24a6386ede913f598a21370ecb83ba6ceecea35bbeaaba2ed41825b4cc29b3dc.png" src="../_images/24a6386ede913f598a21370ecb83ba6ceecea35bbeaaba2ed41825b4cc29b3dc.png" />
 </div>
 </div>
 <p>We learn good values for the parameters iteratively. At each iteration, we ask the question - in what direction should each parameter be adjusted to reduce the loss?</p>
@@ -646,7 +634,7 @@ w_1^{[1]}  = w_1^{[1]} - \alpha\frac{\partial \mathcal{L}}{\partial w_1^{[1]}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c496f8dbed52144f48e058a1920f8781033760b94fe17f6dc6227f1e6155ef11.png" src="../_images/c496f8dbed52144f48e058a1920f8781033760b94fe17f6dc6227f1e6155ef11.png" />
+<img alt="../_images/ccfa76869b7fa898e696ae3216e97b87fe9ff11d947837d6fa2c57760718ded2.png" src="../_images/ccfa76869b7fa898e696ae3216e97b87fe9ff11d947837d6fa2c57760718ded2.png" />
 </div>
 </div>
 <p>After one iteration, making the changes to the parameters indicated by the red arrows above, the loss is reduced slightly:</p>
@@ -697,12 +685,12 @@ New Loss: 12.010
 </section>
 <section id="neural-network-as-a-composed-function">
 <h2>Neural Network as a Composed Function<a class="headerlink" href="#neural-network-as-a-composed-function" title="Permalink to this heading">#</a></h2>
+<p>Neural networks are a big composed function (each layer is a function of the output of the previous layer):</p>
 <p><img alt="" src="../_images/03_backprop_composedfunction.png" /></p>
+<p>You might remember that calculating the derivative of composed functions is what the chain rule is for in calculus. Here’s a reminder:</p>
 </section>
-<section id="chain-rule-for-derivatives">
-<h2>Chain Rule (for derivatives)<a class="headerlink" href="#chain-rule-for-derivatives" title="Permalink to this heading">#</a></h2>
-<section id="case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
-<h3>Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span><a class="headerlink" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x" title="Permalink to this heading">#</a></h3>
+<section id="chain-rule-case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">
+<h2>Chain Rule Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span><a class="headerlink" href="#chain-rule-case-1-f-is-a-function-of-g-and-g-is-a-function-of-x" title="Permalink to this heading">#</a></h2>
 <div class="math notranslate nohighlight">
 \[
 f = f(g(x))
@@ -713,7 +701,7 @@ f = f(g(x))
 \frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\mathrm{d} f}{\mathrm{d} g} \frac{\mathrm{d} g}{\mathrm{d} x}
 \]</div>
 <section id="example">
-<h4>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h4>
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
 <p>Find the derivative of <span class="math notranslate nohighlight">\(f(x) = (e^x + x)^2\)</span>:</p>
 <p>Let:</p>
 <div class="math notranslate nohighlight">
@@ -731,48 +719,9 @@ f(g) = g^2 \\
 \end{split}\]</div>
 </section>
 </section>
-<section id="case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
-<h3>Case 2: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span>, which are both functions of <span class="math notranslate nohighlight">\(x\)</span><a class="headerlink" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x" title="Permalink to this heading">#</a></h3>
-<div class="math notranslate nohighlight">
-\[
-f = f(g(x), h(x))
-\]</div>
-<p>To find the derivative of <span class="math notranslate nohighlight">\(f\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span>, the chain rule states that you must sum over its (partial) derivatives for each input (<span class="math notranslate nohighlight">\(g\)</span>, <span class="math notranslate nohighlight">\(h\)</span>):</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\partial f}{\partial g} \frac{\mathrm{d} g}{\mathrm{d} x} + \frac{\partial f}{\partial h} \frac{\mathrm{d} h}{\mathrm{d} x}
-\]</div>
-<p>This is the <em>multi-variable</em> chain rule.</p>
 <section id="id1">
-<h4>Example<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
-<p>Find the derivative of:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-f(x) = x^2(3x+1) - \sin(x^2) \\
-\end{split}\]</div>
-<p>which can be written as:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-f(g, h) = h g - \sin(h) \\
-g(x) = 3x + 1 \\
-h(x) = x^2
-\end{split}\]</div>
-<p>Then by chain rule:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\frac{\partial f}{\partial g} = h\\
-\frac{\mathrm{d} g}{\mathrm{d} x} = 3 \\
-\frac{\partial f}{\partial h} = g - \cos(h) \\
-\frac{\mathrm{d} h}{\mathrm{d} x} = 2x \\
-\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\partial f}{\partial g} \frac{\mathrm{d} g}{\mathrm{d} x} + \frac{\partial f}{\partial h} \frac{\mathrm{d} h}{\mathrm{d} x} =
-3h + 2x\left(g-\cos(h)\right) \\
-\frac{\mathrm{d} f}{\mathrm{d}x} = 3x^2 + 2x\left(3x + 1 -\cos(x^2)\right)
-\end{split}\]</div>
-</section>
-</section>
-</section>
-<section id="id2">
-<h2>Back Propagation<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<h2>Back Propagation<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Back propagation is using the chain rule to compute the rate of change of the loss with the parameter values.</p>
 <p>Here’s the example network again, but with each edge (arrow) labeled by the partial derviative between the two connected nodes:</p>
 <p><img alt="" src="../_images/03_backprop_example_diffs.png" /></p>
 <p>To compute the derivative of the loss with respect to any term in the network we can use the chain rule. Starting with the loss on the right, we move “backwards” through the network, multiplying the partial derivatives until we get to the term we want.</p>
@@ -806,21 +755,13 @@ a_1^{[2]} = \frac{1}{1+\exp(-z_1^{[2]})} \\
 z_1^{[2]} = w_1^{[2]}a_1^{[1]} + w_2^{[2]}a_2^{[1]} + b_1^{[2]} \\
 \frac{\partial z_1^{[2]}}{\color{blue}{\partial b_1^{[2]}}} = 1
 \end{split}\]</div>
-<p>So overall we could write the loss derivative with respect to the bias as:</p>
+<p>Substituting in these results above and simplifying gives:</p>
 <div class="math notranslate nohighlight">
 \[
 \frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} =
-1 . \frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
-\frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} =
-\frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}}
-\]</div>
-<p>Substituting in the earlier results above and simplifying gives:</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{\color{red}{\partial \mathcal{L}}}{\color{blue}{\partial b_1^{[2]}}} =
-\frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}} =
 a_1^{[2]} - y
 \]</div>
+<p>Note that as <span class="math notranslate nohighlight">\(\frac{\partial z_1^{[2]}}{\color{blue}{\partial b_1^{[2]}}} = 1\)</span>, it’s also the case that <span class="math notranslate nohighlight">\(\frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}} \frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} = a_1^{[2]} - y\)</span>, which is a result we can re-use below.</p>
 </section>
 <section id="example-2-computing-the-gradient-for-w-2-1">
 <h3>Example 2: Computing the gradient for <span class="math notranslate nohighlight">\(w_2^{[1]}\)</span><a class="headerlink" href="#example-2-computing-the-gradient-for-w-2-1" title="Permalink to this heading">#</a></h3>
@@ -841,44 +782,84 @@ z_2^{[1]} = w_2^{[1]}x + b_2^{[1]} \\
 \frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}} = x = a_1^{[0]}
 \end{split}\]</div>
 <p>For the weights after the first layer, the inputs <span class="math notranslate nohighlight">\(x\)</span> are replaced by node activations <span class="math notranslate nohighlight">\(a\)</span>. We can relabel <span class="math notranslate nohighlight">\(x = a_1^{[0]}\)</span> to make the general trend clearer.</p>
+<p><strong>Second term:</strong></p>
+<p>Derivative of the activation function. If using sigmoid it’s (as seen above):</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\color{orange}{\partial a_2^{[1]}}}{\color{gray}{\partial z_2^{[1]}}} = a_2^{[1]} (1 - a_2^{[1]})
+\]</div>
 <p><strong>Third term:</strong></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 z_1^{[2]} = w_1^{[2]} a_1^{[1]} + w_2^{[2]} a_2^{[1]} + b_1^{[2]} \\
 \frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}} = w_2^{[2]}
 \end{split}\]</div>
+<p><strong>Last two terms:</strong></p>
+<p>We already computed this above:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
+\frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} =
+a_1^{[2]} - y
+\]</div>
 <p><strong>Overall:</strong></p>
-<p>The last four terms on the right side of the expression for the derivative can be simplified to <span class="math notranslate nohighlight">\(\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}\)</span>. Then we have:</p>
+<p>Putting it all together:</p>
 <div class="math notranslate nohighlight">
 \[
 \frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
-\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial w_2^{[1]}}}
-\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
-=
-a_1^{[0]}\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}
+a_1^{[0]} a_2^{[1]} (1 - a_2^{[1]}) w_2^{[2]} \left(a_1^{[2]} - y\right)
 \]</div>
-<p>We can also compute that <span class="math notranslate nohighlight">\(\frac{\color{gray}{\partial z_2^{[1]}}}{\color{magenta}{\partial b_2^{[1]}}} = 1\)</span> (see example 1), so it follows that <span class="math notranslate nohighlight">\(\frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial b_2^{[1]}}} =\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}}\)</span>.</p>
-<p>From the previous results (here and in example 1) we can derive <span class="math notranslate nohighlight">\(\color{red}{\partial \mathcal{L}} / \color{gray}{\partial z_2^{[1]}}\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}} =
-\frac{\color{orange}{\partial a_2^{[1]}}}{\color{gray}{\partial z_2^{[1]}}}
-\frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}}
-\frac{\color{green}{\partial a_1^{[2]}}}{\partial z_1^{[2]}}
-\frac{\color{red}{\partial \mathcal{L}}}{\color{green}{\partial a_1^{[2]}}} =
-\frac{\color{orange}{\partial a_2^{[1]}}}{\color{gray}{\partial z_2^{[1]}}}
-\frac{\partial z_1^{[2]}}{\color{orange}{\partial a_2^{[1]}}}
-\frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}} \\
-\frac{\color{red}{\partial \mathcal{L}}}{\color{gray}{\partial z_2^{[1]}}} =
-a_2^{[1]} (1 - a_2^{[1]}) w_2^{[2]}\frac{\color{red}{\partial \mathcal{L}}}{\partial z_1^{[2]}}
-\end{split}\]</div>
 <p>Note we already derived the value of the last term, <span class="math notranslate nohighlight">\(\color{red}{\partial \mathcal{L}} / \partial z_1^{[2]}\)</span>, in Example 1, so we don’t need to re-compute it here.</p>
 </section>
+</section>
 <section id="multiple-paths">
-<h3>Multiple Paths<a class="headerlink" href="#multiple-paths" title="Permalink to this heading">#</a></h3>
+<h2>Multiple Paths<a class="headerlink" href="#multiple-paths" title="Permalink to this heading">#</a></h2>
 <p>There is one case not covered by the simplified network and examples above - where you have multiple paths from the output (loss) back to the term of interest. Such as this:</p>
 <p><img alt="" src="../_images/03_backprop_multipath.png" /></p>
-<p>In this case you must sum all the possible paths.</p>
+<p>In this case we need another form of the chain rule.</p>
+<section id="chain-rule-case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">
+<h3>Chain Rule Case 2: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span>, which are both functions of <span class="math notranslate nohighlight">\(x\)</span><a class="headerlink" href="#chain-rule-case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+f = f(g(x), h(x))
+\]</div>
+<p>To find the derivative of <span class="math notranslate nohighlight">\(f\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span>, the chain rule states that you must sum over its (partial) derivatives for each input (<span class="math notranslate nohighlight">\(g\)</span>, <span class="math notranslate nohighlight">\(h\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\partial f}{\partial g} \frac{\mathrm{d} g}{\mathrm{d} x} + \frac{\partial f}{\partial h} \frac{\mathrm{d} h}{\mathrm{d} x}
+\]</div>
+<p>This is the <em>multi-variable</em> chain rule.</p>
+<section id="id2">
+<h4>Example<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
+<p>Find the derivative of:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x) = x^2(3x+1) - \sin(x^2) \\
+\end{split}\]</div>
+<p>which can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(g, h) = h g - \sin(h) \\
+g(x) = 3x + 1 \\
+h(x) = x^2
+\end{split}\]</div>
+<p>Then by chain rule:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial f}{\partial g} = h\\
+\frac{\mathrm{d} g}{\mathrm{d} x} = 3 \\
+\frac{\partial f}{\partial h} = g - \cos(h) \\
+\frac{\mathrm{d} h}{\mathrm{d} x} = 2x \\
+\frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\partial f}{\partial g} \frac{\mathrm{d} g}{\mathrm{d} x} + \frac{\partial f}{\partial h} \frac{\mathrm{d} h}{\mathrm{d} x} =
+3h + 2x\left(g-\cos(h)\right) \\
+\frac{\mathrm{d} f}{\mathrm{d}x} = 3x^2 + 2x\left(3x + 1 -\cos(x^2)\right)
+\end{split}\]</div>
+</section>
+</section>
+<section id="back-to-the-neural-network">
+<h3>Back to the neural network<a class="headerlink" href="#back-to-the-neural-network" title="Permalink to this heading">#</a></h3>
+<p>To compute <span class="math notranslate nohighlight">\(\partial \mathcal{L}/{\partial b_1^{[1]}}\)</span> we must sum over all paths between the loss and the paremeter of interest:</p>
+<p><img alt="" src="../_images/03_backprop_multipath_sum.png" /></p>
 <p>Why?</p>
 <p>This also follows from the multi-variable chain rule (case 2 from earlier):</p>
 <ul class="simple">
@@ -913,6 +894,7 @@ x = b_1^{[1]}
 <ul class="simple">
 <li><p>The derivatives in layer <span class="math notranslate nohighlight">\(l\)</span> depend on the derivatives in layer <span class="math notranslate nohighlight">\(l + 1\)</span> (so we pass gradients “backwards” through the network)</p></li>
 <li><p>Each term is a fairly simple combination of quantities that must be computed during the forward pass (like the activation values in hidden layers)</p></li>
+<li><p>We get the derivatives for every parameter in the network by back propagating only <strong>once</strong> (only one forward pass to compute the loss and then one backwards pass to compute all the gradients)</p></li>
 </ul>
 <p>These properties of back propagation form the basis for efficient implementations in major frameworks (pytorch, Tensorflow, JAX etc.), mostly via:</p>
 <ul class="simple">
@@ -1062,10 +1044,12 @@ dL_db = -0.3775
 </section>
 <section id="graph-implementation">
 <h3>Graph Implementation<a class="headerlink" href="#graph-implementation" title="Permalink to this heading">#</a></h3>
+<p>Let’s create a parent class <code class="docutils literal notranslate"><span class="pre">Node</span></code> that will store its value, gradients, and which other nodes it’s connected to (its parents and children):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sort_nodes</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">visited</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="c1"># topological sort</span>
+    <span class="c1"># topological sort - used to ensure we compute the gradients in the</span>
+    <span class="c1"># correct order (from the last node to the first node)</span>
     <span class="k">if</span> <span class="n">order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">order</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">visited</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1140,6 +1124,18 @@ dL_db = -0.3775
 </div>
 </div>
 </div>
+<p>The class also provides methods <code class="docutils literal notranslate"><span class="pre">forward</span></code> and <code class="docutils literal notranslate"><span class="pre">backward</span></code> for computing the values and gradients of the whole graph, and unimplemented methods <code class="docutils literal notranslate"><span class="pre">_forward</span></code> and <code class="docutils literal notranslate"><span class="pre">_backward</span></code> for the specific node type:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_forward</span></code> computes the node’s value (dependent on the values of the node’s parents)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_backward</span></code> computes the gradient of the node’s parents (dependent on the accumulated gradient of the current node)</p></li>
+</ul>
+<p>The form of <code class="docutils literal notranslate"><span class="pre">_forward</span></code> and <code class="docutils literal notranslate"><span class="pre">_backward</span></code> depends on the type of node it is. Here we implement these types of nodes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Add</span></code> nodes sum all their inputs (parent node values). In the backward pass they pass their gradient back to their parents (<code class="docutils literal notranslate"><span class="pre">d(a</span> <span class="pre">+</span> <span class="pre">b</span> <span class="pre">+</span> <span class="pre">c)/da</span> <span class="pre">=</span> <span class="pre">1</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Multiply</span></code> nodes take the product of all their inputs (parent node values). In the backward pass they pass their gradient multiplied by the values of the other parents (<code class="docutils literal notranslate"><span class="pre">d(abc)/da</span> <span class="pre">=</span> <span class="pre">bc</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Sigmoid</span></code> nodes have only one parent and compute the sigmoid activation. In the backward pass the parent receives the sigmoid node’s gradient multiplied by <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">*</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">node_value)</span></code> (the derivative of the sigmoid function).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LogLoss</span></code> nodes compute the log loss between two parents (the actual and predicted y values).</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Add</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
@@ -1191,6 +1187,7 @@ dL_db = -0.3775
 </div>
 <section id="id3">
 <h4>Forward Pass<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<p>Here’s the simple example network constructed with our <code class="docutils literal notranslate"><span class="pre">Node</span></code> classes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># =================</span>
@@ -1230,6 +1227,7 @@ dL_db = -0.3775
 </div>
 </div>
 </div>
+<p>To compute the output we set the input data and parameter values then call the forward method on the final node (the loss node):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">1.5</span>
@@ -1276,6 +1274,7 @@ L: LogLoss(value=0.4741, gradient=0.0000)  | manual result was 0.4741
 </section>
 <section id="id4">
 <h4>Backward Pass<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
+<p>To compute the gradient we now just need to call the backward method on the loss node:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
@@ -1303,11 +1302,12 @@ b: Node(value=-1.0000, gradient=-0.3775)   | manual result was -0.3775
 </div>
 </div>
 </div>
+<p>Both the forward and backward results match the manual implementation from before.</p>
 </section>
 </section>
 <section id="pytorch-implementation">
 <h3>Pytorch Implementation<a class="headerlink" href="#pytorch-implementation" title="Permalink to this heading">#</a></h3>
-<p>We can do the same operations with pytorch’s tensor class, being careful to:</p>
+<p>Our <code class="docutils literal notranslate"><span class="pre">Node</span></code> implementation is similar (but much less efficient) to what frameworks like <code class="docutils literal notranslate"><span class="pre">pytorch</span></code> offer. We can do the same operations with pytorch’s tensor class, being careful to:</p>
 <ul class="simple">
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">requires_grad=True</span></code> for the parameters we’re interested in the gradients of (<code class="docutils literal notranslate"><span class="pre">w1</span></code>, <code class="docutils literal notranslate"><span class="pre">w2</span></code>, and <code class="docutils literal notranslate"><span class="pre">b</span></code>) - we’ll come back to this later</p></li>
 <li><p>Use torch’s implementations of sigmoid (<code class="docutils literal notranslate"><span class="pre">torch.sigmoid</span></code>) and log loss (<code class="docutils literal notranslate"><span class="pre">torch.nn.functional.binary_cross_entropy</span></code>).</p></li>
@@ -1479,21 +1479,21 @@ dL_db = tensor([-0.3775])  | manual result was -0.3775
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-pass-recap">Forward Pass: Recap</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-the-parameters-how-not-to-do-it">Learning the Parameters (how not to do it)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-network-as-a-composed-function">Neural Network as a Composed Function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-for-derivatives">Chain Rule (for derivatives)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">Chain Rule Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">Case 2: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span>, which are both functions of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Back Propagation</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Back Propagation</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-computing-the-gradient-for-b-1-2">Example 1: Computing the gradient for <span class="math notranslate nohighlight">\(b_1^{[2]}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-computing-the-gradient-for-w-2-1">Example 2: Computing the gradient for <span class="math notranslate nohighlight">\(w_2^{[1]}\)</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-paths">Multiple Paths</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-paths">Multiple Paths</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-case-2-f-is-a-function-of-g-and-h-which-are-both-functions-of-x">Chain Rule Case 2: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span>, which are both functions of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-the-neural-network">Back to the neural network</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-propagation-and-efficiency">Back Propagation and Efficiency</a></li>
 </ul>
 </li>
