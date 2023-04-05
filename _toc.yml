@@ -3,13 +3,13 @@ root: index
 parts:
   - caption: Fully Connected Neural Networks
     chapters:
-    - file: notebooks/01_linear_regression
-    - file: notebooks/02_logistic_regression
-    - file: notebooks/03_backprop
-    - file: notebooks/04_matrix_notation
-    - file: notebooks/05_activation
-    - file: notebooks/06_nonlinear_regression
-    - file: notebooks/07_multiclass
-    - file: notebooks/08_regularisation
-    - file: notebooks/09_optimisers
-    - file: notebooks/10_experiments
+    - file: learningdl/01_linear_regression
+    - file: learningdl/02_logistic_regression
+    - file: learningdl/03_backprop
+    - file: learningdl/04_matrix_notation
+    - file: learningdl/05_activation
+    - file: learningdl/06_nonlinear_regression
+    - file: learningdl/07_multiclass
+    - file: learningdl/08_regularisation
+    - file: learningdl/09_optimisers
+    - file: learningdl/10_experiments
