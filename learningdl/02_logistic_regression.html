@@ -783,9 +783,9 @@ g(z) = \textrm{sigmoid}(z) = \frac{1}{1 + \exp(-z)}
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4836]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 1]) | Values : tensor([[5.4283]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8245], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8135], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
 </div>
@@ -813,7 +813,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8245], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/79ff9d5637c85494f2a5dc8aa49682c652d2f7e8f640fa6b3cbcb262d34383fa.png" src="../_images/79ff9d5637c85494f2a5dc8aa49682c652d2f7e8f640fa6b3cbcb262d34383fa.png" />
+<img alt="../_images/b36fb757a6de9318f8b996ece584fca4bc4b705e6f6e1b1309f43e9b79aba7a4.png" src="../_images/b36fb757a6de9318f8b996ece584fca4bc4b705e6f6e1b1309f43e9b79aba7a4.png" />
 </div>
 </div>
 <p>Also shown is the <strong>decision boundary</strong> - all samples with <span class="math notranslate nohighlight">\(x\)</span> to the left of the boundary are predicted to have <span class="math notranslate nohighlight">\(y = 0\)</span>, and all values to the right <span class="math notranslate nohighlight">\(y = 1\)</span> (assuming we predict <span class="math notranslate nohighlight">\(y = 1\)</span> when <span class="math notranslate nohighlight">\(\hat{y} \geq 0.5\)</span>).</p>
@@ -853,7 +853,7 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8245], grad_fn=&lt;Sl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dece71a0aabfdfd5b2615e43ac7bd1e6c78cd653d2c6d57b39a9b991212d9912.png" src="../_images/dece71a0aabfdfd5b2615e43ac7bd1e6c78cd653d2c6d57b39a9b991212d9912.png" />
+<img alt="../_images/263783aebc10ad11861ab6b2e8b4629bbc9eacf55bbabb4944b300f327a0598d.png" src="../_images/263783aebc10ad11861ab6b2e8b4629bbc9eacf55bbabb4944b300f327a0598d.png" />
 </div>
 </div>
 </section>
@@ -996,12 +996,12 @@ Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.8245], grad_fn=&lt;Sl
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.4734, -3.1086]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([1, 2]) | Values : tensor([[ 1.2848, -2.9980]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([-0.0447], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([1]) | Values : tensor([0.0889], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
-<img alt="../_images/003e8b7f5eaee7e8a412d7127548c1a32d432275ff9067542db35b32700e4ed8.png" src="../_images/003e8b7f5eaee7e8a412d7127548c1a32d432275ff9067542db35b32700e4ed8.png" />
+<img alt="../_images/e133fb8cb74d98eef5e78c107489152fcb5ce1cd794e6117ffbd04d92a3ce3ff.png" src="../_images/e133fb8cb74d98eef5e78c107489152fcb5ce1cd794e6117ffbd04d92a3ce3ff.png" />
 </div>
 </div>
 <p>Logistic regression, and our neural network that recreates it, can only fit <em>linear</em> decision boundaries. We could fit a non-linear boundary by adding polynomial features. In this case we’d need up cubic terms so we might try to fit something like this:</p>
@@ -1045,17 +1045,17 @@ z = w_1 x_1^3 + w_2 x_1^2 x_2 + w_3 x_1 x_2^2 + w_4 x_2^3 + w_5 x_1 ^2 + w_6 x_1
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
-Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[11.0417, 10.0717],
-        [ 1.4541, -0.6521]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.weight | Size: torch.Size([2, 2]) | Values : tensor([[ -1.4541,   0.5850],
+        [-10.9568,  -9.7538]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([ 0.0377, -0.0442], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 0.bias | Size: torch.Size([2]) | Values : tensor([-0.0676, -0.2859], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[-16.1357,  27.3087]], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.weight | Size: torch.Size([1, 2]) | Values : tensor([[-27.9920,  16.7248]], grad_fn=&lt;SliceBackward0&gt;) 
 
-Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.3437], grad_fn=&lt;SliceBackward0&gt;) 
+Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([5.3305], grad_fn=&lt;SliceBackward0&gt;) 
 </pre></div>
 </div>
-<img alt="../_images/9b25e261c64297df4c2be2ca2570090336faa260bec5e4ee3f4d5304bab807be.png" src="../_images/9b25e261c64297df4c2be2ca2570090336faa260bec5e4ee3f4d5304bab807be.png" />
+<img alt="../_images/8912247fc74818547afb003c6af6608ecdaeb8f9eee33a70fb53e15982605f1b.png" src="../_images/8912247fc74818547afb003c6af6608ecdaeb8f9eee33a70fb53e15982605f1b.png" />
 </div>
 </div>
 <p>We get a non-linear decision boundary! But there’s still a region where the network is uncertain/misclassifies  some points (e.g. the white region). What if we add another layer?</p>
@@ -1087,7 +1087,7 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.3437], grad_fn=&lt;S
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done!
 </pre></div>
 </div>
-<img alt="../_images/2b184010f369b79e3138597e9bcdd62874b20329d71a87b8260956eac21c6eec.png" src="../_images/2b184010f369b79e3138597e9bcdd62874b20329d71a87b8260956eac21c6eec.png" />
+<img alt="../_images/8ff3ba292ce40a0a0a9470c822ebbf03c10686caf8617cb3044dac062ed98468.png" src="../_images/8ff3ba292ce40a0a0a9470c822ebbf03c10686caf8617cb3044dac062ed98468.png" />
 </div>
 </div>
 <p>This network can almost perfectly fit the decision boundary the data was generated with.</p>
@@ -1194,11 +1194,11 @@ Layer: 2.bias | Size: torch.Size([1]) | Values : tensor([-5.3437], grad_fn=&lt;S
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1908/854895806.py:2: RuntimeWarning: overflow encountered in exp
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1914/854895806.py:2: RuntimeWarning: overflow encountered in exp
   return 1 / (1 + np.exp(-z))
 </pre></div>
 </div>
-<img alt="../_images/a06630316ca0375111725ece19bd417268eef162bcb792f386d2060200eda6fd.png" src="../_images/a06630316ca0375111725ece19bd417268eef162bcb792f386d2060200eda6fd.png" />
+<img alt="../_images/b07ed56cff4fb0580878595fe93756d2ed417d6ff09cce7ae6a31a82b9217853.png" src="../_images/b07ed56cff4fb0580878595fe93756d2ed417d6ff09cce7ae6a31a82b9217853.png" />
 </div>
 </div>
 <p>The colour scale shows the “activation” of the node (i.e. the output after applying the sigmoid function). One node in the hidden layer captures the upward (positive) slope of the decision boundary, and the other the downward (negative) slope. When combined in the output layer (and sigmoid applied), the points from the two classes are linearly separable (you can draw a linear decision boundary between them) with respect to the activation of the hidden nodes.</p>
