@@ -385,6 +385,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-the-parameters-how-not-to-do-it">Learning the Parameters (how not to do it)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-network-as-a-composed-function">Neural Network as a Composed Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">Chain Rule Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">Intuition</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 </ul>
 </li>
@@ -700,6 +701,23 @@ f = f(g(x))
 \[
 \frac{\mathrm{d} f}{\mathrm{d}x} = \frac{\mathrm{d} f}{\mathrm{d} g} \frac{\mathrm{d} g}{\mathrm{d} x}
 \]</div>
+<section id="intuition">
+<h3>Intuition<a class="headerlink" href="#intuition" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>“If a car travels twice as fast as a bicycle and the bicycle is four times as fast as a walking man, then the car travels 2 × 4 = 8 times as fast as the man.”</p>
+<p><em>George F. Simmons, Calculus with Analytic Geometry (1985), p. 93</em></p>
+</div></blockquote>
+<p>Or, in the form of the notation above:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\mathrm{d} (\mathrm{car})}{\mathrm{d} (\mathrm{bicycle})} = 2 \\
+\frac{\mathrm{d} (\mathrm{bicycle})}{\mathrm{d} (\mathrm{walker})} = 4 \\
+\frac{\mathrm{d} (\mathrm{car})}{\mathrm{d} (\mathrm{walker})} =
+\frac{\mathrm{d} (\mathrm{car})}{\mathrm{d} (\mathrm{bicycle})} \frac{\mathrm{d} (\mathrm{bicycle})}{\mathrm{d} (\mathrm{walker})}
+= 2 \times 4 = 8
+\end{split}\]</div>
+<p>or we could use <span class="math notranslate nohighlight">\(f\)</span> as the car, <span class="math notranslate nohighlight">\(g\)</span> as the bicycle, and <span class="math notranslate nohighlight">\(x\)</span> as the walking man.</p>
+</section>
 <section id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
 <p>Find the derivative of <span class="math notranslate nohighlight">\(f(x) = (e^x + x)^2\)</span>:</p>
@@ -809,7 +827,7 @@ a_1^{[2]} - y
 \frac{\color{red}{\partial \mathcal{L}}}{\color{magenta}{\partial w_2^{[1]}}} =
 a_1^{[0]} a_2^{[1]} (1 - a_2^{[1]}) w_2^{[2]} \left(a_1^{[2]} - y\right)
 \]</div>
-<p>Note we already derived the value of the last term, <span class="math notranslate nohighlight">\(\color{red}{\partial \mathcal{L}} / \partial z_1^{[2]}\)</span>, in Example 1, so we don’t need to re-compute it here.</p>
+<p>Note that most of these terms will already have been computed either in the forward pass or earlier in the backward pass, so there’s very little that needs to be re-computed here.</p>
 </section>
 </section>
 <section id="multiple-paths">
@@ -1480,6 +1498,7 @@ dL_db = tensor([-0.3775])  | manual result was -0.3775
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-the-parameters-how-not-to-do-it">Learning the Parameters (how not to do it)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-network-as-a-composed-function">Neural Network as a Composed Function</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-case-1-f-is-a-function-of-g-and-g-is-a-function-of-x">Chain Rule Case 1: <span class="math notranslate nohighlight">\(f\)</span> is a function of <span class="math notranslate nohighlight">\(g\)</span>, and <span class="math notranslate nohighlight">\(g\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">Intuition</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 </ul>
 </li>
